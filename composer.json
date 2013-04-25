@@ -1,0 +1,22 @@
+{
+    "name": "michaldudek/foundation",
+    "description": "A set of useful PHP functions and (mostly static) classes.",
+    "keywords": ["tools", "utils", "array", "object", "string", "foundation"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michał Dudek",
+            "email": "michal@michaldudek.pl"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+    	"psr-0": { "MD\\Foundation": "src/" },
+        "files": [
+            "src/constants.php",
+            "src/functions.php"
+        ]
+    }
+}
