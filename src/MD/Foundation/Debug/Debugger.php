@@ -201,9 +201,10 @@ class Debugger
     /**
      * Handles an exception by printing it out nicely.
      * 
-     * @param \Exception $e
+     * @param \Exception $e Exception that you want to handle.
+     * @param array $log [optional] Any log to be attached to the error page.
      */
-    public static function handleException(\Exception $e) {
+    public static function handleException(\Exception $e, array $log = array()) {
         header('HTTP/1.1 500 Internal Server Error');
 
         $type = 'exception';
@@ -212,7 +213,6 @@ class Debugger
         $code = $e->getCode();
         $name = get_class($e);
         $trace = self::getPrettyTrace($e->getTrace());
-        $log = array();//Logger::getLog();
 
         $exceptionPage = realpath(dirname(__FILE__) .'/../../../') .'/error.php';
         include $exceptionPage;
@@ -239,7 +239,7 @@ class Debugger
         $name = '';
         $file = $file .' ('. $line .')';
         $trace = self::getPrettyTrace(debug_backtrace());
-        $log = array();//Logger::getLog();
+        $log = array();
 
         switch($code) {
             case E_ERROR:           $name = 'Fatal Error';          break;

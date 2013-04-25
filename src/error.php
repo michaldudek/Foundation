@@ -42,18 +42,7 @@
     </ul>
 
     <h2>Log:</h2>
-    <ul id="log">
-        <?php $l = count($log);
-        foreach ($log as $item): ?>
-            <li>
-                <span class="number"><?php echo $l--; ?>.</span>
-                <span class="time"><?php echo $item['time']; ?></span>
-                <span class="category"><?php echo $item['category']; ?></span>
-                <span class="message"><?php echo $item['message']; ?></span>
-                <p class="additional"><?php echo \dump($item['additional'], true); ?></p>
-            </li>
-        <?php endforeach; ?>
-    </ul>
+    <?php dump($log); ?>
 
 </body>
 </html>
