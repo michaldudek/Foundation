@@ -9,7 +9,7 @@
  * @license MIT
  */
 
-use Splot\Foundation\Debug\Debugger;
+use MD\Foundation\Debug\Debugger;
 
 /**
  * Friendly output of variables. It will print them out in <pre class="md-dump"> tag.
