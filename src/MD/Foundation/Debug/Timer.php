@@ -135,7 +135,7 @@ class Timer
         $step->stop();
 
         $this->_steps[] = array(
-            'name' => $name ? $name : count($this->_laps) + 1,
+            'name' => $name ? $name : count($this->_steps) + 1,
             'step' => $step
         );
 
