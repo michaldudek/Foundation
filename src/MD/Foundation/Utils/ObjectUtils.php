@@ -174,7 +174,7 @@ class ObjectUtils
             if ($preserveKey) {
                 $return[$val][$k] = $object;
             } else{
-                $return[$vak][] = $object;
+                $return[$val][] = $object;
             }
         }
         
