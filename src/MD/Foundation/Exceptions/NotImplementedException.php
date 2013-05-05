@@ -12,7 +12,6 @@
  */
 namespace MD\Foundation\Exceptions;
 
-use Exception;
 use RuntimeException;
 
 use MD\Foundation\Debug\Debugger;
