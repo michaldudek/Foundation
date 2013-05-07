@@ -524,21 +524,10 @@ class ArrayUtils
         
         // proper conversion
         $parent = ($array) ? $array : array();
-        
-        // different handling for MDModel objects
-        if (is_a($object, 'MDModel')) {
-            $properties = $object->_getProperties();
-            foreach($properties as $varName => $value) {
-                // check if included in the keys array (if any specified)
-                if ($keys AND is_array($keys) AND !in_array($varName, $keys)) continue;
-                
-                $parent[$varName] = null;
-                
-                $getterName = 'get'. ucfirst($varName);
-                $value = $object->$getterName();
-                $parent[$varName] = (is_object($value)) ? static::fromObject($value, $parent[$varName]) : ((is_array($value)) ? static::fromObject($value) : $value);
-            }
-            return $parent;
+
+        // can object be converted to array?
+        if (method_exists($object, 'toArray')) {
+            return $object->toArray();
         }
         
         // and finally typical handling of items
