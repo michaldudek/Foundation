@@ -18,6 +18,7 @@ use MD\Foundation\Debug\Interfaces\Dumpable;
 
 use MD\Foundation\Exceptions\NotUniqueException;
 use MD\Foundation\Exceptions\NotFoundException;
+use MD\Foundation\Exceptions\NotImplementedException;
 
 /**
  * @static
@@ -138,34 +139,99 @@ class Debugger
      * @todo
      */
     public static function callableToString($callable) {
-        return 'callable (@todo)';
+       throw new NotImplementedException();
     }
 
     /**
      * Friendly output of variables. It will print them out in <pre class="md-dump"> tag.
      * 
-     * @param object $variable Variable to be dumped.
-     * @param bool $toString [optional] Should return a string instead of echoing the output? Default: false.
+     * It will dump all arguments sent to this function.
+     * 
+     * @param mixed $variable1 Variable to be dumped.
+     * @param mixed $variable2 Another variable to be dumped.
+     * @param mixed $variable3 Another variable to be dumped.
+     * @param ...
+     */
+    public static function dump() {
+        $arguments = func_get_args();
+
+        foreach($arguments as $variable) {
+            echo static::stringDump($variable) . NL;
+        }
+    }
+
+    /**
+     * Returns a string containing HTML formatted information about the passed variable.
+     * 
+     * @param mixed $variable1 Variable to be dumped.
+     * @param mixed $variable2 Another variable to be dumped.
+     * @param mixed $variable3 Another variable to be dumped.
+     * @param ...
      * @return string
      */
-    public static function dump($variable, $toString = false) {
-        $dump = '<pre style="background-color: white; color: black;" class="splot-dump">';
-        if (is_array($variable)) {
-            $dump .= self::_arrayToString($variable);
-        } elseif (is_object($variable)) {
-            $dump .= self::_objectToString($variable);
-        } elseif (is_bool($variable)) {
-            $dump .= ($variable) ? 'true' : 'false';
-        } else {
-            $dump .= print_r(htmlspecialchars($variable), true);
+    public static function stringDump() {
+        $arguments = func_get_args();
+        $dump = '';
+
+        foreach($arguments as $variable) {
+            $dump .= '<pre style="background-color: white; color: black;" class="md-dump">';
+            if (is_array($variable)) {
+                $dump .= self::_arrayToString($variable);
+            } elseif (is_object($variable)) {
+                $dump .= self::_objectToString($variable);
+            } elseif (is_bool($variable)) {
+                $dump .= ($variable) ? 'true' : 'false';
+            } else {
+                $dump .= print_r(htmlspecialchars($variable), true);
+            }
+            $dump .= '</pre>';
         }
-        $dump .= '</pre>';
         
-        if ($toString) {
-            return $dump;
+        return $dump;
+    }
+
+    /**
+     * Dumps all the arguments into browser's JavaScript console.
+     * 
+     * Attempts to convert all objects into arrays.
+     * 
+     * @param mixed $variable1 Variable to be dumped.
+     * @param mixed $variable2 Another variable to be dumped.
+     * @param mixed $variable3 Another variable to be dumped.
+     * @param ...
+     */
+    public static function consoleDump() {
+        $arguments = func_get_args();
+
+        foreach($arguments as $variable) {
+            echo '<script type="text/javascript">'. static::consoleStringDump($variable) .'</script>' . NL;
         }
-        
-        echo $dump . NL;
+    }
+
+    /**
+     * Returns a string containing JavaScript code that will log all the arguments into browser's JavaScript console.
+     * 
+     * Attempts to convert all objects into arrays.
+     * 
+     * @param mixed $variable1 Variable to be dumped.
+     * @param mixed $variable2 Another variable to be dumped.
+     * @param mixed $variable3 Another variable to be dumped.
+     * @param ...
+     * @return string
+     */
+    public static function consoleStringDump() {
+        $arguments = func_get_args();
+
+        $output = '(function(w,u) {';
+        $output .= 'if (w.console===u) return;';
+
+        foreach($arguments as $variable) {
+            $output .= 'w.console.log('. json_encode(ArrayUtils::fromObject($variable)) .');';
+        }
+
+        $output .= '})(window);';
+
+        return $output;
     }
     
     /**

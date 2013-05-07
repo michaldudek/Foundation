@@ -16,7 +16,7 @@
     	"psr-0": { "MD\\Foundation": "src/" },
         "files": [
             "src/constants.php",
-            "src/functions.php"
+            "src/MD/functions.php"
         ]
     }
 }

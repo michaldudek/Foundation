@@ -34,7 +34,7 @@
                 <span class="file"><?php echo $item['file']; ?></span>
                 <ul class="arguments">
                     <?php foreach($item['arguments'] as $argument): ?>
-                        <li><?php echo \dump($argument, true); ?></li>
+                        <li><?php echo \MD\string_dump($argument); ?></li>
                     <?php endforeach; ?>
                 </ul>
             </li>
@@ -42,7 +42,7 @@
     </ul>
 
     <h2>Log:</h2>
-    <?php dump($log); ?>
+    <?php \MD\string_dump($log); ?>
 
 </body>
 </html>
