@@ -78,7 +78,7 @@ function console_log() {
  * @param ...
  * @return string
  */
-function conse_string_dump() {
+function console_string_dump() {
     return call_user_func_array(array('MD\Foundation\Debug\Debugger', 'consoleStringDump'), func_get_args());
 }
 
