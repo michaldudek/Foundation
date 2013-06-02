@@ -29,7 +29,7 @@ class StringUtils
         $limit = intval($limit);
         if (strlen($text) <= $limit) return $text;
         
-        $text = substr($text, 0, $limit); // crop the string to a given limit
+        $text = substr($text, 0, $limit - strlen($add)); // crop the string to a given limit minus suffix
         $text = substr($text, 0, strrpos($text, ' ')); // find the last occurrence of a space and crop the string to it
                 
         $text = rtrim($text, '.!?:;,-'); // remove unwanted punctuation from the end of the string
