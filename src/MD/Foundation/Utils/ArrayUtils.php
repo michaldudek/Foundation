@@ -130,14 +130,21 @@ class ArrayUtils
      * @param bool $preserveKey [optional] Preserve keys? Default false.
      * @return array Categorized array.
      */
-    public static function categorizeByKey(&$array, $key, $preserveKey = false) {
-        if (!is_array($array)) return array();
+    public static function categorizeByKey($array, $key, $preserveKey = false) {
+        if (!is_array($array)) {
+            return array();
+        }
+
         $return = array();
         
         foreach($array as $k => &$row) {
-            if (!isset($row[$key])) continue;
+            if (!isset($row[$key])) {
+                continue;
+            }
             
-            if (!isset($return[$row[$key]])) $return[$row[$key]] = array();
+            if (!isset($return[$row[$key]])) {
+                $return[$row[$key]] = array();
+            }
             
             if ($preserveKey) {
                 $return[$row[$key]][$k] = $row;
@@ -262,17 +269,25 @@ class ArrayUtils
      * @return array Sorted array.
      */
     public static function multiSort(&$array, $key, $reverse = false) {
-        if ((!is_array($array)) OR (empty($array))) return array();
-        
-        $direction = $reverse ? 'SORT_DESC' : 'SORT_ASC';
-        
-        $sorted = array();
-        foreach($array as $i => &$row) {
-            $sorted[] = (isset($row[$key])) ? $row[$key] : null;
+        if ((!is_array($array)) OR (empty($array))) {
+            return array();
         }
-        
-        array_multisort($sorted, constant($direction), $array);
-        return $array;
+
+        $categorized = static::categorizeByKey($array, $key);
+        if ($reverse) {
+            krsort($categorized);
+        } else {
+            ksort($categorized);
+        }
+
+        $sorted = array();
+        foreach($categorized as $cat => $items) {
+            foreach($items as $item) {
+                $sorted[] = $item;
+            }
+        }
+
+        return $sorted;
     }
     
     /**
