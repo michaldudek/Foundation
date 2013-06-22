@@ -165,6 +165,8 @@ class Debugger
      * 
      * It will dump all arguments sent to this function.
      * 
+     * If PHP is running from CLI then it will dump all the arguments in one line separated by spaces.
+     * 
      * @param mixed $variable1 Variable to be dumped.
      * @param mixed $variable2 Another variable to be dumped.
      * @param mixed $variable3 Another variable to be dumped.
@@ -174,7 +176,18 @@ class Debugger
         $arguments = func_get_args();
 
         foreach($arguments as $variable) {
-            echo static::stringDump($variable) . NL;
+            $dump = static::stringDump($variable);
+            if (static::isCli()) {
+                $dump = strip_tags($dump);
+                $dump = htmlspecialchars_decode($dump);
+                echo $dump .' ';
+            } else {
+                echo $dump . NL;
+            }
+        }
+
+        if (static::isCli()) {
+            echo NL;
         }
     }
 
