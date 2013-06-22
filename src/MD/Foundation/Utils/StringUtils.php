@@ -239,6 +239,39 @@ class StringUtils
     public static function isUrl($url) {
         return preg_match('|^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
     }
+
+    /**
+     * Checks if the given string is a valid class name.
+     * 
+     * @param string $name Class name to validate.
+     * @param bool $allowNamespace [optional] Can the class name be a namespace? Defualt: false.
+     * @return bool
+     */
+    public static function isClassName($name, $allowNamespace = false) {
+        $name = trim($name);
+        if (empty($name)) {
+            return false;
+        }
+
+        if ($allowNamespace) {
+            $name = explode(NS, $name);
+            $allow = true;
+            foreach($name as $className) {
+                if (!static::isClassName($className, false)) {
+                    $allow = false;
+                    break;
+                }
+            }
+
+            return $allow;
+        }
+
+        if (!preg_match('/^[a-zA-Z][a-zA-Z0-9_]*$/i', $name)) {
+            return false;
+        }
+
+        return true;
+    }
     
     /**
      * Fix a given URL if it doesn't have http:// in front (common mistake! :))
