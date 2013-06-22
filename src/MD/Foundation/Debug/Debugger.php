@@ -27,6 +27,24 @@ class Debugger
 {
 
     /**
+     * Checks if PHP is running from CLI (command line interface).
+     * 
+     * @return bool
+     */
+    public static function isCli() {
+        return in_array(php_sapi_name(), array('cli'));
+    }
+
+    /**
+     * Checks if PHP is running from a web request (as opposed to CLI).
+     * 
+     * @return bool
+     */
+    public static function isWebRequest() {
+        return !static::isCli();
+    }
+
+    /**
      * Returns type of the given variable.
      * 
      * Similiar to PHP's gettype() function, but instead of "object" it will return an actual class name.
@@ -325,7 +343,7 @@ class Debugger
         }
 
         // nicely print out shell error
-        if (defined('SPLOT_SHELL') && SPLOT_SHELL) {
+        if (static::isCli()) {
             echo NL . NL . NL;
             echo 'Exiting with error!'. NL;
             echo $message . NL;
