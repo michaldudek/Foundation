@@ -24,14 +24,9 @@ class ArrayUtils
      * @return bool True if it is a collection of data, false otherwise.
      */
     public static function isCollection($array) {
-        return (is_array($array) && count($array) !== array_reduce(array_keys($array), array('static', '_isCollection_callback'), 0)) ? false : true;
-    }
-    
-    /**
-     * Helper function for static::isCollection().
-     */
-    private static function _isCollection_callback($a, $b) {
-        return $a === $b ? $a + 1 : 0;
+        return (!is_array($array) || count($array) !== array_reduce(array_keys($array), function($a, $b) {
+            return $a === $b ? $a + 1 : 0;
+        }, 0)) ? false : true;
     }
     
     /**
@@ -40,8 +35,10 @@ class ArrayUtils
      * @param array $array Array to reset.
      * @return array
      */
-    public static function resetKeys(&$array) {
-        if (!is_array($array)) return array();
+    public static function resetKeys($array) {
+        if (!is_array($array)) {
+            return array();
+        }
         $return = array();
         
         foreach($array as &$row) {
@@ -59,8 +56,11 @@ class ArrayUtils
      * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default false.
      * @return array Array with the list.
      */
-    public static function keyFilter(&$array, $key, $preserveKey = false) {
-        if (!is_array($array)) return array();
+    public static function keyFilter($array, $key, $preserveKey = false) {
+        if (!is_array($array)) {
+            return array();
+        }
+
         $return = array();
         
         foreach($array as $k => &$row) {
