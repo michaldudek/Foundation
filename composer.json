@@ -13,7 +13,10 @@
         "php": ">=5.3.3"
     },
     "autoload": {
-    	"psr-0": { "MD\\Foundation": "src/" },
+    	"psr-0": {
+            "MD\\Foundation\\Tests": "tests/",
+            "MD\\Foundation": "src/"
+        },
         "files": [
             "src/constants.php",
             "src/MD/functions.php"
