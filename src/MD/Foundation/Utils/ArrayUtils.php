@@ -11,6 +11,8 @@
  */
 namespace MD\Foundation\Utils;
 
+use RuntimeException;
+
 /**
  * @static
  */
@@ -23,8 +25,8 @@ class ArrayUtils
      * @param array $array Array to check.
      * @return bool True if it is a collection of data, false otherwise.
      */
-    public static function isCollection($array) {
-        return (!is_array($array) || count($array) !== array_reduce(array_keys($array), function($a, $b) {
+    public static function isCollection(array $array) {
+        return (count($array) !== array_reduce(array_keys($array), function($a, $b) {
             return $a === $b ? $a + 1 : 0;
         }, 0)) ? false : true;
     }
@@ -35,10 +37,7 @@ class ArrayUtils
      * @param array $array Array to reset.
      * @return array
      */
-    public static function resetKeys($array) {
-        if (!is_array($array)) {
-            return array();
-        }
+    public static function resetKeys(array $array) {
         $return = array();
         
         foreach($array as &$row) {
@@ -54,13 +53,9 @@ class ArrayUtils
      * @param array $array Array to filter from.
      * @param string $key Key to filter by.
      * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default false.
-     * @return array Array with the list.
+     * @return array
      */
-    public static function keyFilter($array, $key, $preserveKey = false) {
-        if (!is_array($array)) {
-            return array();
-        }
-
+    public static function keyFilter(array $array, $key, $preserveKey = false) {
         $return = array();
         
         foreach($array as $k => &$row) {
@@ -83,10 +78,9 @@ class ArrayUtils
      * @param string $key Key to filter by.
      * @param mixed $value Value to filter by.
      * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default false.
-     * @return array Filtered array.
+     * @return array
      */
-    public static function filterByKeyValue(&$array, $key, $value, $preserveKey = false) {
-        if (!is_array($array)) return array();
+    public static function filterByKeyValue(array $array, $key, $value, $preserveKey = false) {
         $return = array();
         
         foreach($array as $k => &$row) {
@@ -107,15 +101,23 @@ class ArrayUtils
      * 
      * @param array $array Array to be exploded.
      * @param string $key Key on which to explode.
-     * @return array Exploded array.
+     * @return array
+     * 
+     * @throws RuntimeException When at least one row of the $array doesn't have the $key.
+     * @throws RuntimeException When values of $key are not unique.
      */
-    public static function keyExplode(&$array, $key) {
-        if (!is_array($array)) return array();
+    public static function keyExplode(array $array, $key) {
         $return = array();
         
         foreach($array as $k => &$row) {
             if (isset($row[$key])) {
-                $return[$row[$key]] = $row;
+                if (!isset($return[$row[$key]])) {
+                    $return[$row[$key]] = $row;
+                } else {
+                    throw new RuntimeException('Value of a key "'. $key .'" in rows of array sent to MD\Foundation\Utils\ArrayUtils::keyExplode() are not unique and therefore some rows would be missing from the returned array.');
+                }
+            } else {
+                throw new RuntimeException('At least one row of an array sent to MD\Foundation\Utils\ArrayUtils::keyExplode() hasn\'t got a key "'. $key .'" and therefore would be missing from the return value.');
             }
         }
         
@@ -128,13 +130,9 @@ class ArrayUtils
      * @param array $array Array to parse.
      * @param string $key Key to categorize by.
      * @param bool $preserveKey [optional] Preserve keys? Default false.
-     * @return array Categorized array.
+     * @return array
      */
-    public static function categorizeByKey($array, $key, $preserveKey = false) {
-        if (!is_array($array)) {
-            return array();
-        }
-
+    public static function categorizeByKey(array $array, $key, $preserveKey = false) {
         $return = array();
         
         foreach($array as $k => &$row) {
@@ -162,10 +160,9 @@ class ArrayUtils
      * @param array $array Array to implode from.
      * @param string $key Key to implode by.
      * @param string $separator [optional] Separator to implode by. Default ",".
-     * @return string Imploded string.
+     * @return string
      */
-    public static function implodeByKey(&$array, $key, $separator = ',') {
-        if (!is_array($array)) return '';
+    public static function implodeByKey(array $array, $key, $separator = ',') {
         return implode($separator, static::keyFilter($array, $key));
     }
     
@@ -177,7 +174,7 @@ class ArrayUtils
      * @param string $value Value to look for.
      * @return string|int|bool Key name found (string/int) or bool false if not found.
      */
-    public static function search(&$array, $key, $value) {
+    public static function search(array $array, $key, $value) {
         foreach ($array as $k => &$row) {
             if ((isset($row[$key])) AND ($row[$key] === $value)) {
                 return $k;
@@ -193,7 +190,7 @@ class ArrayUtils
      * @param string $key Key name.
      * @return int|bool Int for the position of the key if it was found, bool false if it wasn't found.
      */
-    public static function keyPosition(&$array, $key) {
+    public static function keyPosition(array $array, $key) {
         $x = 0;
         
         foreach($array as $i => &$row) {
@@ -214,9 +211,7 @@ class ArrayUtils
      * @param string $key Key to be removed.
      * @return array The given collection array without the keys.
      */
-    public static function keyRemove(&$array, $key) {
-        if (!is_array($array)) return array();
-        
+    public static function keyRemove(array $array, $key) {
         foreach($array as $k => &$row) {
             if (isset($row[$key])) {
                 unset($row[$key]);
@@ -233,9 +228,7 @@ class ArrayUtils
      * @param mixed $value [optional] Optional value to be set under this key. Default null.
      * @return array The given collection with added key.
      */
-    public static function keyAdd(&$array, $key, $value = null) {
-        if (!is_array($array)) return array();
-        
+    public static function keyAdd(array $array, $key, $value = null) {
         foreach($array as $k => &$row) {
             $row[$key] = $value;
         }
@@ -268,8 +261,8 @@ class ArrayUtils
      * @param bool $reverse [optional] True for descending order, false (default) for ascending.
      * @return array Sorted array.
      */
-    public static function multiSort(&$array, $key, $reverse = false) {
-        if ((!is_array($array)) OR (empty($array))) {
+    public static function multiSort(array $array, $key, $reverse = false) {
+        if (empty($array)) {
             return array();
         }
 
