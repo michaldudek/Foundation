@@ -237,23 +237,6 @@ class ArrayUtils
     }
     
     /**
-     * Switches values and keys of an array. Has to be one dimensional array!
-     * 
-     * @param array $array 1-dimensional array!
-     * @return array New array.
-     */
-    public static function switchKeyValue(&$array) {
-        if (!is_array($array)) return array();
-        
-        $return = array();
-        foreach($array as $k => &$row) {
-            $return[$row] = $k;
-        }
-        
-        return $return;
-    }
-    
-    /**
      * Sorts a multidimensional array by key (2-dimensional).
      * 
      * @param array $array Array to sort.
