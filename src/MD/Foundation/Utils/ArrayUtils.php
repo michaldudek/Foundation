@@ -338,10 +338,15 @@ class ArrayUtils
 
         foreach($arrays as $i => $array) {
             if (!is_array($array)) {
-                throw new \InvalidArgumentException('Argument #'. $i .' supplied to '. get_called_class() .'::merge() must be array, '. get_type($array) .' given.');
+                throw new \InvalidArgumentException('Argument '. $i .' supplied to '. get_called_class() .'::merge() must be array, '. gettype($array) .' given.');
             }
 
-            $target = static::mergeDeep($target, $array);
+            // if $array is a collection array then use the standard PHP array_merge (to add it at the end)
+            if (static::isCollection($array)) {
+                $target = array_merge($target, $array);
+            } else {
+                $target = static::mergeDeep($target, $array);
+            }
         }
 
         return $target;
@@ -357,7 +362,7 @@ class ArrayUtils
     public static function mergeDeep(array $into, array $from) {
         foreach($from as $key => $value) {
             if (is_array($value)) {
-                $into[$key] = (isset($into[$key])) ? static::mergeDeep($into[$key], $value) : $value;
+                $into[$key] = (isset($into[$key]) && is_array($into[$key])) ? static::mergeDeep($into[$key], $value) : $value;
             } else {
                 $into[$key] = $value;
             }
