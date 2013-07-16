@@ -461,11 +461,16 @@ class ArrayUtils
      * Converts the given array to an object. The conversion is "deep", ie. all dimensions will be converted.
      * 
      * @param array $array Array to convert to object.
-     * @param object $object [optional] Object to which assign the properties.
-     * @return object New object from the given array.
+     * @param object $object [optional] Object to which assign the properties, usually for internal use. Default: null.
+     * @return stdClass
      */
-    public static function toObject(&$array, $object = false) {
-        $parent = ($object) ? $object : new stdClass();
+    public static function toObject(array $array, $object = null) {
+        if ($object !== null && !is_object($object)) {
+            throw new \InvalidArgumentException(get_called_class() .'::toObject() expends argument 2 to be an object, '. gettype($object) .' given.');
+        }
+
+        $parent = ($object !== null) ? $object : new \stdClass();
+
         foreach($array as $key => $value) {
             // make sure the property exists if we're gonna go recursively through it
             if (!isset($parent->$key)) {
