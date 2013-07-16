@@ -524,14 +524,8 @@ class ArrayUtils
             if (!empty($keys) && !in_array($key, $keys)) {
                 continue;
             }
-            
-            $parent[$key] = array();
-            $parent[$key] = is_object($value)
-                ? static::fromObject($value, $parent[$key])
-                : (is_array($value)
-                    ? static::fromObject($value)
-                    : $value
-                );
+
+            $parent[$key] = (is_object($value) || is_array($value)) ? static::fromObject($value) : $value;
         }
         
         return $parent;
