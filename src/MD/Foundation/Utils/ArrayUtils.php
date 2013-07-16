@@ -300,42 +300,27 @@ class ArrayUtils
     }
     
     /**
-     * Helper property for the SplotArray::flatten method.
-     */
-    private static $_flatArray = array();
-    
-    /**
      * Flattens an array, ie. makes it 1-dimensional.
      * 
      * @param array $array Array to be flattened.
      * @return array
      */
-    public static function flatten($array) {
-        if (!is_array($array)) return $array;
-        
-        // make sure the helper property is empty
-        static::$_flatArray = array();
-        static::_flattenHelper($array);
-        $flatArray = static::$_flatArray;
-        static::$_flatArray = array();
-        return $flatArray;
-    }
-    
-    /**
-     * Helper method for static::flatten()
-     * 
-     * @param array $array
-     */
-    private static function _flattenHelper($array) {
-        if (!is_array($array)) return $array;
-        
-        foreach($array as $row) {
-            if (is_array($row)) {
-                static::_flattenHelper($row);
-            } else {
-                static::$_flatArray[] = $row;
+    public static function flatten(array $array) {
+        $flat = array();
+
+        $flatter = function(array $arr, $self) use (&$flat) {
+            foreach($arr as $item) {
+                if (is_array($item)) {
+                    $self($item, $self);
+                } else {
+                    $flat[] = $item;
+                }
             }
-        }
+        };
+
+        $flatter($array, $flatter);
+
+        return $flat;
     }
 
     /**
