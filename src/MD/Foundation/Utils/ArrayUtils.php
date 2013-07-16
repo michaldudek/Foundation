@@ -453,7 +453,7 @@ class ArrayUtils
      * @param array $array Array to be converted to query string.
      * @return string
      */
-    public static function toQueryString(&$array) {
+    public static function toQueryString(array $array) {
         return http_build_query($array);
     }
     
