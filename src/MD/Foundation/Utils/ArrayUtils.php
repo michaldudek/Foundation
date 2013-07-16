@@ -18,6 +18,9 @@ use RuntimeException;
  */
 class ArrayUtils
 {
+
+    const JOIN_INNER = 'inner';
+    const JOIN_OUTER = 'outer';
     
     /**
      * Check whether the given array is a collection of data, ie. multidimensional array with a list of data rows.
@@ -372,57 +375,52 @@ class ArrayUtils
     }
     
     /**
-     * Joins the second collection into the first based a given key. Default is outer join meaning
+     * Joins the second collection into the first based on the given key. Default is outer join meaning
      * that if matching row wasn't found in the second collection the row in the first collection will still
      * be displayed (this can be altered by setting the 6th argument to 'inner').
      * 
-     * @param array $array1 Collection of data in which to put values of $array2.
-     * @param array $array2 Collection of data from which get values to put into $array1.
-     * @param string $onKey Key on which to join (ie. merge occurs when the value of this key in $array1 is equal to 
-     * @param string $underKey [optional] Under what key to put values from $array2. By default it's null which means
-     *                  that the values from both collections will be merged and values from $array2 will overwrite 
-     *                  values from $array1.
-     * @param string $array2Key [optional] If key on which to join is different for $array2 specify it here.
-     * @param string $type [optional] Type of join. Default is 'outer'. Can also be 'inner' which will remove all items
-     *                  from $array1 that haven't got values in $array2.
+     * @param array $into Collection of data in which to put values of $from.
+     * @param array $from Collection of data from which get values to put into $into.
+     * @param string $onKey What key from $into to compare on?
+     * @param string $intoKey Into what key to put values from $from.
+     * @param string $fromKey What key from $from to compare on?
+     * @param string $type [optional] Type of join. Default is ArrayUtils::JOIN_OUTER. Can also be ArrayUtils::JOIN_INNER which will remove all items
+     *                  from $into that haven't got values in $from. Default: ArrayUtils::JOIN_OUTER.
      * @return array
      */
-    public static function join($array1, $array2, $onKey, $underKey = null, $array2Key = null, $type = 'outer') {
-        if ((!is_array($array1)) OR (empty($array1))) return array();
+    public static function join(array $into, array $from, $onKey, $intoKey, $fromKey, $type = self::JOIN_OUTER) {
+        if (empty($into)) {
+            return array();
+        }
         
-        $array2Key = ($array2Key) ? $array2Key : $onKey;
-        $array2 = static::keyExplode($array2, $array2Key);
+        $from = static::keyExplode($from, $fromKey);
         
-        foreach($array1 as $k => &$row) {
-            if (isset($array2[$row[$onKey]])) {
-                if ($underKey) {
-                    $row[$underKey] = $array2[$row[$onKey]];
-                } else {
-                    $row = array_merge($row, $array2[$row[$onKey]]);
-                }
-            } elseif ($type == 'inner') {
-                unset($array1[$k]);
+        foreach($into as $k => &$row) {
+            if (isset($from[$row[$onKey]])) {
+                $row[$intoKey] = $from[$row[$onKey]];
+            } elseif ($type === self::JOIN_INNER) {
+                unset($into[$k]);
             }
         }
         
-        return $array1;
+        return $into;
     }
     
     /**
-     * Check whether the specified keys are set inside the given array.
+     * Check whether the specified keys are set inside the given array and are not empty (strings are trimmed before check).
+     * 
+     * Returns boolean true if all is correct, false otherwise.
      * 
      * @param array $array Array to check.
      * @param array $keys Array of keys to check.
-     * @return bool True if all keys are set, false if at least one is missing.
+     * @return bool
      */
-    public static function checkValues(&$array, $keys) {
-        if (!is_array($array)) return false;
-        
+    public static function checkValues(array $array, array $keys) {
         foreach($keys as $key) {
             if (
                 (!isset($array[$key]))
-                OR (empty($array[$key]))
-                OR (is_string($array[$key]) AND (trim($array[$key]) == ''))
+                || ($array[$key] !== false && empty($array[$key]))
+                || (is_string($array[$key]) && (trim($array[$key]) === ''))
             ) {
                 return false;
             }
