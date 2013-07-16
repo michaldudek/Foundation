@@ -22,7 +22,15 @@
     <filter>
         <whitelist>
             <directory>src</directory>
+            <exclude>
+                <file>src/constants.php</file>
+                <file>src/error.php</file>
+            </exclude>
         </whitelist>
     </filter>
+
+    <logging>
+         <log type="coverage-html" target="tests/coverage" charset="UTF-8" highlight="false" />
+    </logging>
 
 </phpunit>
