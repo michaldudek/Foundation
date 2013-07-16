@@ -429,15 +429,20 @@ class ArrayUtils
     }
 
     /**
-     * Removes empty rows from an array.
+     * Removes empty keys from an array.
      * 
      * @param array $array Array to clean.
      * @return array
      */
-    public static function cleanEmpty(&$array) {
-        foreach($array as $key => &$value) {
-            $value = trim($value);
-            if (empty($value)) unset($array[$key]);
+    public static function cleanEmpty(array $array) {
+        foreach($array as $key => $value) {
+            if (is_string($value)) {
+                $value = trim($value);
+            }
+
+            if (empty($value) && $value !== 0 && $value !== false) {
+                unset($array[$key]);
+            }
         }
         return $array;
     }
