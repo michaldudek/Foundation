@@ -5,6 +5,7 @@ use MD\Foundation\Utils\ArrayUtils;
 
 use MD\Foundation\Tests\TestFixtures\EmptyClass;
 use MD\Foundation\Tests\TestFixtures\ToArrayClass;
+use MD\Foundation\Tests\TestFixtures\ToArrayWrongClass;
 
 class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
 {
@@ -211,6 +212,7 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $byCategoryIdNamed);
         $this->assertArrayHasKey(3, $byCategoryIdNamed);
         $this->assertArrayHasKey('sit', $byCategoryIdNamed[3]);
+        $this->assertCount(0, ArrayUtils::categorizeByKey($this->_getArrayPreset('2D_collection_5'), 'undefined'));
     }
 
     public function testImplodeByKey() {
@@ -305,6 +307,8 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
             array_shift($pushedArray);
         }
         $this->assertEquals($input, array_shift($pushedArray));
+
+        $this->assertArrayHasKey('lipsum', ArrayUtils::pushAfter($this->_getArrayPreset('associative'), $input, 'lorem', 'lipsum'));
     }
 
     public function testFlatten() {
@@ -511,7 +515,7 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testJoin() {
-        $this->assertEmpty(array(), array(), 'categoryId', 'category', 'id');
+        $this->assertEmpty(ArrayUtils::join(array(), array(), 'categoryId', 'category', 'id'));
 
         $joinedCollection = array(
             array(
@@ -817,6 +821,12 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         $collectionArray = array();
         foreach($this->_getArrayPreset('2D_collection_5') as $item) {
             $collectionArray[] = new ToArrayClass($item['id'], $item['name'], $item['categoryId'], $item['date']);
+        }
+        $this->assertEquals(ArrayUtils::fromObject($collectionArray), $this->_getArrayPreset('2D_collection_5'));
+
+        $collectionArray = array();
+        foreach($this->_getArrayPreset('2D_collection_5') as $item) {
+            $collectionArray[] = new ToArrayWrongClass($item['id'], $item['name'], $item['categoryId'], $item['date']);
         }
         $this->assertEquals(ArrayUtils::fromObject($collectionArray), $this->_getArrayPreset('2D_collection_5'));
     }
