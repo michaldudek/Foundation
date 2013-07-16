@@ -512,7 +512,10 @@ class ArrayUtils
 
         // can object be converted to array?
         if (method_exists($object, 'toArray')) {
-            return $object->toArray();
+            $toArray = $object->toArray();
+            if (is_array($toArray)) {
+                return $toArray;
+            }
         }
         
         // and finally typical handling of items
