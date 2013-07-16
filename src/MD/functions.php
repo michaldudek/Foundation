@@ -81,25 +81,3 @@ function console_log() {
 function console_string_dump() {
     return call_user_func_array(array('MD\Foundation\Debug\Debugger', 'consoleStringDump'), func_get_args());
 }
-
-
-// a fix for apache_request_headers() if it's not available
-
-if(!function_exists('apache_request_headers')) {
-    /**
-     * Returns request headers.
-     * 
-     * @return array
-     */
-    /*
-    function apache_request_headers() {
-        $headers = array();
-        foreach($_SERVER as $key => $value) {
-            if(substr($key, 0, 5) == 'HTTP_') {
-                $headers[str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))))] = $value;
-            }
-        }
-        return $headers;
-    }
-    */
-}
