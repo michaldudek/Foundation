@@ -275,9 +275,7 @@ class ArrayUtils
      * @param string $key [optional] Specific key assigned to the value (if wanted).
      * @return array Array with additional row.
      */
-    public static function pushAfter(&$array, $input, $position, $key = false) {
-        if (!is_array($array)) return array();
-        
+    public static function pushAfter(array $array, $input, $position, $key = null) {
         $input = ($key) ? array($key => $input) : array($input);
         
         // if position is integer then its a simple matter of slicing in "half" and adding the input inside
