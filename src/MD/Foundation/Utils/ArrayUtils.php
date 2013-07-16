@@ -490,27 +490,25 @@ class ArrayUtils
     /**
      * Creates an array from a given object. The conversion is "deep", ie. all dimensions will be converted.
      * 
-     * @param mixed $object Object to be converted to an array or an array of objects.
-     * @param array $array [optional] Usually for internal use of the function. A reference to parent array.
-     * @param array $keys [optional] If you don't want the whole object converted to array, specify the names of keys that you are interested in (only works for 1st level keys).
+     * @param object|array $object Object to be converted to an array or an array of objects.
+     * @param array $parent [optional] Usually for internal use of the function. A reference to parent array. Default: array().
+     * @param array $keys [optional] If you don't want the whole object converted to array, specify the names of keys
+     *                    that you are interested in. Default: array().
      * @return array
-     * 
-     * @todo Remove old MDModel case.
      */
-    public static function fromObject($object, $array = false, $keys = false) {
+    public static function fromObject($object, array $parent = array(), array $keys = array()) {
         // maybe an array of objects has been passed?
         if (is_array($object)) {
-            foreach($object as &$item) {
-                $item = static::fromObject($item, null, $keys);
+            foreach($object as $key => $item) {
+                $parent[$key] = static::fromObject($item, array(), $keys);
             }
-            return $object;
+            return $parent;
         }
         
-        // if not an array or object then just return itself
-        if (!is_object($object)) return $object;
-        
-        // proper conversion
-        $parent = ($array) ? $array : array();
+        // if not an array or object then throw exception
+        if (!is_object($object)) {
+            throw new \InvalidArgumentException(get_called_class() .'::fromObject() expects argument 1 to be an object or an array, '. gettype($object) .' given.');
+        }
 
         // can object be converted to array?
         if (method_exists($object, 'toArray')) {
@@ -518,12 +516,19 @@ class ArrayUtils
         }
         
         // and finally typical handling of items
-        foreach($object as $varName => $value) {
+        foreach($object as $key => $value) {
             // check if included in the keys array (if any specified)
-            if ($keys AND is_array($keys) AND !in_array($varName, $keys)) continue;
+            if (!empty($keys) && !in_array($key, $keys)) {
+                continue;
+            }
             
-            $parent[$varName] = null;
-            $parent[$varName] = (is_object($value)) ? static::fromObject($value, $parent[$varName]) : ((is_array($value)) ? static::fromObject($value) : $value);
+            $parent[$key] = array();
+            $parent[$key] = is_object($value)
+                ? static::fromObject($value, $parent[$key])
+                : (is_array($value)
+                    ? static::fromObject($value)
+                    : $value
+                );
         }
         
         return $parent;
