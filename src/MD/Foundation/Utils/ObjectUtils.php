@@ -24,7 +24,9 @@ class ObjectUtils
      * 
      * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
      * @param string $key Key to filter by.
-     * @return array Array with the list.
+     * @return array
+     * 
+     * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
     public static function keyFilter($objects, $key) {
         // convert to array, for example for Doctrine collections
@@ -33,7 +35,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException('ObjectUtils::keyFilter() expects argument 1 to be array or object convertible to array, "'. gettype($objects) .'" given.');
+            throw new \InvalidArgumentException(get_called_class() .'::keyFilter() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
         }
 
         // build a getter name to always try with getter
@@ -60,7 +62,9 @@ class ObjectUtils
      * 
      * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
      * @param string $key Key on which to explode.
-     * @return array Exploded array.
+     * @return array
+     * 
+     * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
     public static function keyExplode($objects, $key) {
         // convert to array, for example for Doctrine collections
@@ -69,7 +73,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException('ObjectUtils::keyExplode() expects argument 1 to be array or object convertible to array, "'. gettype($objects) .'" given.');
+            throw new \InvalidArgumentException(get_called_class() .'::keyExplode() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
         }
 
         // build a getter name to always try with getter
@@ -99,6 +103,8 @@ class ObjectUtils
      * @param mixed $value Value to filter by.
      * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default false.
      * @return array
+     * 
+     * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
     public static function filterByKeyValue($objects, $key, $value, $preserveKey = false) {
         // convert to array, for example for Doctrine collections
@@ -107,7 +113,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException('ObjectUtils::filterByKeyValue() expects argument 1 to be array or object convertible to array, "'. gettype($objects) .'" given.');
+            throw new \InvalidArgumentException(get_called_class() .'::filterByKeyValue() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
         }
 
         // build a getter name to always try with getter
@@ -123,7 +129,7 @@ class ObjectUtils
                 continue; // can't get any value, move on
             }
 
-            if ($val === $value) {
+            if ($val == $value) {
                 if ($preserveKey) {
                     $return[$k] = $object;
                 } else {
@@ -140,8 +146,10 @@ class ObjectUtils
      * 
      * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
      * @param string $key Key to categorize by.
-     * @param bool $preserveKey[optional] Preserve keys? Default false.
-     * @return array Categorized array with collections of objects.
+     * @param bool $preserveKey [optional] Preserve keys? Default: false.
+     * @return array
+     * 
+     * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
     public static function categorizeByKey($objects, $key, $preserveKey = false) {
         // convert to array, for example for Doctrine collections
@@ -150,7 +158,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException('ObjectUtils::categorizeByKey() expects argument 1 to be array or object convertible to array, "'. gettype($objects) .'" given.');
+            throw new \InvalidArgumentException(get_called_class() .'::categorizeByKey() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
         }
 
         // build a getter name to always try with getter
@@ -186,8 +194,10 @@ class ObjectUtils
      * 
      * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
      * @param string $key Key to sort by.
-     * @param bool $reverse[optional] True for descending order, false (default) for ascending.
-     * @return array Sorted collection of objects.
+     * @param bool $reverse [optional] True for descending order, false for ascending. Default: false.
+     * @return array
+     * 
+     * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
     public static function multiSort($objects, $key, $reverse = false) {
         // convert to array, for example for Doctrine collections
@@ -196,33 +206,29 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException('ObjectUtils::multiSort() expects argument 1 to be array or object convertible to array, "'. gettype($objects) .'" given.');
+            throw new \InvalidArgumentException(get_called_class() .'::multiSort() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
         }
 
         // don't worry if objects are empty
         if (empty($objects)) {
             return $objects;
         }
-        
-        // build a getter name to always try with getter
-        $getter = static::getter($key);
-        $direction = $reverse ? 'SORT_DESC' : 'SORT_ASC';
-        $sorted = array();
 
-        foreach($objects as $i => $object) {
-            if (method_exists($object, $getter)) {
-                $val = $object->$getter();
-            } elseif (isset($object->$key)) {
-                $val = $object->$key;
-            } else {
-                $val = null;
-            }
-
-            $sorted[] = $val;
+        $categorized = static::categorizeByKey($objects, $key);
+        if ($reverse) {
+            krsort($categorized);
+        } else {
+            ksort($categorized);
         }
-        
-        array_multisort($sorted, constant($direction), $objects);
-        return $objects;
+
+        $sorted = array();
+        foreach($categorized as $cat => $items) {
+            foreach($items as $item) {
+                $sorted[] = $item;
+            }
+        }
+
+        return $sorted;
     }
     
     /**
@@ -230,6 +236,8 @@ class ObjectUtils
      * 
      * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
      * @return array Resetted array.
+     * 
+     * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
     public static function resetKeys($objects) {
         // convert to array, for example for Doctrine collections
@@ -238,7 +246,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException('ObjectUtils::resetKeys() expects argument 1 to be array or object convertible to array, "'. gettype($objects) .'" given.');
+            throw new \InvalidArgumentException(get_called_class() .'::resetKeys() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
         }
 
         $return = array();
