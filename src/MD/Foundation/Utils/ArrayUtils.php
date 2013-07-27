@@ -11,6 +11,8 @@
  */
 namespace MD\Foundation\Utils;
 
+use MD\Foundation\Exceptions\InvalidArgumentException;
+
 /**
  * @static
  */
@@ -115,10 +117,10 @@ class ArrayUtils
                 if (!isset($return[$row[$key]])) {
                     $return[$row[$key]] = $row;
                 } else {
-                    throw new \RuntimeException('Value of a key "'. $key .'" in rows of array sent to MD\Foundation\Utils\ArrayUtils::keyExplode() are not unique and therefore some rows would be missing from the returned array.');
+                    throw new \RuntimeException('Value of a key "'. $key .'" in rows of array sent to '. get_called_class() .'::keyExplode() are not unique and therefore some rows would be missing from the returned array.');
                 }
             } else {
-                throw new \RuntimeException('At least one row of an array sent to MD\Foundation\Utils\ArrayUtils::keyExplode() hasn\'t got a key "'. $key .'" and therefore would be missing from the return value.');
+                throw new \RuntimeException('At least one row of an array sent to '. get_called_class() .'::keyExplode() hasn\'t got a key "'. $key .'" and therefore would be missing from the return value.');
             }
         }
         
@@ -339,7 +341,7 @@ class ArrayUtils
 
         foreach($arrays as $i => $array) {
             if (!is_array($array)) {
-                throw new \InvalidArgumentException('Argument '. $i .' supplied to '. get_called_class() .'::merge() must be array, '. gettype($array) .' given.');
+                throw new InvalidArgumentException('array', $array, $i);
             }
 
             // if $array is a collection array then use the standard PHP array_merge (to add it at the end)
@@ -464,7 +466,7 @@ class ArrayUtils
      */
     public static function toObject(array $array, $object = null) {
         if ($object !== null && !is_object($object)) {
-            throw new \InvalidArgumentException(get_called_class() .'::toObject() expends argument 2 to be an object, '. gettype($object) .' given.');
+            throw new InvalidArgumentException('object', $object, 2);
         }
 
         $parent = ($object !== null) ? $object : new \stdClass();
@@ -505,7 +507,7 @@ class ArrayUtils
         
         // if not an array or object then throw exception
         if (!is_object($object)) {
-            throw new \InvalidArgumentException(get_called_class() .'::fromObject() expects argument 1 to be an object or an array, '. gettype($object) .' given.');
+            throw new InvalidArgumentException('object or array', $object);
         }
 
         // can object be converted to array?

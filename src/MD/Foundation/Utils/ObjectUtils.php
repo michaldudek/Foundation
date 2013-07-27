@@ -11,6 +11,7 @@
  */
 namespace MD\Foundation\Utils;
 
+use MD\Foundation\Exceptions\InvalidArgumentException;
 use MD\Foundation\Utils\StringUtils;
 
 /**
@@ -35,7 +36,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException(get_called_class() .'::keyFilter() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
+            throw new InvalidArgumentException('array or object convertible to array', $objects);
         }
 
         // build a getter name to always try with getter
@@ -73,7 +74,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException(get_called_class() .'::keyExplode() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
+            throw new InvalidArgumentException('array or object convertible to array', $objects);
         }
 
         // build a getter name to always try with getter
@@ -113,7 +114,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException(get_called_class() .'::filterByKeyValue() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
+            throw new InvalidArgumentException('array or object convertible to array', $objects);
         }
 
         // build a getter name to always try with getter
@@ -158,7 +159,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException(get_called_class() .'::categorizeByKey() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
+            throw new InvalidArgumentException('array or object convertible to array', $objects);
         }
 
         // build a getter name to always try with getter
@@ -206,7 +207,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException(get_called_class() .'::multiSort() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
+            throw new InvalidArgumentException('array or object convertible to array', $objects);
         }
 
         // don't worry if objects are empty
@@ -246,7 +247,7 @@ class ObjectUtils
         }
 
         if (!is_array($objects)) {
-            throw new \InvalidArgumentException(get_called_class() .'::resetKeys() expects argument 1 to be array or object convertible to array, '. gettype($objects) .' given.');
+            throw new InvalidArgumentException('array or object convertible to array', $objects);
         }
 
         $return = array();
