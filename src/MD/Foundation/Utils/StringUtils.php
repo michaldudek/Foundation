@@ -11,6 +11,9 @@
  */
 namespace MD\Foundation\Utils;
 
+use MD\Foundation\Exceptions\InvalidArgumentException;
+use MD\Foundation\Utils\ObjectUtils;
+
 /**
  * @static
  */
@@ -23,14 +26,33 @@ class StringUtils
      * @param string $text String to truncate.
      * @param int $limit [optional] Maximum length of the string. Default is 72.
      * @param string $add [optional] String to append at the end. Default is '...'
-     * @return string Truncated string.
+     * @return string
      */
     public static function truncate($text, $limit = 72, $add = '...') {
+        if (!is_string($text)) {
+            throw new InvalidArgumentException('string', $text);
+        }
+
+        if (empty($text)) {
+            return $text;
+        }
+
         $limit = intval($limit);
-        if (strlen($text) <= $limit) return $text;
+        if (strlen($text) <= $limit) {
+            return $text;
+        }
+
+        $suffixLength = strlen($add);
+        if ($limit - $suffixLength < 0) {
+            return substr($add, 0, $limit);
+        }
         
-        $text = substr($text, 0, $limit - strlen($add)); // crop the string to a given limit minus suffix
-        $text = substr($text, 0, strrpos($text, ' ')); // find the last occurrence of a space and crop the string to it
+        $text = substr($text, 0, $limit - $suffixLength); // crop the string to a given limit minus suffix
+
+        $lastSpacePos = strrpos($text, ' ');
+        if ($lastSpacePos) {
+            $text = substr($text, 0, strrpos($text, ' ')); // find the last occurrence of a space and crop the string to it
+        }
                 
         $text = rtrim($text, '.!?:;,-'); // remove unwanted punctuation from the end of the string
         
@@ -82,6 +104,11 @@ class StringUtils
      */
     public static function getWords($string, $removePunctuation = false) {
         $string = static::clear($string, $removePunctuation);
+        
+        if (empty($string)) {
+            return array();
+        }
+
         $words = mb_split(' ', $string);
         return $words;
     }
@@ -93,8 +120,8 @@ class StringUtils
      * @return string
      */
     public static function getFirstWord($string) {
-        $words = static::getWords($string);
-        return $words[0];
+        $words = static::getWords($string, true);
+        return (!empty($words)) ? $words[0] : null;
     }
     
     /**
@@ -111,9 +138,11 @@ class StringUtils
     /**
      * Make a string that is URL (SEO) friendly.
      * 
+     * Note that it doesn't mean it makes a valid URL - it will escape normally URL accepted characters like %, ?, / or &.
+     * 
      * @param string $string String to make URL friendly.
      * @param bool $lowercase [optional] Should the string be made lowercase? Default: true.
-     * @return string URL friendly string.
+     * @return string
      */
     public static function urlFriendly($string, $lowercase = true) {
         $string = str_ireplace(
@@ -192,42 +221,13 @@ class StringUtils
     }
     
     /**
-     * @var array Holds map for StringUtils::fixPolishEncoding() method.
-     */
-    private static $_polishEncodingMap = array(
-        '\u0104'    => 'Ą',     'a\u0328'   => 'ą',     '\u0105'    => 'ą',
-        '\u0106'    => 'Ć',     '\u0107'    => 'ć',     'c\u0301'   => 'ć',
-        '\u0118'    => 'Ę',     'e\u0328'   => 'ę',     '\u0119'    => 'ę',
-        '\u0141'    => 'Ł',     '\u0142'    => 'ł',
-        '\u0143'    => 'Ń',     '\u0144'    => 'ń',     'n\u0301'   => 'ń',
-        '\u00d3'    => 'Ó',     'o\u0301'   => 'ó',     '\u00f3'    => 'ó',
-        '\u015a'    => 'Ś',     's\u0301'   => 'ś',     '\u015b'    => 'ś',
-        '\u017b'    => 'Ż',     'z\u0307'   => 'ż',     '\u017c'    => 'ż',
-        '\u0179'    => 'Ź',     '\u017a'    => 'ź',
-    );
-
-    /**
-     * Attempts to fix a broken UTF-8 encoding (that may come from AJAX requests or serialized arrays or smth) and guess where proper polish letters should appear.
-     * 
-     * EXPERIMENTAL, use at your own risk.
-     * 
-     * @param string $string
-     * @return string
-     */
-    public static function fixPolishEncoding($string) {
-        $string = trim(json_encode($string), '"');
-        $string = str_replace(array_keys(static::$_polishEncodingMap), static::$_polishEncodingMap, $string);
-        return $string;
-    }
-    
-    /**
      * Checks whether a string is a valid e-mail address.
      * 
      * @param string $email String to validate.
-     * @return bool True if valid email address, false if not.
+     * @return bool
      */
     public static function isEmail($email) {
-        return preg_match("/[a-z0-9.-]+@[a-z0-9.-]+\.[a-z]{2,4}/i", $email);
+        return (preg_match('/[a-z0-9\.-]+@[a-z0-9.-]+\.[a-z]{2,4}/i', $email) === 1);
     }
     
     /**
@@ -237,18 +237,17 @@ class StringUtils
      * @return bool True if valid URL, false if not.
      */
     public static function isUrl($url) {
-        return preg_match('|^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url);
+        return (preg_match('|^http(s)?://[a-z0-9-]+(\.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i', $url) === 1);
     }
 
     /**
      * Checks if the given string is a valid class name.
      * 
      * @param string $name Class name to validate.
-     * @param bool $allowNamespace [optional] Can the class name be a namespace? Defualt: false.
+     * @param bool $allowNamespace [optional] Can the class name include a namespace? Default: false.
      * @return bool
      */
     public static function isClassName($name, $allowNamespace = false) {
-        $name = trim($name);
         if (empty($name)) {
             return false;
         }
@@ -277,10 +276,10 @@ class StringUtils
      * Fix a given URL if it doesn't have http:// in front (common mistake! :))
      * 
      * @param string $url URL to check or fix.
-     * @return string URL with given http://
+     * @return string
      */
     public static function fixUrlProtocol($url) {
-        return (strpos($url, 'http://') === 0) ? $url : 'http://'. $url;
+        return (stripos($url, 'http://') === 0 || stripos($url, 'https://') === 0) ? $url : 'http://'. $url;
     }
     
     /**
@@ -289,13 +288,18 @@ class StringUtils
      * @param int $length [optional] Length of the string. Default: 16
      * @param bool $capitals [optional] Should the string include capital letters? Default: true
      * @param bool $punctuation [optional] Should the string include special characters like punctuation? Default: false
-     * @return string Random string.
+     * @return string
      */
     public static function random($length = 16, $capitals = true, $punctuation = false) {
         $chars = '1234567890abcdefghijkmnopqrstuvwxyz';
         
-        if ($capitals) $chars .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        if ($punctuation) $chars .= '?!.,;:^#@&';
+        if ($capitals) {
+            $chars .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        }
+
+        if ($punctuation) {
+            $chars .= '?!.,;:^#@&';
+        }
         
         $string = '';
         for ($i = 1; $i <= $length; $i++) {
@@ -309,21 +313,32 @@ class StringUtils
      * Parses the given string looking for variables to insert to from the given set of variables.
      * 
      * Ie. Looks for occurrences of variables like {foo} or {bar} and replaces them with values found under
-     * keys 'foo' or 'bar' (respectively) in the given set of variables.
+     * keys 'foo' or 'bar' (respectively) in the given array of variables.
      *
      * @param string $string String to parse.
      * @param mixed $variables Either an array or an object with variables.
      * @return string
      */
     public static function parseVariables($string, $variables) {
-        $string = preg_replace_callback('#{([\w\d_\.]+)}#is', function($matches) use ($variables) {
-            $var = $matches[1];
+        if (!is_object($variables) && !is_array($variables)) {
+            throw new InvalidArgumentException('array or object', $variables);
+        }
 
+        $string = preg_replace_callback('/{([\w\d_\.]+)}/is', function($matches) use ($variables) {
+            $var = $matches[1];
             $value = '';
-            if (is_object($variables) AND isset($variables->$var)) {
-                $value = (string)$variables->$var;
-            } elseif (isset($variables[$var])) {
-                $value = (string)$variables[$var];
+
+            if (is_object($variables)) {
+                $getter = ObjectUtils::getter($var);
+                if (method_exists($variables, $getter)) {
+                    $value = strval(call_user_func(array($variables, $getter)));
+                } elseif (isset($variables->$var)) {
+                    $value = strval($variables->$var);
+                }
+            } elseif (is_array($variables)) {
+                if (isset($variables[$var])) {
+                    $value = strval($variables[$var]);
+                }
             }
 
             return $value;
@@ -335,7 +350,7 @@ class StringUtils
     /**
      * Changes the given number of seconds to a format hh:mm:ss.
      * 
-     * @param int $seconds
+     * @param int $seconds Number of seconds to be transformed.
      * @param bool $hideHoursWhenZero [optional] If the time returned has zero hours then do not display them. Default: false.
      * @return string
      */
@@ -356,10 +371,15 @@ class StringUtils
         $seconds = $seconds - $minutes * 60;
         
         $seconds = round($seconds);
-        
-        $timeString = (($hideHoursWhenZero AND $hours == 0) ? null : $hours .':')
-            . (($minutes < 10) ? '0' : null) . $minutes .':'
-            . (($seconds < 10) ? '0' : null) . $seconds;
+
+        $timeString = '';
+
+        if ($hours != 0 || !$hideHoursWhenZero) {
+            $timeString = $hours .':';
+        }
+
+        $timeString .= static::zeroFill($minutes, 2) .':';
+        $timeString .= static::zeroFill($seconds, 2);
         
         return $negative . $timeString;
     }
@@ -375,6 +395,8 @@ class StringUtils
     public static function timeStringToSeconds($string) {
         $seconds = 0;
         $multipliers = array(1, 60, 3600);
+        $negative = (substr($string, 0, 1) === '-') ? true : false;
+        $string = ltrim($string, '-');
         
         $char = (strpos($string, ':') !== false) ? ':' : '.';
         $times = explode($char, $string);
@@ -385,12 +407,16 @@ class StringUtils
             $number = intval(ltrim($number, '0')); // remove suffixed 0's and make int
             $seconds = $seconds + ($number * $multipliers[$i]);
         }
+
+        if ($negative) {
+            $seconds = $seconds * -1;
+        }
         
         return $seconds;
     }
 
     /**
-     * Changes the givne bytes to a user friendly string.
+     * Changes the given bytes to a user friendly string.
      * 
      * @param int $bytes
      * @return string
@@ -402,10 +428,14 @@ class StringUtils
         }
 
         $kb = $bytes / 1024;
-        if ($kb <= 1024) return number_format($kb, 0) .' kb';
+        if ($kb < 1024) {
+            return number_format($kb, 0) .' kb';
+        }
 
         $mb = $kb / 1024;
-        if ($mb <= 1024) return number_format($mb, 1) .' MB';
+        if ($mb < 1024) {
+            return number_format($mb, 1) .' MB';
+        }
 
         $gb = $mb / 1024;
         return number_format($gb, 2) .' GB';
@@ -416,29 +446,33 @@ class StringUtils
      * 
      * @param int $timestamp UNIX timestamp.
      * @param int $levels [optional] How many levels of time periods to show.
-     * @param mixed $returnDateIfOlder [optional] If specified then the function will return a regular date instead of 'xxx ago' if the date is older than this. Use (bool) false if you want to ommit this functionality. To use it pass any string that can be used by strtotime(). Default: '3 weeks ago'.
-     * @param string $returnDateFormat [optional] If $returnDateIfOlder is set then this is the format in which the given date will be returned. Parsing of this will be rerouted to date() and this is the format that will be passed to that function. Default: 'd.m.Y H:i'.
+     * @param mixed $returnDateIfOlder [optional] If specified then the function will return a regular date
+     *                                 instead of 'xxx ago' if the date is older than this.
+     *                                 Use (bool) false if you want to ommit this functionality.
+     *                                 To use it pass any string that can be used by strtotime(). Default: '3 weeks ago'.
+     * @param string $returnDateFormat [optional] If $returnDateIfOlder is set then this is the format in which
+     *                                 the given date will be returned. Parsing of this will be rerouted to date()
+     *                                 and this is the format that will be passed to that function. Default: 'd.m.Y H:i'.
+     * @param bool $secondSpecific [optional] Should the return be specific to a second? Otherwise will return
+     *                             'few seconds ago'. Defualt: false.
+     * @param bool $trimAgo [optional] Should the 'ago' appendix be not added? Mainly for internal use. Default: false.
      * @return string
      */
-    public static function timeAgo($timestamp, $levels = 1, $returnDateIfOlder = '3 weeks ago', $returnDateFormat = 'd.m.Y H:i') {
+    public static function timeAgo($timestamp, $levels = 1, $returnDateIfOlder = '3 weeks ago', $returnDateFormat = 'd.m.Y H:i', $secondSpecific = false, $trimAgo = false) {
         // if it only happened less than a minute ago then show 'few seconds ago'
-        if ($timestamp > strtotime('1 minute ago')) {
-            return 'few seconds ago';
+        if (!$secondSpecific && $timestamp > strtotime('1 minute ago')) {
+            return 'few seconds'. (!$trimAgo ? ' ago' : '');
         }
 
         // if it happened too far in the past then return regular date.
-        if ($returnDateIfOlder AND ($timestamp < strtotime($returnDateIfOlder))) {
-            return date($timestamp, $returnDateFormat);
+        if ($returnDateIfOlder && ($timestamp < strtotime($returnDateIfOlder))) {
+            return date($returnDateFormat, $timestamp);
         }
 
-        // Store the current time
         $currentTime = time();
-        $levels--; // lower the level
-
-        // Determine the difference, between the time now and the timestamp
+        $levels--;
         $difference = $currentTime - $timestamp;
 
-        // Set the periods of time
         $periods = array(
             array(
                 'single' => 'second',
@@ -474,32 +508,39 @@ class StringUtils
             )
         );
                 
-        // Set the number of seconds per period
         $lengths = array(1, 60, 3600, 86400, 604800, 2630880, 31570560, 315705600);
 
         // Determine which period we should use, based on the number of seconds lapsed.
         // If the difference divided by the seconds is more than 1, we use that. Eg 1 year / 1 decade = 0.1, so we move on
         // Go from decades backwards to seconds
-        for ($val = sizeof($lengths) - 1; ($val >= 0) && (($number = $difference / $lengths[$val]) <= 1); $val--);
+        for ($val = count($lengths) - 1; $val >= 0; $val--) {
+            $number = $difference / $lengths[$val];
+            if ($number >= 1) {
+                break;
+            }
+        }
+        /*
+        for (
+            $val = count($lengths) - 1;
+            ($val >= 0) && (($number = $difference / $lengths[$val]) < 1);
+            $val--
+        );*/
 
-        // Ensure the script has found a match
-        if ($val < 0) $val = 0;
+        $val = ($val < 0) ? 0 : $val;
+        $number = floor($number);
 
         // Determine the minor value, to recurse through
         $newTime = $currentTime - ($difference % $lengths[$val]);
 
-        // Set the current value to be floored
-        $number = floor($number);
-
         // Return text
-        $text = sprintf("%d %s ", $number, ($number != 1) ? $periods[$val]['plural'] : $periods[$val]['single']);
+        $text = sprintf("%d %s ", $number, $number != 1 ? $periods[$val]['plural'] : $periods[$val]['single']);
 
         // Ensure there is still something to recurse through, and we have not found 1 minute and 0 seconds.
         if (($val >= 1) && (($currentTime - $newTime) > 0) && ($levels > 0)){
-            $text .= static::timeAgo($newTime, $levels);
+            $text .= static::timeAgo($newTime, $levels, $returnDateIfOlder, $returnDateFormat, true, true);
         }
          
-        return strtolower(trim($text) . ' ago');
+        return trim($text) . (!$trimAgo ? ' ago' : '');
     }
     
     /**
@@ -537,7 +578,7 @@ class StringUtils
      * Case insensitive. Can search for multiple strings in one call.
      * 
      * @param string $string String to be searched in.
-     * @param mixed $search String or an array of strings to search for.
+     * @param string|array $search String or an array of strings to search for.
      * @return bool
      */
     public static function search($string, $search) {
