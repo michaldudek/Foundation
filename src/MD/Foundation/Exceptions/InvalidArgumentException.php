@@ -23,12 +23,13 @@ class InvalidArgumentException extends Base_InvalidArgumentException
      * @param string $expected Expected type.
      * @param mixed $actual Actual argument given.
      * @param int $number [optional] Argument number.
+     * @param bool $hideCaller [optional] Should the function that has thrown this exception be hidden? Default: false.
      */
-    public function __construct($expected, $actual, $number = 1) {
+    public function __construct($expected, $actual, $number = 1, $hideCaller = false) {
         $trace = Debugger::getPrettyTrace(debug_backtrace());
         $type = Debugger::getType($actual);
 
-        if (isset($trace[1])) {
+        if (!$hideCaller && isset($trace[1])) {
             $message = $trace[1]['function'] .' expected argument '. $number .' to be '. $expected .', '. $type .' given.';
         } else {
             $message = 'Expected argument '. $number .' to be '. $expected .', '. $type .' given.';
