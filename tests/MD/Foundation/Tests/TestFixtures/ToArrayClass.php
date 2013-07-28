@@ -1,7 +1,9 @@
 <?php
 namespace MD\Foundation\Tests\TestFixtures;
 
-class ToArrayClass
+use MD\Foundation\Debug\Interfaces\Dumpable;
+
+class ToArrayClass implements Dumpable
 {
 
     protected $id;
@@ -25,6 +27,10 @@ class ToArrayClass
             'categoryId' => $this->categoryId,
             'date' => $this->date
         );
+    }
+
+    public function toDumpableArray() {
+        return $this->toArray();
     }
     
 }

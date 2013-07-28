@@ -129,6 +129,7 @@ class Debugger
      * @return bool
      */
     public static function isImplementing($class, $interface) {
+        $interface = ltrim($interface, '\\');
         return in_array($interface, class_implements($class));
     }
 
@@ -137,7 +138,7 @@ class Debugger
      * 
      * @param object|string $class Either an object or a string name of the class.
      * @param string $parent Name of the parent class to check.
-     * @param bool $includeSelf [optional] If set to true, it will also check if $class == $parent. Default: false.
+     * @param bool $includeSelf [optional] If set to true, it will also check if $class is $parent. Default: false.
      * @return bool
      */
     public static function isExtending($class, $parent, $includeSelf = false) {
@@ -155,6 +156,8 @@ class Debugger
      * @return string
      * 
      * @todo
+     * 
+     * @codeCoverageIgnore
      */
     public static function callableToString($callable) {
        throw new NotImplementedException();
@@ -171,6 +174,8 @@ class Debugger
      * @param mixed $variable2 Another variable to be dumped.
      * @param mixed $variable3 Another variable to be dumped.
      * @param ...
+     * 
+     * @codeCoverageIgnore
      */
     public static function dump() {
         $arguments = func_get_args();
@@ -199,6 +204,8 @@ class Debugger
      * @param mixed $variable3 Another variable to be dumped.
      * @param ...
      * @return string
+     * 
+     * @codeCoverageIgnore
      */
     public static function stringDump() {
         $arguments = func_get_args();
@@ -230,6 +237,8 @@ class Debugger
      * @param mixed $variable2 Another variable to be dumped.
      * @param mixed $variable3 Another variable to be dumped.
      * @param ...
+     * 
+     * @codeCoverageIgnore
      */
     public static function consoleDump() {
         $arguments = func_get_args();
@@ -249,6 +258,8 @@ class Debugger
      * @param mixed $variable3 Another variable to be dumped.
      * @param ...
      * @return string
+     * 
+     * @codeCoverageIgnore
      */
     public static function consoleStringDump() {
         $arguments = func_get_args();
@@ -271,10 +282,10 @@ class Debugger
      * @param array $trace Original trace array.
      * @return array "Prettified" trace.
      */
-    public static function getPrettyTrace($trace) {
+    public static function getPrettyTrace(array $trace) {
         $prettyTrace = array();
         
-        foreach($trace as &$item) {
+        foreach($trace as $item) {
             $type = isset($item['type']) ? $item['type'] : '';
             $class = isset($item['class']) ? $item['class'] : '';
             $function = isset($item['function']) ? $item['function'] : '';
@@ -300,6 +311,8 @@ class Debugger
      * 
      * @param \Exception $e Exception that you want to handle.
      * @param array $log [optional] Any log to be attached to the error page.
+     * 
+     * @codeCoverageIgnore
      */
     public static function handleException(\Exception $e, array $log = array()) {
         header('HTTP/1.1 500 Internal Server Error');
@@ -325,6 +338,8 @@ class Debugger
      * @param int $line Line number of the file in which the error occurred.
      * @param array $context The error's context.
      * @return bool True if managed to handle the error, false if not.
+     * 
+     * @codeCoverageIgnore
      */
     public static function handleError($code, $message, $file, $line, $context) {
         $errorReportingLevel = error_reporting();
@@ -374,6 +389,8 @@ class Debugger
 
     /**
      * Handles a fatal error.
+     * 
+     * @codeCoverageIgnore
      */
     public static function handleFatalError() {
         $error = error_get_last();
@@ -392,6 +409,8 @@ class Debugger
      * @param int $level [optional] Indentation level.
      * @param bool $object [optional] Should it output "object formatting"
      * @return string Array formatted as a string.
+     * 
+     * @codeCoverageIgnore
      */
     private static function _arrayToString($array, $level = 0, $objectFormat = false) {
         $indentation = str_repeat(TAB, $level);
@@ -445,6 +464,8 @@ class Debugger
      * @param object $object
      * @param int $level [optional] Level of indentation.
      * @return string
+     * 
+     * @codeCoverageIgnore
      */
     private static function _objectToString($object, $level = 0) {
         $indentation = str_repeat(TAB, $level);

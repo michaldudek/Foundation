@@ -21,6 +21,8 @@ use MD\Foundation\Debug\Debugger;
  * @param mixed $variable2 Another variable to be dumped.
  * @param mixed $variable3 Another variable to be dumped.
  * @param ...
+ * 
+ * @codeCoverageIgnore
  */
 function dump() {
     call_user_func_array(array('MD\Foundation\Debug\Debugger', 'dump'), func_get_args());
@@ -34,6 +36,8 @@ function dump() {
  * @param mixed $variable3 Another variable to be dumped.
  * @param ...
  * @return string
+ * 
+ * @codeCoverageIgnore
  */
 function string_dump() {
     return call_user_func_array(array('MD\Foundation\Debug\Debugger', 'stringDump'), func_get_args());
@@ -48,6 +52,8 @@ function string_dump() {
  * @param mixed $variable2 Another variable to be dumped.
  * @param mixed $variable3 Another variable to be dumped.
  * @param ...
+ * 
+ * @codeCoverageIgnore
  */
 function console_dump() {
     call_user_func_array(array('MD\Foundation\Debug\Debugger', 'consoleDump'), func_get_args());
@@ -62,6 +68,8 @@ function console_dump() {
  * @param mixed $variable2 Another variable to be dumped.
  * @param mixed $variable3 Another variable to be dumped.
  * @param ...
+ * 
+ * @codeCoverageIgnore
  */
 function console_log() {
     call_user_func_array(array('MD\Foundation\Debug\Debugger', 'consoleDump'), func_get_args());
@@ -77,6 +85,8 @@ function console_log() {
  * @param mixed $variable3 Another variable to be dumped.
  * @param ...
  * @return string
+ * 
+ * @codeCoverageIgnore
  */
 function console_string_dump() {
     return call_user_func_array(array('MD\Foundation\Debug\Debugger', 'consoleStringDump'), func_get_args());
