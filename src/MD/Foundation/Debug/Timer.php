@@ -11,6 +11,8 @@
  */
 namespace MD\Foundation\Debug;
 
+use BadMethodCallException;
+
 use MD\Foundation\Debug\TimerStep;
 
 class Timer
@@ -88,11 +90,11 @@ class Timer
     /**
      * Start the timer.
      * 
-     * @throws \BadMethodCallException When the timer was already started.
+     * @throws BadMethodCallException When the timer was already started.
      */
     public function start() {
         if ($this->_startTime) {
-            throw new \BadMethodCallException('Timer already started.');
+            throw new BadMethodCallException('Timer already started.');
         }
 
         $this->_startTime = static::getMicroTime();
@@ -103,16 +105,16 @@ class Timer
     }
     
     /**
-     * Stop the timer and return the result.
+     * Stop the timer and return the result duration in seconds.
      * 
      * @param int $precision [optional] How many places to round to. Default: 8
-     * @return float Duration in seconds.
+     * @return float
      * 
-     * @throws \BadMethodCallException When the timer was already stopped.
+     * @throws\ BadMethodCallException When the timer was already stopped.
      */
     public function stop($precision = 8) {
         if ($this->_stopTime) {
-            throw new \BadMethodCallException('Timer already stopped.');
+            throw new BadMethodCallException('Timer already stopped.');
         }
 
         $this->_stopTime = static::getMicroTime();
@@ -170,7 +172,7 @@ class Timer
      */
     public function getMemoryUsage() {
         $peakMemory = $this->_stopMemoryPeak ? $this->_stopMemoryPeak : static::getCurrentMemory();
-        return static::memoryDifference($this->_startMemory, $stopMemory);
+        return static::memoryDifference($this->_startMemory, $peakMemory);
     }
 
     /**
@@ -201,12 +203,21 @@ class Timer
     }
 
     /**
+     * Returns the current active step.
+     * 
+     * @return TimerStep
+     */
+    public function getCurrentStep() {
+        return $this->_currentStep;
+    }
+
+    /**
      * Returns seconds with microtime when the timer stopped.
      * 
      * @return float
      */
     public function getStopTime() {
-        return $this->_startTime;
+        return $this->_stopTime;
     }
 
     /**
@@ -216,6 +227,15 @@ class Timer
      */
     public function getStopMemory() {
         return $this->_stopMemory;
+    }
+
+    /**
+     * Returns how many bytes of memory PHP was using at most (peak) when the timer stopped.
+     * 
+     * @return int
+     */
+    public function getStopMemoryPeak() {
+        return $this->_stopMemoryPeak;
     }
 
     /**
@@ -252,15 +272,6 @@ class Timer
      */
     public static function memoryDifference($startMemory, $endMemory) {
         return $endMemory - $startMemory;
-    }
-
-    /**
-     * Returns how many bytes of memory PHP was using at most (peak) when the timer stopped.
-     * 
-     * @return int
-     */
-    public function getStopMemoryPeak() {
-        return $this->_stopMemoryPeak;
     }
 
     /**

@@ -11,6 +11,8 @@
  */
 namespace MD\Foundation\Debug;
 
+use BadMethodCallException;
+
 use MD\Foundation\Debug\Timer;
 
 class TimerStep extends Timer
@@ -35,11 +37,11 @@ class TimerStep extends Timer
     /**
      * Start the timer step.
      * 
-     * @throws \BadMethodCallException When the timer step was already started.
+     * @throws BadMethodCallException When the timer step was already started.
      */
     public function start($startTime = null, $startMemory = null, $startMemoryPeak = null) {
         if ($this->_startTime) {
-            throw new \BadMethodCallException('Timer step already started.');
+            throw new BadMethodCallException('Timer step already started.');
         }
 
         $this->_startTime = isset($startTime) ? $startTime : static::getMicroTime();
@@ -53,11 +55,11 @@ class TimerStep extends Timer
      * @param int $precision [optional] How many places to round to. Default: 8
      * @return float Duration in seconds.
      * 
-     * @throws \BadMethodCallException When the timer step was already stopped.
+     * @throws BadMethodCallException When the timer step was already stopped.
      */
     public function stop($precision = 8) {
         if ($this->_stopTime) {
-            throw new \BadMethodCallException('Timer already stopped.');
+            throw new BadMethodCallException('Timer already stopped.');
         }
 
         $this->_stopTime = static::getMicroTime();
@@ -70,10 +72,10 @@ class TimerStep extends Timer
     /**
      * Timer step cannot track any steps.
      * 
-     * @throws \BadMethodCallException Always thrown when this method is called.
+     * @throws BadMethodCallException Always thrown when this method is called.
      */
     public function step($name = null) {
-        throw new \BadMethodCallException('Timer step cannot track any steps.');
+        throw new BadMethodCallException('Timer step cannot track any steps.');
     }
 
     /*****************************************************
@@ -82,10 +84,10 @@ class TimerStep extends Timer
     /**
      * Timer step cannot track any steps.
      * 
-     * @throws \BadMethodCallException Always thrown when this method is called.
+     * @throws BadMethodCallException Always thrown when this method is called.
      */
     public function getSteps() {
-        throw new \BadMethodCallException('Timer step cannot track any steps.');
+        throw new BadMethodCallException('Timer step cannot track any steps.');
     }
     
 }
