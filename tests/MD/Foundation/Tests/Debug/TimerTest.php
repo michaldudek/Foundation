@@ -67,7 +67,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase
         // test default
         $timer = new Timer();
         $duration = explode('.', $timer->stop());
-        $this->assertEquals(8, strlen(end($duration)));
+        $this->assertTrue(strlen(end($duration)) <= 8);
 
         // now test custom
         foreach(array(0, 1, 2, 5, 8, 10, 20) as $precision) {

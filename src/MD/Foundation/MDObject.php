@@ -1,6 +1,6 @@
 <?php
 /**
- * Abstract class that adds some magic and useful functionalities to objects.
+ * Class that adds some magic and useful functionalities to objects.
  * 
  * @package Foundation
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -14,7 +14,7 @@ use MD\Foundation\Debug\Interfaces\Dumpable;
 use MD\Foundation\Utils\ObjectUtils;
 use MD\Foundation\Utils\StringUtils;
 
-abstract class MDObject implements Dumpable
+class MDObject implements Dumpable
 {
 
     /**
@@ -35,8 +35,7 @@ abstract class MDObject implements Dumpable
      */
     final protected function __setProperty($property, $value) {
         if (!is_string($property)) {
-            $trace = debug_backtrace();
-            trigger_error('Function "MDObject::__setProperty() requires argument 1 to be a string, '. gettype($property) .' given in '. $trace[0]['file'] .' on line '. $trace[0]['line'], E_USER_ERROR);
+            return trigger_error('Function '. get_called_class() .'::__setProperty() requires argument 1 to be a string, '. gettype($property) .' given.', E_USER_ERROR);
         }
 
         $this->__properties[$property] = $value;
@@ -50,8 +49,7 @@ abstract class MDObject implements Dumpable
      */
     final protected function __getProperty($property) {
         if (!is_string($property)) {
-            $trace = debug_backtrace();
-            trigger_error('Function "MDObject::__getProperty()" requires argument 1 to be a string, '. gettype($property) .' given in '. $trace[0]['file'] .' on line '. $trace[0]['line'], E_USER_ERROR);
+            return trigger_error('Function '. get_called_class() .'::__getProperty() requires argument 1 to be a string, '. gettype($property) .' given.', E_USER_ERROR);
         }
 
         return isset($this->__properties[$property]) ? $this->__properties[$property] : null;
@@ -95,9 +93,7 @@ abstract class MDObject implements Dumpable
         }
         
         // trigger a user notice if property not found
-        $trace = debug_backtrace();
-        trigger_error('Call to undefined object property "'. $this->__getClass() .'::$'. $property .'" in '. $trace[0]['file'] .' on line '. $trace[0]['line'], E_USER_NOTICE);
-        return null;
+        return trigger_error('Call to undefined object property '. get_called_class() .'::$'. $property .'.', E_USER_NOTICE);
     }
     
     /**
@@ -107,6 +103,10 @@ abstract class MDObject implements Dumpable
      * @return bool
      */
     final public function __isset($property) {
+        if (property_exists($this, $property)) {
+            return isset($this->$property);
+        }
+
         return isset($this->__properties[$property]);
     }
     
@@ -116,6 +116,11 @@ abstract class MDObject implements Dumpable
      * @param string $property Name of the property.
      */
     final public function __unset($property) {
+        if (property_exists($this, $property)) {
+            unset($this->$property);
+            return;
+        }
+
         unset($this->__properties[$property]);
     }
     
@@ -130,20 +135,19 @@ abstract class MDObject implements Dumpable
         $type = strtolower(substr($method, 0, 3));
         
         // called a setter or a getter ?
-        if (($type === 'set') || ($type === 'get')) {
+        if ($type === 'set' || $type === 'get') {
             $property = lcfirst(substr($method, 3));
 
             // decide on property name by checking if a camelCase exists first
             // and if not try the under_scored
-            $property = (isset($this->__properties[$property])) ? $property : StringUtils::toSeparated($property, '_');
+            $property = (isset($this->__properties[$property]))
+                ? $property
+                : StringUtils::toSeparated($property, '_');
 
             if ($type === 'set') {
                 // if a setter then require at least one argument
                 if (!isset($arguments[0])) {
-                    $trace = debug_backtrace();
-                    $file = isset($trace[0]['file']) ? $trace[0]['file'] : 'unknown';
-                    $line = isset($trace[0]['line']) ? $trace[0]['line'] : 'unknown';
-                    trigger_error('Function "'. $this->__getClass() .'::'. $method .'()" requires one argument, none given in '. $file .' on line '. $line, E_USER_ERROR);
+                    return trigger_error('Function '. get_called_class() .'::'. $method .'()" requires one argument, none given.', E_USER_ERROR);
                 }
 
                 return $this->__setProperty($property, $arguments[0]);
@@ -155,7 +159,9 @@ abstract class MDObject implements Dumpable
         // called an isser?
         if (strtolower(substr($method, 0, 2)) === 'is') {
             $property = lcfirst(substr($method, 2));
-            $property = (isset($this->__properties[$property])) ? $property : StringUtils::toSeparated($property, '_');
+            $property = (isset($this->__properties[$property]))
+                ? $property
+                : StringUtils::toSeparated($property, '_');
 
             $value = $this->__getProperty($property);
             // cast '0' as false
@@ -163,9 +169,7 @@ abstract class MDObject implements Dumpable
         }
     
         // undefined method called!
-        $trace = debug_backtrace();
-        trigger_error('Call to undefined method '. $this->__getClass() .'::'. $method .'() in '. $trace[0]['file'] .' on line '. $trace[0]['line'], E_USER_ERROR);
-        return null;
+        return trigger_error('Call to undefined method '. get_called_class() .'::'. $method .'().', E_USER_ERROR);
     }
 
     /*****************************************************
