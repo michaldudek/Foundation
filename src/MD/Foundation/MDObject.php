@@ -154,7 +154,9 @@ class MDObject implements Dumpable
             } else if ($type === 'get') {
                 return $this->__getProperty($property);
             }
+        // @codeCoverageIgnoreStart
         }
+        // @codeCoverageIgnoreEnd
 
         // called an isser?
         if (strtolower(substr($method, 0, 2)) === 'is') {
