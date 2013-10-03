@@ -78,6 +78,24 @@ class DebuggerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(Debugger::isExtending(new Collection(), 'Countable'));
     }
 
+    public function testStringDump() {
+        $this->assertInternalType('string', Debugger::stringDump());
+        $this->assertInternalType('string', Debugger::stringDump('some string'));
+        $this->assertInternalType('string', Debugger::stringDump(array('some', 1, 'key' => 'val')));
+        $this->assertInternalType('string', Debugger::stringDump(new \stdClass()));
+        $this->assertInternalType('string', Debugger::stringDump(true));
+        $this->assertInternalType('string', Debugger::stringDump('arg1', array('arg2'), new \stdClass()));
+    }
+
+    public function testConsoleStringDump() {
+        $this->assertInternalType('string', Debugger::consoleStringDump());
+        $this->assertInternalType('string', Debugger::consoleStringDump('some string'));
+        $this->assertInternalType('string', Debugger::consoleStringDump(array('some', 1, 'key' => 'val')));
+        $this->assertInternalType('string', Debugger::consoleStringDump(new \stdClass()));
+        $this->assertInternalType('string', Debugger::consoleStringDump(true));
+        $this->assertInternalType('string', Debugger::consoleStringDump('arg1', array('arg2'), new \stdClass()));
+    }
+
     public function testGetPrettyTrace() {
         $prettyTrace = Debugger::getPrettyTrace(debug_backtrace());
         $this->assertInternalType('array', $prettyTrace);

@@ -204,8 +204,6 @@ class Debugger
      * @param mixed $variable3 Another variable to be dumped.
      * @param ...
      * @return string
-     * 
-     * @codeCoverageIgnore
      */
     public static function stringDump() {
         $arguments = func_get_args();
@@ -258,17 +256,24 @@ class Debugger
      * @param mixed $variable3 Another variable to be dumped.
      * @param ...
      * @return string
-     * 
-     * @codeCoverageIgnore
      */
     public static function consoleStringDump() {
         $arguments = func_get_args();
 
         $output = '(function(w,u) {';
-        $output .= 'if (w.console===u) return;';
+        $output .= 'if(w.console===u)return;';
 
         foreach($arguments as $variable) {
-            $output .= 'w.console.log('. json_encode(ArrayUtils::fromObject($variable)) .');';
+            $dump = null;
+            if (is_object($variable)) {
+                $dump = json_encode(ArrayUtils::fromObject($variable));
+            } elseif (is_bool($variable)) {
+                $dump = '"(bool) '. ($variable ? 'true' : 'false') .'"';
+            } else {
+                $dump = json_encode($variable);
+            }
+
+            $output .= 'w.console.log('. $dump .');';
         }
 
         $output .= '})(window);';
