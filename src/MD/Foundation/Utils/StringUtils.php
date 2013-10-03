@@ -19,6 +19,55 @@ use MD\Foundation\Utils\ObjectUtils;
  */
 class StringUtils
 {
+
+    /**
+     * Accented letters map used in StringUtils::translit() method.
+     * 
+     * @var array
+     */
+    protected static $_accentLettersMap = array(
+        'A' => array('Á','À','Â','Ǎ','Ă','Ã','Ả','Ạ','Ä','Å','Ā','Ą','Ấ','Ầ','Ẫ','Ẩ','Ậ','Ắ','Ằ','Ẵ','Ẳ','Ặ','Ǻ'),
+        'a' => array('á','à','â','ǎ','ă','ã','ả','ạ','ä','å','ā','ą','ấ','ầ','ẫ','ẩ','ậ','ắ','ằ','ẵ','ẳ','ặ','ǻ'),
+        'C' => array('Ć','Ĉ','Č','Ċ','Ç'),
+        'c' => array('ć','ĉ','č','ċ','ç'),
+        'D' => array('Ď','Đ','Ð'),
+        'd' => array('ď','đ'),
+        'E' => array('É','È','Ê','Ě','Ĕ','Ẽ','Ẻ','Ė','Ë','Ē','Ę','Ế','Ề','Ễ','Ể','Ẹ','Ệ'),
+        'e' => array('é','è','ê','ě','ĕ','ẽ','ẻ','ė','ë','ē','ę','ế','ề','ễ','ể','ẹ','ệ'),
+        'G' => array('Ğ','Ĝ','Ġ','Ģ'),
+        'g' => array('ğ','ĝ','ġ','ģ'),
+        'H' => array('Ĥ','Ħ'),
+        'h' => array('ĥ','ħ'),
+        'I' => array('Í','Ì','Ĭ','Î','Ǐ','Ï','Ĩ','Į','Ī','Ỉ','Ị'),
+        'i' => array('í','ì','ĭ','î','ǐ','ï','ĩ','į','ī','ỉ','ị'),
+        'J' => array('Ĵ'),
+        'j' => array('ĵ'),
+        'K' => array('Ķ'),
+        'k' => array('ķ'),
+        'L' => array('Ĺ','Ľ','Ļ','Ł','Ŀ'),
+        'l' => array('ĺ','ľ','ļ','ł','ŀ'),
+        'N' => array('Ń','Ň','Ñ','Ņ'),
+        'n' => array('ń','ň','ñ','ņ'),
+        'O' => array('Ó','Ò','Ŏ','Ô','Ố','Ồ','Ỗ','Ổ','Ǒ','Ö','Ő','Õ','Ø','Ǿ','Ō','Ỏ','Ơ','Ớ','Ờ','Ỡ','Ở','Ợ','Ọ','Ộ'),
+        'o' => array('ó','ò','ŏ','ô','ố','ồ','ỗ','ổ','ǒ','ö','ő','õ','ø','ǿ','ō','ỏ','ơ','ớ','ờ','ỡ','ở','ợ','ọ','ộ'),
+        'P' => array('Ṕ','Ṗ'),
+        'p' => array('ṕ','ṗ'),
+        'R' => array('Ŕ','Ř','Ŗ'),
+        'r' => array('ŕ','ř','ŗ'),
+        'S' => array('Ś','Ŝ','Š','Ş'),
+        's' => array('ś','ŝ','š','ş'),
+        'T' => array('Ť','Ţ','Ŧ'),
+        't' => array('ť','ţ','ŧ'),
+        'U' => array('Ú','Ù','Ŭ','Û','Ǔ','Ů','Ü','Ǘ','Ǜ','Ǚ','Ǖ','Ű','Ũ','Ų','Ū','Ủ','Ư','Ứ','Ừ','Ữ','Ử','Ự','Ụ'),
+        'u' => array('ú','ù','ŭ','û','ǔ','ů','ü','ǘ','ǜ','ǚ','ǖ','ű','ũ','ų','ū','ủ','ư','ứ','ừ','ữ','ử','ự','ụ'),
+        'W' => array('Ẃ','Ẁ','Ŵ','Ẅ'),
+        'w' => array('ẃ','ẁ','ŵ','ẅ'),
+        'Y' => array('Ý','Ỳ','Ŷ','Ÿ','Ỹ','Ỷ','Ỵ'),
+        'y' => array('ý','ỳ','ŷ','ÿ','ỹ','ỷ','ỵ'),
+        'Z' => array('Ź','Ž','Ż'),
+        'z' => array('ź','ž','ż'),
+        'ss' => array('ß')
+    );
     
     /**
      * Truncates a string to a specific length.
@@ -134,6 +183,24 @@ class StringUtils
         $words = static::getWords($string);
         return count($words);
     }
+
+    /**
+     * Tries to remove any accents from letters in the given string by replacing them with similar looking letters.
+     * 
+     * Experimental. Use only with UTF-8 strings.
+     * 
+     * @param string $string String to be translit.
+     * @param string $encoding [optional] If you know the string's encoding then put it here. Default: 'UTF-8'.
+     * @return string
+     */
+    public static function translit($string, $encoding = 'UTF-8') {
+        foreach(static::$_accentLettersMap as $ch => $accents) {
+            $string = str_replace($accents, $ch, $string);
+        }
+
+        $string = iconv($encoding, 'ISO-8859-1//TRANSLIT', $string);
+        return $string;
+    }
     
     /**
      * Make a string that is URL (SEO) friendly.
@@ -145,11 +212,7 @@ class StringUtils
      * @return string
      */
     public static function urlFriendly($string, $lowercase = true) {
-        $string = str_ireplace(
-            array('ę', 'ó', 'ą', 'ś', 'ł', 'ż', 'ź', 'ć', 'ń', 'Ę', 'Ó', 'Ś', 'Ł', 'Ż', 'Ć'),
-            array('e', 'o', 'a', 's', 'l', 'z', 'z', 'c', 'n', 'E', 'O', 'S', 'L', 'Z', 'C'),
-            $string
-        );
+        $string = static::translit($string);
         $string = utf8_decode($string);
         $string = htmlentities($string);
         $string = ($lowercase) ? strtolower($string) : $string;
@@ -167,11 +230,7 @@ class StringUtils
      * @return string
      */
     public static function fileNameFriendly($string) {
-        $string = str_ireplace(
-            array('ę', 'ó', 'ą', 'ś', 'ł', 'ż', 'ź', 'ć', 'ń', 'Ę', 'Ó', 'Ś', 'Ł', 'Ż', 'Ć'),
-            array('e', 'o', 'a', 's', 'l', 'z', 'z', 'c', 'n', 'E', 'O', 'S', 'L', 'Z', 'C'),
-            $string
-        );
+        $string = static::translit($string);
         $string = utf8_decode($string);
         $string = htmlentities($string);
         $string = str_replace('&amp;', 'and', $string);

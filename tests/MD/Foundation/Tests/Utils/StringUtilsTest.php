@@ -88,6 +88,44 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(5, StringUtils::wordCount('lor/em, ipsum <br /> dolor sit amet   '));
     }
 
+    public function testTranslit() {
+        $strings = array(
+            'lorem ipsum dolor sit amet',
+            'zażółć żółtą gęśl',
+            'ÄäÖöÜüß€',
+            'ÀÂÄÈÉÊËÎÏÔŒÙÛÜŸ',
+            'àâäèéêëîïôœùûüÿ',
+            'Çç€',
+            'ÁáÀàÂâǍǎĂăÃãẢảẠạÄäÅåĀāĄąẤấẦầẪẫẨẩẬậẮắẰằẴẵẲẳẶặǺǻ',
+            'ĆćĈĉČčĊċÇç',
+            'ĎďĐđÐ',
+            'ÉéÈèÊêĚěĔĕẼẽẺẻĖėËëĒēĘęẾếỀềỄễỂểẸẹỆệ',
+            'ĞğĜĝĠġĢģ',
+            'ĤĥĦħ',
+            'ÍíÌìĬĭÎîǏǐÏïĨĩĮįĪīỈỉỊị',
+            'Ĵĵ',
+            'Ķķ',
+            'ĹĺĽľĻļ',
+            'ŁłĿŀ',
+            'ŃńŇňÑñŅņ',
+            'ÓóÒòŎŏÔôỐốỒồỖỗỔổǑǒÖöŐőÕõØøǾǿŌōỎỏƠơỚớỜờỠỡỞởỢợỌọỘộ',
+            'ṔṕṖṗ',
+            'ŔŕŘřŖŗ',
+            'ŚśŜŝŠšŞş',
+            'ŤťŢţŦŧ',
+            'ÚúÙùŬŭÛûǓǔŮůÜüǗǘǛǜǙǚǕǖŰűŨũŲųŪūỦủƯưỨứỪừỮữỬửỰựỤụ',
+            'ẂẃẀẁŴŵẄẅ',
+            'ÝýỲỳŶŷŸÿỸỹỶỷỴỵ',
+            'ŹźŽžŻż',
+            'ß'
+        );
+
+        foreach($strings as $string) {
+            $translit = StringUtils::translit($string);
+            $this->assertEquals(1, preg_match('/([a-zAz0-9\s]+)/', $translit), 'Failed to translit string "'. $string .'" - got "'. $translit .'".');
+        }
+    }
+
     public function testUrlFriendly() {
         $strings = array(
             'lorem ipsum dolor sit amet',
