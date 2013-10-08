@@ -829,6 +829,24 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
             $collectionArray[] = new ToArrayWrongClass($item['id'], $item['name'], $item['categoryId'], $item['date']);
         }
         $this->assertEquals(ArrayUtils::fromObject($collectionArray), $this->_getArrayPreset('2D_collection_5'));
+
+        $someObj = new \stdClass();
+        $someObj->id = 45;
+        $someObj->title = 'Lorem ipsum';
+        $this->assertEquals(array(
+            123,
+            'title' => 'Lipsum.com',
+            'obj' => array(
+                'id' => 45,
+                'title' => 'Lorem ipsum'
+            ),
+            'enable' => false
+        ), ArrayUtils::fromObject(array(
+            123,
+            'title' => 'Lipsum.com',
+            'obj' => $someObj,
+            'enable' => false
+        )));
     }
 
 }

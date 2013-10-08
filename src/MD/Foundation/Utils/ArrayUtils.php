@@ -500,7 +500,7 @@ class ArrayUtils
         // maybe an array of objects has been passed?
         if (is_array($object)) {
             foreach($object as $key => $item) {
-                $parent[$key] = static::fromObject($item, array(), $keys);
+                $parent[$key] = (is_object($item) || is_array($item)) ? static::fromObject($item, array(), $keys) : $item;
             }
             return $parent;
         }
