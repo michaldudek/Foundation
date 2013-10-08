@@ -124,6 +124,9 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
             $translit = StringUtils::translit($string);
             $this->assertEquals(1, preg_match('/([a-zAz0-9\s]+)/', $translit), 'Failed to translit string "'. $string .'" - got "'. $translit .'".');
         }
+
+        $this->assertEquals('Ara', StringUtils::translit('Ära'));
+        $this->assertEquals('a', substr(strtolower(StringUtils::translit('Ära')), 0, 1));
     }
 
     public function testUrlFriendly() {
