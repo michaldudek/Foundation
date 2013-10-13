@@ -12,7 +12,9 @@
 namespace MD\Foundation\Exceptions;
 
 use InvalidArgumentException as Base_InvalidArgumentException;
+
 use MD\Foundation\Debug\Debugger;
+use MD\Foundation\Utils\StringUtils;
 
 class InvalidArgumentException extends Base_InvalidArgumentException
 {
@@ -28,6 +30,8 @@ class InvalidArgumentException extends Base_InvalidArgumentException
     public function __construct($expected, $actual, $number = 1, $hideCaller = false) {
         $trace = Debugger::getPrettyTrace(debug_backtrace());
         $type = Debugger::getType($actual);
+
+        $type = $type === 'string' ? $type .' ("'. StringUtils::truncate($actual, 50) .'")' : $type;
 
         if (!$hideCaller && isset($trace[1])) {
             $message = $trace[1]['function'] .' expected argument '. $number .' to be '. $expected .', '. $type .' given.';
