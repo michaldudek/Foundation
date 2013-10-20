@@ -301,6 +301,23 @@ class ArrayUtils
         // if position (key) found then return the new array and if not then add the input to the end
         return ($foundPosition) ? $return : array_merge($return, $input);
     }
+
+    /**
+     * Filters the array so that it contains only the keys from the $allowedKeys list.
+     * 
+     * @param array $array Array to be filtered.
+     * @param array $allowedKeys List of keys that are allowed in the $array
+     * @return array
+     */
+    public static function filterKeys(array $array, array $allowedKeys) {
+        foreach($array as $key => $value) {
+            if (!in_array($key, $allowedKeys)) {
+                unset($array[$key]);
+            }
+        }
+
+        return $array;
+    }
     
     /**
      * Flattens an array, ie. makes it 1-dimensional.

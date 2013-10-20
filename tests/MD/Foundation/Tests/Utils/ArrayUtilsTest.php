@@ -311,6 +311,30 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('lipsum', ArrayUtils::pushAfter($this->_getArrayPreset('associative'), $input, 'lorem', 'lipsum'));
     }
 
+    /**
+     * @dataProvider provideFilterKeysArrays
+     */
+    public function testFilterKeys(array $array, array $allowed) {
+        $filtered = ArrayUtils::filterKeys($array, $allowed);
+
+        foreach($array as $key => $val) {
+            if (in_array($key, $allowed)) {
+                $this->assertArrayHasKey($key, $filtered);
+            } else {
+                $this->assertArrayNotHasKey($key, $filtered);
+            }
+        }
+    }
+
+    public function provideFilterKeysArrays() {
+        return array(
+            array(array('lorem' => 'ipsum', 'dolor' => 'sit'), array('lorem', 'ipsum')),
+            array(array('lorem' => 'ipsum', 'dolor' => 'sit'), array('ipsm', 'sit')),
+            array(array('lorem' => 1, 'ipsum' => 2, 'dolor' => 'yes', 'sit' => 'amet'), array('lorem', 'ipsum')),
+            array(array('lorem' => 1, 'ipsum' => 2, 'dolor' => 'yes', 'sit' => 'amet'), array())
+        );
+    }
+
     public function testFlatten() {
         $this->assertEmpty(ArrayUtils::flatten($this->_getArrayPreset('empty_array')));
         $this->assertEquals(ArrayUtils::flatten($this->_getArrayPreset('abcd')), $this->_getArrayPreset('abcd'));
