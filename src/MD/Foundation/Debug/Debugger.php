@@ -316,11 +316,21 @@ class Debugger
      * 
      * @param \Exception $e Exception that you want to handle.
      * @param array $log [optional] Any log to be attached to the error page.
+     * @param int $httpResponseCode [optional] What HTTP response code to use? Default: 500.
      * 
      * @codeCoverageIgnore
      */
-    public static function handleException(\Exception $e, array $log = array()) {
-        header('HTTP/1.1 500 Internal Server Error');
+    public static function handleException(\Exception $e, array $log = array(), $httpResponseCode = 500) {
+        switch($httpResponseCode) {
+            case 400:   $header = '400 Bad Request';    break;
+            case 401:   $header = '401 Unauthorized';   break;
+            case 403:   $header = '403 Forbidden';      break;
+            case 404:   $header = '404 Not Found';      break;
+            case 500:
+            default:
+                $header = '500 Internal Server Error';
+        }
+        header('HTTP/1.1 '. $header);
 
         $type = 'exception';
         $message = $e->getMessage();
