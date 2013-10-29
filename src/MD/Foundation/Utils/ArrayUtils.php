@@ -531,7 +531,8 @@ class ArrayUtils
         if (method_exists($object, 'toArray')) {
             $toArray = $object->toArray();
             if (is_array($toArray)) {
-                return $toArray;
+                // make the original object an array so we can iterate through all keys and transform their values as well
+                $object = $toArray;
             }
         }
         
