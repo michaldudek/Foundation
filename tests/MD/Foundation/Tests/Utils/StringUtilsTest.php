@@ -86,6 +86,7 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, StringUtils::wordCount(''));
         $this->assertEquals(2, StringUtils::wordCount('lorem ipsum'));
         $this->assertEquals(5, StringUtils::wordCount('lor/em, ipsum <br /> dolor sit amet   '));
+        $this->assertEquals(3, StringUtils::wordCount('Żażółć żółtą gęśl.'));
     }
 
     public function testTranslit() {

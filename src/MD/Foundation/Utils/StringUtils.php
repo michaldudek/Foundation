@@ -180,6 +180,7 @@ class StringUtils
      * @return int
      */
     public static function wordCount($string) {
+        $string = static::translit($string);
         $words = static::getWords($string);
         return count($words);
     }
