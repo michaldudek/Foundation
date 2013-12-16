@@ -1,11 +1,11 @@
 <?php
 /**
  * A set of array utility functions.
- * 
+ *
  * @package Foundation
  * @subpackage Utils
  * @author Michał Dudek <michal@michaldudek.pl>
- * 
+ *
  * @copyright Copyright (c) 2013, Michał Dudek
  * @license MIT
  */
@@ -21,10 +21,10 @@ class ArrayUtils
 
     const JOIN_INNER = 'inner';
     const JOIN_OUTER = 'outer';
-    
+
     /**
      * Check whether the given array is a collection of data, ie. multidimensional array with a list of data rows.
-     * 
+     *
      * @param array $array Array to check.
      * @return bool
      */
@@ -33,26 +33,26 @@ class ArrayUtils
             return $a === $b ? $a + 1 : 0;
         }, 0)) ? false : true;
     }
-    
+
     /**
      * Resets keys of an array to numerical values starting with 0.
-     * 
+     *
      * @param array $array Array to reset.
      * @return array
      */
     public static function resetKeys(array $array) {
         $return = array();
-        
+
         foreach($array as &$row) {
             $return[] = $row;
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Returns an array with a list of all values (not unique) assigned to a key in a collection.
-     * 
+     *
      * @param array $array Array to filter from.
      * @param string $key Key to filter by.
      * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
@@ -60,7 +60,7 @@ class ArrayUtils
      */
     public static function keyFilter(array $array, $key, $preserveKey = false) {
         $return = array();
-        
+
         foreach($array as $k => &$row) {
             if (isset($row[$key])) {
                 if ($preserveKey) {
@@ -70,13 +70,13 @@ class ArrayUtils
                 }
             }
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Filters out all values from a multidimensional array that match the given value of they given associative level 2 key.
-     * 
+     *
      * @param array $array Array to filter from.
      * @param string $key Key to filter by.
      * @param mixed $value Value to filter by.
@@ -85,7 +85,7 @@ class ArrayUtils
      */
     public static function filterByKeyValue(array $array, $key, $value, $preserveKey = false) {
         $return = array();
-        
+
         foreach($array as $k => &$row) {
             if ((isset($row[$key])) AND ($row[$key] == $value)) {
                 if ($preserveKey) {
@@ -95,23 +95,23 @@ class ArrayUtils
                 }
             }
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Assigns a value under a key of a collection to its main (top level) key.
-     * 
+     *
      * @param array $array Array to be exploded.
      * @param string $key Key on which to explode.
      * @return array
-     * 
+     *
      * @throws \RuntimeException When at least one row of the $array doesn't have the $key.
      * @throws \RuntimeException When values of $key are not unique.
      */
     public static function keyExplode(array $array, $key) {
         $return = array();
-        
+
         foreach($array as $k => &$row) {
             if (isset($row[$key])) {
                 if (!isset($return[$row[$key]])) {
@@ -123,13 +123,13 @@ class ArrayUtils
                 throw new \RuntimeException('At least one row of an array sent to '. get_called_class() .'::keyExplode() hasn\'t got a key "'. $key .'" and therefore would be missing from the return value.');
             }
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Categorize all items from the collection by the value of a specific key.
-     * 
+     *
      * @param array $array Array to parse.
      * @param string $key Key to categorize by.
      * @param bool $preserveKey [optional] Preserve keys? Default: false.
@@ -137,29 +137,29 @@ class ArrayUtils
      */
     public static function categorizeByKey(array $array, $key, $preserveKey = false) {
         $return = array();
-        
+
         foreach($array as $k => &$row) {
             if (!isset($row[$key])) {
                 continue;
             }
-            
+
             if (!isset($return[$row[$key]])) {
                 $return[$row[$key]] = array();
             }
-            
+
             if ($preserveKey) {
                 $return[$row[$key]][$k] = $row;
             } else {
                 $return[$row[$key]][] = $row;
             }
         }
-        
+
         return $return;
     }
-    
+
     /**
      * Implodes all fields with a specific key from a multidimensional array.
-     * 
+     *
      * @param array $array Array to implode from.
      * @param string $key Key to implode by.
      * @param string $separator [optional] Separator to implode by. Default: ",".
@@ -168,10 +168,10 @@ class ArrayUtils
     public static function implodeByKey(array $array, $key, $separator = ',') {
         return implode($separator, static::keyFilter($array, $key));
     }
-    
+
     /**
      * Searches a multidimensional array (a collection, but not necessarily) for a specific value on a key and returns top key (first occurrence!).
-     * 
+     *
      * @param array $array Array to search through.
      * @param string $key Key of which value to look for.
      * @param string $value Value to look for.
@@ -185,17 +185,17 @@ class ArrayUtils
         }
         return false;
     }
-    
+
     /**
      * Get the numerical index for an associative key.
-     * 
+     *
      * @param array $array Array to search through.
      * @param string $key Key name.
      * @return int|bool Int for the position of the key if it was found, bool false if it wasn't found.
      */
     public static function keyPosition(array $array, $key) {
         $x = 0;
-        
+
         foreach($array as $i => &$row) {
             if ($key == $i) {
                 return $x;
@@ -203,13 +203,13 @@ class ArrayUtils
                 $x++;
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * Removes a key from a collection.
-     * 
+     *
      * @param array $array Array to be parsed.
      * @param string $key Key to be removed.
      * @return array
@@ -222,10 +222,10 @@ class ArrayUtils
         }
         return $array;
     }
-    
+
     /**
      * Adds a key to a collection.
-     * 
+     *
      * @param array $array Array to be parsed.
      * @param key $key Key to be added.
      * @param mixed $value [optional] Optional value to be set under this key. Default null.
@@ -235,13 +235,13 @@ class ArrayUtils
         foreach($array as $k => &$row) {
             $row[$key] = $value;
         }
-        
+
         return $array;
     }
-    
+
     /**
      * Sorts a multidimensional array by key (2-dimensional).
-     * 
+     *
      * @param array $array Array to sort.
      * @param string $key Key to sort by.
      * @param bool $reverse [optional] True for descending order, false for ascending. Default: false.
@@ -268,10 +268,10 @@ class ArrayUtils
 
         return $sorted;
     }
-    
+
     /**
      * Push a value after another one in an array
-     * 
+     *
      * @param array $array Array to push into.
      * @param mixed $input Value to push.
      * @param int/string $position Position or key after which to push the value.
@@ -280,12 +280,12 @@ class ArrayUtils
      */
     public static function pushAfter(array $array, $input, $position, $key = null) {
         $input = ($key) ? array($key => $input) : array($input);
-        
+
         // if position is integer then its a simple matter of slicing in "half" and adding the input inside
         if (is_int($position)) {
             return array_merge(array_slice($array, 0, $position + 1), $input, array_slice($array, $position + 1));
         }
-        
+
         // let's look for the associative key to insert after
         $foundPosition = false;
         $return = array();
@@ -297,14 +297,14 @@ class ArrayUtils
                 $foundPosition = true;
             }
         }
-        
+
         // if position (key) found then return the new array and if not then add the input to the end
         return ($foundPosition) ? $return : array_merge($return, $input);
     }
 
     /**
      * Filters the array so that it contains only the keys from the $allowedKeys list.
-     * 
+     *
      * @param array $array Array to be filtered.
      * @param array $allowedKeys List of keys that are allowed in the $array
      * @return array
@@ -318,10 +318,10 @@ class ArrayUtils
 
         return $array;
     }
-    
+
     /**
      * Flattens an array, ie. makes it 1-dimensional.
-     * 
+     *
      * @param array $array Array to be flattened.
      * @return array
      */
@@ -345,7 +345,7 @@ class ArrayUtils
 
     /**
      * Performs a merge between n arrays, where the last array has the highest priority.
-     * 
+     *
      * @param array $array1
      * @param array $array2
      * @param array $array3
@@ -374,7 +374,7 @@ class ArrayUtils
 
     /**
      * Performs a deep merge between two arrays.
-     * 
+     *
      * @param array $into Array to merge into.
      * @param array $from Array to merge to.
      * @return array
@@ -390,12 +390,12 @@ class ArrayUtils
 
         return $into;
     }
-    
+
     /**
      * Joins the second collection into the first based on the given key. Default is outer join meaning
      * that if matching row wasn't found in the second collection the row in the first collection will still
      * be displayed (this can be altered by setting the 6th argument to 'inner').
-     * 
+     *
      * @param array $into Collection of data in which to put values of $from.
      * @param array $from Collection of data from which get values to put into $into.
      * @param string $onKey What key from $into to compare on?
@@ -409,9 +409,9 @@ class ArrayUtils
         if (empty($into)) {
             return array();
         }
-        
+
         $from = static::keyExplode($from, $fromKey);
-        
+
         foreach($into as $k => &$row) {
             if (isset($from[$row[$onKey]])) {
                 $row[$intoKey] = $from[$row[$onKey]];
@@ -419,15 +419,15 @@ class ArrayUtils
                 unset($into[$k]);
             }
         }
-        
+
         return $into;
     }
-    
+
     /**
      * Check whether the specified keys are set inside the given array and are not empty (strings are trimmed before check).
-     * 
+     *
      * Returns boolean true if all is correct, false otherwise.
-     * 
+     *
      * @param array $array Array to check.
      * @param array $keys Array of keys to check.
      * @return bool
@@ -447,7 +447,7 @@ class ArrayUtils
 
     /**
      * Removes empty keys from an array.
-     * 
+     *
      * @param array $array Array to clean.
      * @return array
      */
@@ -466,17 +466,17 @@ class ArrayUtils
 
     /**
      * Parses the given array into a query string.
-     * 
+     *
      * @param array $array Array to be converted to query string.
      * @return string
      */
     public static function toQueryString(array $array) {
         return http_build_query($array);
     }
-    
+
     /**
      * Converts the given array to an object. The conversion is "deep", ie. all dimensions will be converted.
-     * 
+     *
      * @param array $array Array to convert to object.
      * @param object $object [optional] Object to which assign the properties, usually for internal use. Default: null.
      * @return stdClass
@@ -500,13 +500,13 @@ class ArrayUtils
                 $parent->$key = $value;
             }
         }
-        
+
         return $parent;
     }
-    
+
     /**
      * Creates an array from a given object. The conversion is "deep", ie. all dimensions will be converted.
-     * 
+     *
      * @param object|array $object Object to be converted to an array or an array of objects.
      * @param array $parent [optional] Usually for internal use of the function. A reference to parent array. Default: array().
      * @param array $keys [optional] If you don't want the whole object converted to array, specify the names of keys
@@ -521,7 +521,7 @@ class ArrayUtils
             }
             return $parent;
         }
-        
+
         // if not an array or object then throw exception
         if (!is_object($object)) {
             throw new InvalidArgumentException('object or array', $object);
@@ -535,7 +535,7 @@ class ArrayUtils
                 $object = $toArray;
             }
         }
-        
+
         // and finally typical handling of items
         foreach($object as $key => $value) {
             // check if included in the keys array (if any specified)
@@ -545,8 +545,99 @@ class ArrayUtils
 
             $parent[$key] = (is_object($value) || is_array($value)) ? static::fromObject($value) : $value;
         }
-        
+
         return $parent;
     }
-    
+
+    /**
+     * Flatten a multi-dimensional associative array with dots.
+     *
+     * @param  array   $array
+     * @param  string  $prepend
+     * @return array
+     */
+    public static function dot($array, $prepend = '')
+    {
+        $results = array();
+
+        foreach ($array as $key => $value)
+        {
+            if (is_array($value))
+            {
+                $results = array_merge(
+                    $results,
+                    self::dot($value, $prepend.$key.'.')
+                );
+            }
+            else
+            {
+                $results[$prepend.$key] = $value;
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Returns array key.
+     * Supports dot notation.
+     *
+     * @param  array      $array
+     * @param  string     $key
+     * @param  mixed      $default
+     *
+     * @return mixed
+     */
+    public static function get(array $array, $key, $default = null)
+    {
+        if (is_null($key)) return $array;
+
+        if (isset($array[$key])) return $array[$key];
+
+        foreach (explode('.', $key) as $segment)
+        {
+            if ( ! is_array($array) or ! array_key_exists($segment, $array))
+            {
+                return $default;
+            }
+
+            $array = $array[$segment];
+        }
+
+        return $array;
+    }
+
+    /**
+     * Set an array item to a given value using "dot" notation.
+     *
+     * If no key is given to the method, the entire array will be replaced.
+     *
+     * @param  array   $array
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return array
+     */
+    public static function set(&$array, $key, $value)
+    {
+        if (is_null($key)) return $array = $value;
+
+        $keys = explode('.', $key);
+
+        while (count($keys) > 1)
+        {
+            $key = array_shift($keys);
+
+            if ( ! isset($array[$key]) or ! is_array($array[$key]))
+            {
+                $array[$key] = array();
+            }
+
+            $array =& $array[$key];
+        }
+
+        $array[array_shift($keys)] = $value;
+
+        return $array;
+    }
+
 }

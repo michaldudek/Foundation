@@ -114,7 +114,16 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
                 'id' => 5,
                 'name' => 'Empty'
             )
-        )
+        ),
+        'dotted_notation_tests' => array(
+            'flat' => 'bar',
+            'foo' => array(
+                'bar' => array(
+                    'baz' => true,
+                    'bat' => false,
+                ),
+            ),
+        ),
     );
 
     protected function _getArrayPreset($name) {
@@ -678,7 +687,7 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
 
     public function testToObject() {
         $this->assertEquals(ArrayUtils::toObject(array()), new \stdClass());
-        
+
         $intKeysObject = new \stdClass();
         $intKeysObject->{0} = 'a';
         $intKeysObject->{1} = 'b';
@@ -871,6 +880,153 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
             'obj' => $someObj,
             'enable' => false
         )));
+
     }
+
+    public function testFlatNestedArrayToFlatDotNotation()
+    {
+        $nested_array = $this->_getArrayPreset('dotted_notation_tests');
+
+        $expected_array = array(
+            'flat' => 'bar',
+            'foo.bar.baz' => true,
+            'foo.bar.bat' => false,
+        );
+
+        $this->assertSame(
+            $expected_array,
+            ArrayUtils::dot($nested_array)
+        );
+    }
+
+    public function testGetNullKey()
+    {
+        $array = $this->_getArrayPreset('dotted_notation_tests');
+
+        $this->assertSame(
+            $array,
+            ArrayUtils::get($array, null)
+        );
+    }
+
+    public function testGetFlatArrayKey()
+    {
+        $array = $this->_getArrayPreset('dotted_notation_tests');
+
+        $this->assertSame(
+            'bar',
+            ArrayUtils::get($array, 'flat')
+        );
+    }
+
+    public function testGetNestedKey()
+    {
+        $array = $this->_getArrayPreset('dotted_notation_tests');
+
+        $this->assertSame(
+            true,
+            ArrayUtils::get($array, 'foo.bar.baz')
+        );
+        $this->assertSame(
+            false,
+            ArrayUtils::get($array, 'foo.bar.bat')
+        );
+    }
+
+    public function testGetInvalidPathKey()
+    {
+        $array = $this->_getArrayPreset('dotted_notation_tests');
+
+        $expected_default_to_be_returned = 'some_default_val';
+
+        $this->assertSame(
+            $expected_default_to_be_returned,
+            ArrayUtils::get(
+                $array,
+                'foo.bar.not_existing_key',
+                $expected_default_to_be_returned
+            )
+        );
+    }
+
+    public function testSetNullKey()
+    {
+        $array = $this->_getArrayPreset('dotted_notation_tests');
+        $value = 'some_value';
+
+        $this->assertSame(
+            $value,
+            ArrayUtils::set(
+                $array,
+                null,
+                $value
+            )
+        );
+    }
+
+    public function testSetSimpleAndExistingPath()
+    {
+        $input_array = array(
+            'foo' => array(
+                'bar' => 'some_value',
+            )
+        );
+
+        $output_array = array(
+            'foo' => array(
+                'bar' => 'new_value',
+            )
+        );
+
+        $result = ArrayUtils::set($input_array, 'foo.bar', 'new_value');
+
+        $this->assertSame(
+            $output_array,
+            $input_array
+        );
+        // Set returns just the changed bit:
+        $this->assertSame(
+            array(
+                'bar' => 'new_value',
+            ),
+            $result
+        );
+    }
+
+    public function testSetNestedPath()
+    {
+        $input_array = array(
+            'foo' => array(
+                'bar' => 'some_value',
+            ),
+        );
+
+        $output_array = array(
+            'foo' => array(
+                'bar' => 'some_value',
+                'new' => array(
+                    'node' => array(
+                        'value' => 'new_value',
+                    ),
+                ),
+            ),
+        );
+
+        $result = ArrayUtils::set($input_array, 'foo.new.node.value', 'new_value');
+
+        $this->assertSame(
+            $output_array,
+            $input_array
+        );
+
+        // Set returns just the added bit:
+        $this->assertSame(
+            array(
+                'value' => 'new_value',
+            ),
+            $result
+        );
+    }
+
 
 }
