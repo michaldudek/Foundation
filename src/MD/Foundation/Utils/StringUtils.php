@@ -236,7 +236,7 @@ class StringUtils
         $string = htmlentities($string);
         $string = str_replace('&amp;', 'and', $string);
         $string = preg_replace("/&(.)(acute|cedil|circ|ring|tilde|uml);/", "$1", $string);
-        $string = preg_replace("/([^a-zA-Z0-9_.\(\)\s]+)/", "-", html_entity_decode($string));
+        $string = preg_replace("/([^a-zA-Z0-9_\.\(\)]+)/", "-", html_entity_decode($string));
         $string = trim($string, "-");
         return $string;
     }

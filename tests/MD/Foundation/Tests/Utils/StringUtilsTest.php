@@ -6,6 +6,9 @@ use MD\Foundation\Utils\StringUtils;
 use MD\Foundation\Tests\TestFixtures\ItemClass;
 use MD\Foundation\Tests\TestFixtures\ItemMagicClass;
 
+/**
+ * @coversDefaultClass \MD\Foundation\Utils\StringUtils
+ */
 class StringUtilsTest extends \PHPUnit_Framework_TestCase
 {
 
@@ -150,21 +153,25 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testFileNameFriendly() {
-        $strings = array(
-            'lorem ipsum dolor sit amet',
-            'zażółć żółtą gęśl',
-            '<?php echo $stuff->whatever; ?>',
-            '123123123',
-            123123123,
-            '<html><head /></html>',
-            'I want to do something like that & whatever',
-            'something / else . js'
-        );
+    /**
+     * @dataProvider provideFileNameStrings
+     * @covers ::fileNameFriendly
+     */
+    public function testFileNameFriendly($string, $fileName) {
+        $this->assertEquals($fileName, StringUtils::fileNameFriendly($string));
+    }
 
-        foreach($strings as $string) {
-            $this->assertEquals(1, preg_match('/([a-zA-Z0-9_.\(\)\s]+)/', StringUtils::fileNameFriendly($string)));
-        }
+    public function provideFileNameStrings() {
+        return array(
+            array('lorem ipsum dolor sit amet', 'lorem-ipsum-dolor-sit-amet'),
+            array('zażółć żółtą gęśl', 'zazolc-zolta-gesl'),
+            array('<?php echo $stuff->whatever; ?>', 'php-echo-stuff-whatever'),
+            array('123123123', '123123123'),
+            array(123123123, '123123123'),
+            array('<html><head /></html>', 'html-head-html'),
+            array('I want to do something like that & whatever', 'I-want-to-do-something-like-that-and-whatever'),
+            array('something / else . js', 'something-else-.-js')
+        );
     }
 
     public function testToCamelCase() {
