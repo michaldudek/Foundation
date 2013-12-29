@@ -176,7 +176,17 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('sit', ArrayUtils::keyFilter($this->_getArrayPreset('2D_collection_5_named'), 'name', true));
     }
 
-    public function testFilterByKeyValue() {
+    public function testFilter() {
+        $this->assertCount(0, ArrayUtils::filter($this->_getArrayPreset('empty_array'), 'id', 1));
+        $this->assertCount(1, ArrayUtils::filter($this->_getArrayPreset('2D_collection_5'), 'id', 1));
+        $this->assertCount(2, ArrayUtils::filter($this->_getArrayPreset('2D_collection_5'), 'categoryId', '5'));
+        $this->assertCount(2, ArrayUtils::filter($this->_getArrayPreset('2D_collection_5_named'), 'categoryId', 5));
+        $this->assertEmpty(ArrayUtils::filter($this->_getArrayPreset('2D_collection_5'), 'categoryId', 999));
+        $this->assertArrayHasKey('sit', ArrayUtils::filter($this->_getArrayPreset('2D_collection_5_named'), 'name', 'sit', true));
+        $this->assertArrayNotHasKey('sit', ArrayUtils::filter($this->_getArrayPreset('2D_collection_5_named'), 'name', 'sit'));
+    }
+
+    public function testDeprecatedFilterByKeyValue() {
         $this->assertCount(0, ArrayUtils::filterByKeyValue($this->_getArrayPreset('empty_array'), 'id', 1));
         $this->assertCount(1, ArrayUtils::filterByKeyValue($this->_getArrayPreset('2D_collection_5'), 'id', 1));
         $this->assertCount(2, ArrayUtils::filterByKeyValue($this->_getArrayPreset('2D_collection_5'), 'categoryId', '5'));
@@ -186,27 +196,31 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayNotHasKey('sit', ArrayUtils::filterByKeyValue($this->_getArrayPreset('2D_collection_5_named'), 'name', 'sit'));
     }
 
-    public function testKeyExplode() {
-        $this->assertCount(0, ArrayUtils::keyExplode($this->_getArrayPreset('empty_array'), 'name'));
-        $this->assertCount(5, ArrayUtils::keyExplode($this->_getArrayPreset('2D_collection_5'), 'id'));
+    public function testIndexBy() {
+        $this->assertCount(0, ArrayUtils::indexBy($this->_getArrayPreset('empty_array'), 'name'));
+        $this->assertCount(5, ArrayUtils::indexBy($this->_getArrayPreset('2D_collection_5'), 'id'));
+        $this->assertCount(5, ArrayUtils::indexBy($this->_getArrayPreset('2D_collection_5_named'), 'name'));
+        $this->assertArrayHasKey('sit', ArrayUtils::indexBy($this->_getArrayPreset('2D_collection_5'), 'name'));
+        $this->assertArrayHasKey('sit', ArrayUtils::indexBy($this->_getArrayPreset('2D_collection_5_named'), 'name'));
+        $this->assertArrayNotHasKey('sit', ArrayUtils::indexBy($this->_getArrayPreset('2D_collection_5_named'), 'id'));
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testIndexByThrowingExceptionOnNotUniqueValues() {
+        ArrayUtils::indexBy($this->_getArrayPreset('2D_collection_5'), 'categoryId');
+    }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testIndexByThrowingExceptionOnMissingValue() {
+        ArrayUtils::indexBy($this->_getArrayPreset('2D_collection_5_named'), 'title');
+    }
+
+    public function testDeprecatedKeyExplode() {
         $this->assertCount(5, ArrayUtils::keyExplode($this->_getArrayPreset('2D_collection_5_named'), 'name'));
-        $this->assertArrayHasKey('sit', ArrayUtils::keyExplode($this->_getArrayPreset('2D_collection_5'), 'name'));
-        $this->assertArrayHasKey('sit', ArrayUtils::keyExplode($this->_getArrayPreset('2D_collection_5_named'), 'name'));
-        $this->assertArrayNotHasKey('sit', ArrayUtils::keyExplode($this->_getArrayPreset('2D_collection_5_named'), 'id'));
-    }
-
-    /**
-     * @expectedException \RuntimeException
-     */
-    public function testKeyExplodeThrowingExceptionOnNotUniqueValues() {
-        ArrayUtils::keyExplode($this->_getArrayPreset('2D_collection_5'), 'categoryId');
-    }
-
-    /**
-     * @expectedException \RuntimeException
-     */
-    public function testKeyExplodeThrowingExceptionOnMissingValue() {
-        ArrayUtils::keyExplode($this->_getArrayPreset('2D_collection_5_named'), 'title');
     }
 
     public function testCategorizeByKey() {

@@ -58,7 +58,7 @@ class ArrayUtils
      * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
      * @return array
      */
-    public static function keyFilter(array $array, $key, $preserveKey = false) {
+    public static function pluck(array $array, $key, $preserveKey = false) {
         $return = array();
 
         foreach($array as $k => &$row) {
@@ -75,6 +75,20 @@ class ArrayUtils
     }
 
     /**
+     * Alias for ::pluck().
+     * 
+     * @param array $array Array to filter from.
+     * @param string $key Key to filter by.
+     * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
+     * @return array
+     *
+     * @deprecated Please use ::pluck() instead.
+     */
+    public static function keyFilter(array $array, $key, $preserveKey = false) {
+        return static::pluck($array, $key, $preserveKey);
+    }
+
+    /**
      * Filters out all values from a multidimensional array that match the given value of they given associative level 2 key.
      *
      * @param array $array Array to filter from.
@@ -83,7 +97,7 @@ class ArrayUtils
      * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
      * @return array
      */
-    public static function filterByKeyValue(array $array, $key, $value, $preserveKey = false) {
+    public static function filter(array $array, $key, $value, $preserveKey = false) {
         $return = array();
 
         foreach($array as $k => &$row) {
@@ -100,6 +114,21 @@ class ArrayUtils
     }
 
     /**
+     * Alias for ::filter.
+     * 
+     * @param array $array Array to filter from.
+     * @param string $key Key to filter by.
+     * @param mixed $value Value to filter by.
+     * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
+     * @return array
+     *
+     * @deprecated Please use ::filter() instead.
+     */
+    public static function filterByKeyValue(array $array, $key, $value, $preserveKey = false) {
+        return static::filter($array, $key, $value, $preserveKey);
+    }
+
+    /**
      * Assigns a value under a key of a collection to its main (top level) key.
      *
      * @param array $array Array to be exploded.
@@ -109,7 +138,7 @@ class ArrayUtils
      * @throws \RuntimeException When at least one row of the $array doesn't have the $key.
      * @throws \RuntimeException When values of $key are not unique.
      */
-    public static function keyExplode(array $array, $key) {
+    public static function indexBy(array $array, $key) {
         $return = array();
 
         foreach($array as $k => &$row) {
@@ -117,10 +146,10 @@ class ArrayUtils
                 if (!isset($return[$row[$key]])) {
                     $return[$row[$key]] = $row;
                 } else {
-                    throw new \RuntimeException('Value of a key "'. $key .'" in rows of array sent to '. get_called_class() .'::keyExplode() are not unique and therefore some rows would be missing from the returned array.');
+                    throw new \RuntimeException('Value of a key "'. $key .'" in rows of array sent to '. get_called_class() .'::indexBy() are not unique and therefore some rows would be missing from the returned array.');
                 }
             } else {
-                throw new \RuntimeException('At least one row of an array sent to '. get_called_class() .'::keyExplode() hasn\'t got a key "'. $key .'" and therefore would be missing from the return value.');
+                throw new \RuntimeException('At least one row of an array sent to '. get_called_class() .'::indexBy() hasn\'t got a key "'. $key .'" and therefore would be missing from the return value.');
             }
         }
 
@@ -128,14 +157,27 @@ class ArrayUtils
     }
 
     /**
-     * Categorize all items from the collection by the value of a specific key.
+     * Alias for ::indexBy.
+     * 
+     * @param  array  $array Array to be indexed.
+     * @param  string $key Key to index by.
+     * @return array
+     *
+     * @deprecated Please use ::indexBy() instead.
+     */
+    public static function keyExplode(array $array, $key) {
+        return static::indexBy($array, $key);
+    }
+
+    /**
+     * Group all items from the collection by the value of a specific key.
      *
      * @param array $array Array to parse.
-     * @param string $key Key to categorize by.
+     * @param string $key Key to group by.
      * @param bool $preserveKey [optional] Preserve keys? Default: false.
      * @return array
      */
-    public static function categorizeByKey(array $array, $key, $preserveKey = false) {
+    public static function groupBy(array $array, $key, $preserveKey = false) {
         $return = array();
 
         foreach($array as $k => &$row) {
@@ -155,6 +197,20 @@ class ArrayUtils
         }
 
         return $return;
+    }
+
+    /**
+     * Alias for ::groupBy().
+     * 
+     * @param array $array Array to parse.
+     * @param string $key Key to group by.
+     * @param bool $preserveKey [optional] Preserve keys? Default: false.
+     * @return array
+     *
+     * @deprecated Please use ::groupBy() instead.
+     */
+    public static function categorizeByKey(array $array, $key, $preserveKey = false) {
+        return static::groupBy($array, $key, $preserveKey);
     }
 
     /**

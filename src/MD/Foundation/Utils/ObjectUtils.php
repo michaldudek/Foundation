@@ -29,7 +29,7 @@ class ObjectUtils
      * 
      * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
-    public static function keyFilter($objects, $key) {
+    public static function pluck($objects, $key) {
         // convert to array, for example for Doctrine collections
         if (is_object($objects) && method_exists($objects, 'toArray')) {
             $objects = $objects->toArray();
@@ -57,6 +57,19 @@ class ObjectUtils
         
         return $return;     
     }
+
+    /**
+     * Alias for ::pluck().
+     * 
+     * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
+     * @param string $key Key to filter by.
+     * @return array
+     *
+     * @deprecated Please use ::pluck() instead.
+     */
+    public static function keyFilter($objects, $key) {
+        return static::pluck($objects, $key);        
+    }
     
     /**
      * Assigns a value under a key of a collection of objects to its main (top level) key.
@@ -67,7 +80,7 @@ class ObjectUtils
      * 
      * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
-    public static function keyExplode($objects, $key) {
+    public static function indexBy($objects, $key) {
         // convert to array, for example for Doctrine collections
         if (is_object($objects) && method_exists($objects, 'toArray')) {
             $objects = $objects->toArray();
@@ -95,6 +108,19 @@ class ObjectUtils
         
         return $return;
     }
+
+    /**
+     * Alias for ::indexBy().
+     * 
+     * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
+     * @param string $key Key on which to explode.
+     * @return array
+     *
+     * @deprecated Please use ::indexBy() instead.
+     */
+    public static function keyExplode($objects, $key) {
+        return static::indexBy($objects, $key);
+    }
     
     /**
      * Filters out all values from a multidimensional array that contains objects that match the given value of they given associative level 2 key.
@@ -107,7 +133,7 @@ class ObjectUtils
      * 
      * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
-    public static function filterByKeyValue($objects, $key, $value, $preserveKey = false) {
+    public static function filter($objects, $key, $value, $preserveKey = false) {
         // convert to array, for example for Doctrine collections
         if (is_object($objects) && method_exists($objects, 'toArray')) {
             $objects = $objects->toArray();
@@ -141,6 +167,21 @@ class ObjectUtils
         
         return $return;
     }
+
+    /**
+     * Alias for ::filter().
+     * 
+     * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
+     * @param string $key Key to filter by.
+     * @param mixed $value Value to filter by.
+     * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default false.
+     * @return array
+     *
+     * @deprecated Please use ::filter() instead.
+     */
+    public static function filterByKeyValue($objects, $key, $value, $preserveKey = false) {
+        return static::filter($objects, $key, $value, $preserveKey);
+    }
     
     /**
      * Categorize all items from the collection of objects by the value of a specific key.
@@ -152,7 +193,7 @@ class ObjectUtils
      * 
      * @throws \InvalidArgumentException When the given $objects argument is not an array or cannot be converted to an array.
      */
-    public static function categorizeByKey($objects, $key, $preserveKey = false) {
+    public static function groupBy($objects, $key, $preserveKey = false) {
         // convert to array, for example for Doctrine collections
         if (is_object($objects) && method_exists($objects, 'toArray')) {
             $objects = $objects->toArray();
@@ -188,6 +229,20 @@ class ObjectUtils
         }
         
         return $return;
+    }
+
+    /**
+     * Alias for ::groupBy().
+     * 
+     * @param array|object $objects Collection of objects - either an array or a collection object that implements 'toArray' method.
+     * @param string $key Key to categorize by.
+     * @param bool $preserveKey [optional] Preserve keys? Default: false.
+     * @return array
+     *
+     * @deprecated Please use ::groupBy() instead.
+     */
+    public static function categorizeByKey($objects, $key, $preserveKey = false) {
+        return static::groupBy($objects, $key, $preserveKey);
     }
     
     /**
