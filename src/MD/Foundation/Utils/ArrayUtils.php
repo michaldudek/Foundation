@@ -635,25 +635,24 @@ class ArrayUtils
     }
 
     /**
-     * Returns array key.
-     * Supports dot notation.
+     * Returns value from the key at given path (using a dot notation).
      *
-     * @param  array      $array
-     * @param  string     $key
-     * @param  mixed      $default
-     *
+     * @param  array  $array Array to get the value from.
+     * @param  string $key Key or path to key.
+     * @param  mixed  $default Default value if key not found.
      * @return mixed
      */
-    public static function get(array $array, $key, $default = null)
-    {
-        if (is_null($key)) return $array;
+    public static function get(array $array, $key, $default = null) {
+        if (is_null($key)) {
+            return $array;
+        }
 
-        if (isset($array[$key])) return $array[$key];
+        if (isset($array[$key])) {
+            return $array[$key];
+        }
 
-        foreach (explode('.', $key) as $segment)
-        {
-            if ( ! is_array($array) or ! array_key_exists($segment, $array))
-            {
+        foreach (explode('.', $key) as $segment) {
+            if (!is_array($array) || !array_key_exists($segment, $array)) {
                 return $default;
             }
 
@@ -664,31 +663,32 @@ class ArrayUtils
     }
 
     /**
-     * Set an array item to a given value using "dot" notation.
+     * Set an array item to a given value using a dot notation.
      *
      * If no key is given to the method, the entire array will be replaced.
      *
-     * @param  array   $array
-     * @param  string  $key
-     * @param  mixed   $value
+     * Returns the array.
+     *
+     * @param  array  $array Array to which the key should be added. Passed by reference.
+     * @param  string $key Key or path to key.
+     * @param  mixed  $value Value to be set at the given path.
      * @return array
      */
-    public static function set(&$array, $key, $value)
-    {
-        if (is_null($key)) return $array = $value;
+    public static function set(array &$array, $key, $value) {
+        if (is_null($key)) {
+            return $array = $value;
+        }
 
         $keys = explode('.', $key);
 
-        while (count($keys) > 1)
-        {
+        while (count($keys) > 1) {
             $key = array_shift($keys);
 
-            if ( ! isset($array[$key]) or ! is_array($array[$key]))
-            {
+            if (!isset($array[$key]) || !is_array($array[$key])) {
                 $array[$key] = array();
             }
 
-            $array =& $array[$key];
+            $array = &$array[$key];
         }
 
         $array[array_shift($keys)] = $value;
