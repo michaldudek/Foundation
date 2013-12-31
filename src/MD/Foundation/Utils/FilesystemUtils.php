@@ -40,21 +40,25 @@ class FilesystemUtils
 
         // if globstar is inside braces
         if ($flags & GLOB_BRACE) {
-            // extract the globstar from inside the braces and add a new pattern to patterns list
-            $patterns[] = preg_replace_callback('/(.+)?\{(.+)?([\*]{2})(.?)\}(.?)/i', function($matches) {
-                $brace = '{'. $matches[2] . $matches[4] .'}';
-                if ($brace === '{,}' || $brace === '{}') {
-                    $brace = '';
-                }
+            $regexp = '/\{(.+)?([\*]{2}[^,]?)(.?)\}/i';
+            // check if this situation really occurs (otherwise we can end up with infinite nesting)
+            if (preg_match($regexp, $pattern)) {
+                // extract the globstar from inside the braces and add a new pattern to patterns list
+                $patterns[] = preg_replace_callback('/(.+)?\{(.+)?([\*]{2}[^,]?)(.?)\}(.?)/i', function($matches) {
+                    $brace = '{'. $matches[2] . $matches[4] .'}';
+                    if ($brace === '{,}' || $brace === '{}') {
+                        $brace = '';
+                    }
 
-                $pattern = $matches[1] . $brace . $matches[5];
-                return str_replace('//', '/', $pattern);
+                    $pattern = $matches[1] . $brace . $matches[5];
+                    return str_replace('//', '/', $pattern);
+                }, $pattern);
 
-                return $matches[1] . $brace . $matches[5];
-            }, $pattern);
-
-            // and now change the braces in the main pattern to globstar
-            $pattern = preg_replace('/\{(.+)?([\*]{2})(.?)\}/i', '**', $pattern);
+                // and now change the braces in the main pattern to globstar
+                $pattern = preg_replace_callback($regexp, function($matches) {
+                    return $matches[2];
+                }, $pattern);
+            }
         }
 
         $files = array();
