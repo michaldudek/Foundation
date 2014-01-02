@@ -315,6 +315,93 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testSortPaths() {
+        $paths = array(
+            'app.js',
+            'app.min.js',
+            'dolor.txt',
+            'global.js',
+            'global.min.js',
+            'ipsum.txt',
+            'lorem.txt',
+            'company/bilbo.txt',
+            'company/dwarves/bifur.txt',
+            'company/dwarves/bombur.txt',
+            'company/dwarves/oin.txt',
+            'company/dwarves/oin.txt', // double, to cover situation when two are equal
+            'company/dwarves/thorin.txt',
+            'company/wizards/gandalf.txt',
+            'company/wizards/radagast.txt',
+            'lipsum/root.js',
+            'lipsum/dolor/dolor.txt',
+            'lipsum/dolor/valuptatos.js',
+            'lipsum/dolor/amet/adipiscit.txt',
+            'lipsum/dolor/amet/elit.txt',
+            'lipsum/dolor/amet/lorem.txt',
+            'newdir/file.txt',
+            'newdir/dummy/dummy.js',
+            'newdir/dummy/leaf.txt',
+        );
+
+        shuffle($paths);
+
+        $this->assertEquals(array(
+            'company/dwarves/bifur.txt',
+            'company/dwarves/bombur.txt',
+            'company/dwarves/oin.txt',
+            'company/dwarves/oin.txt',
+            'company/dwarves/thorin.txt',
+            'company/wizards/gandalf.txt',
+            'company/wizards/radagast.txt',
+            'company/bilbo.txt',
+            'lipsum/dolor/amet/adipiscit.txt',
+            'lipsum/dolor/amet/elit.txt',
+            'lipsum/dolor/amet/lorem.txt',
+            'lipsum/dolor/dolor.txt',
+            'lipsum/dolor/valuptatos.js',
+            'lipsum/root.js',
+            'newdir/dummy/dummy.js',
+            'newdir/dummy/leaf.txt',
+            'newdir/file.txt',
+            'app.js',
+            'app.min.js',
+            'dolor.txt',
+            'global.js',
+            'global.min.js',
+            'ipsum.txt',
+            'lorem.txt',
+        ), ArrayUtils::sortPaths($paths), 'Failed to sort with child first.');
+
+        shuffle($paths);
+
+        $this->assertEquals(array(
+            'app.js',
+            'app.min.js',
+            'dolor.txt',
+            'global.js',
+            'global.min.js',
+            'ipsum.txt',
+            'lorem.txt',
+            'company/bilbo.txt',
+            'company/dwarves/bifur.txt',
+            'company/dwarves/bombur.txt',
+            'company/dwarves/oin.txt',
+            'company/dwarves/oin.txt',
+            'company/dwarves/thorin.txt',
+            'company/wizards/gandalf.txt',
+            'company/wizards/radagast.txt',
+            'lipsum/root.js',
+            'lipsum/dolor/dolor.txt',
+            'lipsum/dolor/valuptatos.js',
+            'lipsum/dolor/amet/adipiscit.txt',
+            'lipsum/dolor/amet/elit.txt',
+            'lipsum/dolor/amet/lorem.txt',
+            'newdir/file.txt',
+            'newdir/dummy/dummy.js',
+            'newdir/dummy/leaf.txt',
+        ), ArrayUtils::sortPaths($paths, true), 'Failed to sort with root first.');
+    }
+
     public function testPushAfter() {
         $input = 'lorem ipsum';
 

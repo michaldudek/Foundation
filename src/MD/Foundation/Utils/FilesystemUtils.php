@@ -11,11 +11,16 @@
  */
 namespace MD\Foundation\Utils;
 
+use MD\Foundation\Utils\ArrayUtils;
+
 /**
  * @static
  */
 class FilesystemUtils
 {
+
+    const GLOB_ROOTFIRST = 1024;
+    const GLOB_CHILDFIRST =  2048;
     
     /**
      * Extended glob() functionality that supports double star "**" wildcard.
@@ -33,7 +38,20 @@ class FilesystemUtils
     public static function glob($pattern, $flags = 0) {
         // if not using ** then just use PHP's glob()
         if (stripos($pattern, '**') === false) {
-            return glob($pattern, $flags);
+            // turn off the custom flags
+            $files = glob($pattern, ($flags | static::GLOB_CHILDFIRST | static::GLOB_ROOTFIRST) ^ (static::GLOB_CHILDFIRST | static::GLOB_ROOTFIRST));
+
+            // sort alphabetically
+            sort($files);
+
+            // sort by root first?
+            if ($flags & static::GLOB_ROOTFIRST) {
+                $files = ArrayUtils::sortPaths($files, true);
+            } else if ($flags & static::GLOB_CHILDFIRST) {
+                $files = ArrayUtils::sortPaths($files, false);
+            }
+
+            return $files;
         }
 
         $patterns = array();
@@ -81,7 +99,16 @@ class FilesystemUtils
         }
 
         $files = array_unique($files);
+
+        // sort alphabetically
         sort($files);
+
+        // sort by root first?
+        if ($flags & static::GLOB_ROOTFIRST) {
+            $files = ArrayUtils::sortPaths($files, true);
+        } else if ($flags & static::GLOB_CHILDFIRST) {
+            $files = ArrayUtils::sortPaths($files, false);
+        }
 
         return $files;
     }

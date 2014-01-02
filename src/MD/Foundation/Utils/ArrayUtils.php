@@ -326,6 +326,50 @@ class ArrayUtils
     }
 
     /**
+     * Sorts an array of paths in either "child first" or "root first" order.
+     *
+     * @param  array   $paths     Array of paths (strings).
+     * @param  boolean $rootFirst [optional] Root first? Default: false (child first).
+     * @param  boolean $separator [optional] Used path separator. Default: DIRECTORY_SEPARATOR.
+     * @return array
+     */
+    public static function sortPaths(array $paths, $rootFirst = false, $separator = DS) {
+        usort($paths, function($a, $b) use ($rootFirst, $separator) {
+            $a = trim(trim($a, $separator));
+            $b = trim(trim($b, $separator));
+
+            if ($a === $b) {
+                return 0;
+            }
+
+            $aPath = explode($separator, $a);
+            $bPath = explode($separator, $b);
+
+            // find first distinct path element
+            $aNode = array_shift($aPath);
+            $bNode = array_shift($bPath);
+
+            while($aNode === $bNode) {
+                $aNode = array_shift($aPath);
+                $bNode = array_shift($bPath);
+            }
+
+            // if one of the paths has finished then it means they're in root
+            if (empty($aPath) && !empty($bPath)) {
+                return $rootFirst ? -1 : 1;
+            } else if (empty($bPath) && !empty($aPath)) {
+                return $rootFirst ? 1 : -1;
+            }
+
+            // normal sort comparison based on first distinct element
+            $order = array($aNode, $bNode);
+            sort($order);
+            return $order[0] === $aNode ? -1 : 1;
+        });
+        return $paths;
+    }
+
+    /**
      * Push a value after another one in an array
      *
      * @param array $array Array to push into.
