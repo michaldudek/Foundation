@@ -74,6 +74,7 @@ class Debugger
             $class = $object;
         } else {
             $class = get_class($object);
+            $class = ltrim($class, NS);
         }
 
         if ($stripNamespace) {
@@ -118,6 +119,9 @@ class Debugger
     public static function getObjectAncestors($object) {
         $parents = class_parents($object);
         $parents = ArrayUtils::resetKeys($parents);
+        $parents = array_map(function($parent) {
+            return ltrim($parent, NS);
+        }, $parents);
         return $parents;
     }
     
@@ -129,8 +133,12 @@ class Debugger
      * @return bool
      */
     public static function isImplementing($class, $interface) {
-        $interface = ltrim($interface, '\\');
-        return in_array($interface, class_implements($class));
+        $interface = ltrim($interface, NS);
+        $implements = array_map(function($iface) {
+            return ltrim($iface, NS);
+        }, class_implements($class));
+
+        return in_array($interface, $implements);
     }
 
     /**
@@ -142,11 +150,13 @@ class Debugger
      * @return bool
      */
     public static function isExtending($class, $parent, $includeSelf = false) {
-        if ($includeSelf) {
-            return is_a($class, $parent, true);
+        if (is_object($class)) {
+            $class = static::getType($class);
         }
+        $class = ltrim($class, NS);
+        $parent = ltrim($parent, NS);
 
-        return in_array($parent, self::getObjectAncestors($class));
+        return ($includeSelf && $class === $parent) || in_array($parent, self::getObjectAncestors($class));
     }
 
     /**
