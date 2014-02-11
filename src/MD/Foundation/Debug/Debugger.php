@@ -472,9 +472,12 @@ class Debugger
                 case 'boolean':
                     $string .= '<i>'. (($row) ? 'true' : 'false') .'</i>';
                 break;
+
+                case 'resource':
+                    $string .= '<i>Resource '. get_resource_type($row) .'</i>';
                 
                 default:
-                    $string .= htmlspecialchars($row);
+                    $string .= htmlspecialchars((string) $row);
             }
             
             $string .= NL;
