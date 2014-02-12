@@ -349,7 +349,7 @@ class Debugger
         $name = get_class($e);
         $trace = self::getPrettyTrace($e->getTrace());
 
-        $exceptionPage = realpath(dirname(__FILE__) .'/../../../') .'/error.php';
+        $exceptionPage = dirname(__FILE__) .'/../../../error.php';
         include $exceptionPage;
         die();
     }
@@ -407,7 +407,7 @@ class Debugger
 
         // normal web error
         header('HTTP/1.1 500 Internal Server Error');
-        $errorPage = realpath(dirname(__FILE__) .'/../../../') .'/error.php';
+        $errorPage = dirname(__FILE__) .'/../../../error.php';
         include $errorPage;
         die();
     }
