@@ -181,10 +181,10 @@ class StringUtils
      */
     public static function getFirstSentence($string) {
         $string = strip_tags($string);
-        $breakers = array('.', '!', '?');
+        $breakers = array('. ', '! ', '? ', "\n");
         $breakerPosition = mb_strlen($string);
         foreach($breakers as $breaker) {
-            $position = stripos($string, $breaker .' ');
+            $position = stripos($string, $breaker);
             if ($position) {
                 $breakerPosition = min($breakerPosition, $position);
             }
