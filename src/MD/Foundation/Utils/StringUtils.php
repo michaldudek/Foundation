@@ -172,6 +172,25 @@ class StringUtils
         $words = static::getWords($string, true);
         return (!empty($words)) ? $words[0] : null;
     }
+
+    /**
+     * Returns the first sentence from the given string, previously removing any HTML tags.
+     * 
+     * @param  string $string
+     * @return string
+     */
+    public static function getFirstSentence($string) {
+        $string = strip_tags($string);
+        $breakers = array('.', '!', '?');
+        $breakerPosition = mb_strlen($string);
+        foreach($breakers as $breaker) {
+            $position = stripos($string, $breaker .' ');
+            if ($position) {
+                $breakerPosition = min($breakerPosition, $position);
+            }
+        }
+        return mb_substr($string, 0, $breakerPosition);
+    }
     
     /**
      * Returns how many words are used in the string.
