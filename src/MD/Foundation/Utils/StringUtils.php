@@ -387,7 +387,7 @@ class StringUtils
 
         return $string;
     }
-    
+
     /**
      * Parses the given string looking for variables to insert to from the given set of variables.
      * 
@@ -398,7 +398,7 @@ class StringUtils
      * @param mixed $variables Either an array or an object with variables.
      * @return string
      */
-    public static function parseVariables($string, $variables) {
+    public static function interpolate($string, $variables) {
         if (!is_object($variables) && !is_array($variables)) {
             throw new InvalidArgumentException('array or object', $variables);
         }
@@ -424,6 +424,19 @@ class StringUtils
         }, $string);
         
         return $string;
+    }
+    
+    /**
+     * Alias for ::interpolate().
+     *
+     * @param string $string String to parse.
+     * @param mixed $variables Either an array or an object with variables.
+     * @return string
+     *
+     * @deprecated Please use ::interpolate() instead.
+     */
+    public static function parseVariables($string, $variables) {
+        return static::interpolate($string, $variables);
     }
     
     /**
