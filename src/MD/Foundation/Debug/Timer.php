@@ -171,7 +171,7 @@ class Timer
      * @return int Memory usage in bytes.
      */
     public function getMemoryUsage() {
-        $peakMemory = $this->_stopMemoryPeak ? $this->_stopMemoryPeak : static::getCurrentMemory();
+        $peakMemory = $this->_stopMemoryPeak ? $this->_stopMemoryPeak : static::getCurrentMemoryPeak();
         return static::memoryDifference($this->_startMemory, $peakMemory);
     }
 
