@@ -41,13 +41,7 @@ class ArrayUtils
      * @return array
      */
     public static function resetKeys(array $array) {
-        $return = array();
-
-        foreach($array as &$row) {
-            $return[] = $row;
-        }
-
-        return $return;
+        return array_values($array);
     }
 
     /**

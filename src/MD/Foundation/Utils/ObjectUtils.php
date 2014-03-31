@@ -12,6 +12,7 @@
 namespace MD\Foundation\Utils;
 
 use MD\Foundation\Exceptions\InvalidArgumentException;
+use MD\Foundation\Utils\ArrayUtils;
 use MD\Foundation\Utils\StringUtils;
 
 /**
@@ -305,13 +306,7 @@ class ObjectUtils
             throw new InvalidArgumentException('array or object convertible to array', $objects);
         }
 
-        $return = array();
-        
-        foreach($objects as $object) {
-            $return[] = $object;
-        }
-        
-        return $return;
+        return ArrayUtils::resetKeys($objects);
     }
 
     /**
