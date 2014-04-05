@@ -530,7 +530,7 @@ class ArrayUtils
         foreach($keys as $key) {
             if (
                 (!isset($array[$key]))
-                || ($array[$key] !== false && empty($array[$key]))
+                || (is_array($array[$key]) && empty($array[$key]))
                 || (is_string($array[$key]) && (trim($array[$key]) === ''))
             ) {
                 return false;

@@ -722,6 +722,8 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(ArrayUtils::checkValues(array('key' => 'val', 'key1' => true), array('key', 'key1')));
         $this->assertTrue(ArrayUtils::checkValues(array('key' => 'val', 'key1' => false), array('key', 'key1')));
         $this->assertFalse(ArrayUtils::checkValues(array('key' => 'val', 'key1' => '   '), array('key', 'key1')));
+        $this->assertTrue(ArrayUtils::checkValues(array('key' => 'val', 'key1' => 0), array('key', 'key1')));
+        $this->assertTrue(ArrayUtils::checkValues(array('key' => 'val', 'key1' => '0'), array('key', 'key1')));
     }
 
     public function testCleanEmpty() {
