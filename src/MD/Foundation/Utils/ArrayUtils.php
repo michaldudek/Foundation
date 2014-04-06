@@ -307,7 +307,7 @@ class ArrayUtils
      * @param  array   $values Values to be found.
      * @return boolean
      */
-    public static function hasValues(array $array, array $values) {
+    public static function hasValue(array $array, array $values) {
         return count(array_intersect($array, $values)) > 0;
     }
 
