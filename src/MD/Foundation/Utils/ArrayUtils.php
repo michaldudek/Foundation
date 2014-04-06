@@ -290,6 +290,28 @@ class ArrayUtils
     }
 
     /**
+     * Removes $values from the $array.
+     * 
+     * @param  array  $array  Array to remove items from.
+     * @param  array  $values Values to be removed.
+     * @return array
+     */
+    public static function removeValues(array $array, array $values) {
+        return array_diff($array, $values);
+    }
+
+    /**
+     * Checks whether $array has at least one of the $values.
+     * 
+     * @param  array   $array  Array to be checked.
+     * @param  array   $values Values to be found.
+     * @return boolean
+     */
+    public static function hasValues(array $array, array $values) {
+        return count(array_intersect($array, $values)) > 0;
+    }
+
+    /**
      * Sorts a multidimensional array by key (2-dimensional).
      *
      * @param array $array Array to sort.
