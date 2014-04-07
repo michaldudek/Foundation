@@ -208,6 +208,21 @@ class ArrayUtils
     }
 
     /**
+     * Special version of implode that uses alternative implode string for the last item in the array.
+     * 
+     * @param  array  $array         Array to be imploded.
+     * @param  string $separator     [optional] Separator to implode with. Default: ','.
+     * @param  string $lastSeparator [optional] Separator for last imploded element - if none then $separator will be used. Default: null.
+     * @return string
+     */
+    public static function implode(array $array, $separator = ',', $lastSeparator = null) {
+        $lastSeparator = $lastSeparator === null ? $separator : $lastSeparator;
+        $last = array_pop($array);
+        $string = implode($separator, $array);
+        return $last ? $string . $lastSeparator . $last : $string;
+    }
+
+    /**
      * Implodes all fields with a specific key from a multidimensional array.
      *
      * @param array $array Array to implode from.
@@ -216,7 +231,7 @@ class ArrayUtils
      * @return string
      */
     public static function implodeByKey(array $array, $key, $separator = ',') {
-        return implode($separator, static::keyFilter($array, $key));
+        return static::implode(static::keyFilter($array, $key), $separator);
     }
 
     /**
