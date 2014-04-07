@@ -217,7 +217,7 @@ class ArrayUtils
      */
     public static function implode(array $array, $separator = ',', $lastSeparator = null) {
         $lastSeparator = $lastSeparator === null ? $separator : $lastSeparator;
-        $last = array_pop($array);
+        $last = count($array) > 1 ? array_pop($array) : null;
         $string = implode($separator, $array);
         return $last ? $string . $lastSeparator . $last : $string;
     }
@@ -231,7 +231,7 @@ class ArrayUtils
      * @return string
      */
     public static function implodeByKey(array $array, $key, $separator = ',') {
-        return static::implode(static::keyFilter($array, $key), $separator);
+        return static::implode(static::pluck($array, $key), $separator);
     }
 
     /**
