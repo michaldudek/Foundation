@@ -50,7 +50,7 @@ class Cipher
     public function __construct($secret, $algorithm = MCRYPT_RIJNDAEL_256) {
         $this->secret = hash('sha256', $secret, true);
         $this->algorithm = $algorithm;
-        $this->iv = mcrypt_create_iv(32);
+        $this->iv = mcrypt_create_iv(32, MCRYPT_DEV_URANDOM);
     }
 
     /**
