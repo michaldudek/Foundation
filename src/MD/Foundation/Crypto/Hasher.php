@@ -143,6 +143,8 @@ class Hasher
      * @return boolean
      */
     public function slowEquals($a, $b) {
+        $a = (string)$a;
+        $b = (string)$b;
         $diff = mb_strlen($a) ^ mb_strlen($b);
         for($i = 0; $i < mb_strlen($a) && $i < mb_strlen($b); $i++) {
             $diff |= ord($a[$i]) ^ ord($b[$i]);
