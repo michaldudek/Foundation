@@ -569,7 +569,7 @@ class StringUtils
     public static function rgbToHex($rgb, $separator = ',') {
         $rgb = is_array($rgb) ? $rgb : explode($separator, $rgb);
         $rgb = array_map(function($item) {
-            return intval(trim($rgb));
+            return intval(trim($item));
         }, $rgb);
 
         // validate if really RGB
