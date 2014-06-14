@@ -532,6 +532,65 @@ class StringUtils
         $gb = $mb / 1024;
         return number_format($gb, 2) .' GB';
     }
+
+    /**
+     * Converts the given hex color (e.g. ff000 or #ff000 or #f00) to RGB color.
+     *
+     * Returns an array where index 0 = red, 1 = green, 2 = blue.
+     * 
+     * @param  string $hex Hex color that you want to convert. Can have a # in front.
+     * @return array
+     */
+    public static function hexToRgb($hex) {
+        $hex = ltrim($hex, '#');
+
+        if (mb_strlen($hex) === 3) {
+            $r = hexdec(mb_substr($hex, 0, 1) . mb_substr($hex, 0, 1));
+            $g = hexdec(mb_substr($hex, 1, 1) . mb_substr($hex, 1, 1));
+            $b = hexdec(mb_substr($hex, 2, 1) . mb_substr($hex, 2, 1));
+        } else {
+            $r = hexdec(mb_substr($hex, 0, 2));
+            $g = hexdec(mb_substr($hex, 2, 2));
+            $b = hexdec(mb_substr($hex, 4, 2));
+        }
+
+        return array($r, $g, $b);
+    }
+
+    /**
+     * Converts the given RGB value (either as a separated string or an array) to hex value.
+     * 
+     * @param  array|string $rgb Either a zero-indexed array of red, green and blue values
+     *                           or a string separated by $separator.
+     * @param  string $separator [optional] If $rgb is a string then what's the separator?
+     *                           Default: ','.
+     * @return string
+     */
+    public static function rgbToHex($rgb, $separator = ',') {
+        $rgb = is_array($rgb) ? $rgb : explode($separator, $rgb);
+        $rgb = array_map(function($item) {
+            return intval(trim($rgb));
+        }, $rgb);
+
+        // validate if really RGB
+        if (count($rgb) !== 3) {
+            throw new InvalidArgumentException('valid RGB value', $rgb);
+        }
+
+        // also validate values
+        foreach($rgb as $color) {
+            if ($color < 0 || $color > 255) {
+                throw new InvalidArgumentException('valid RGB value', $rgb);
+            }
+        }
+
+        $hex = '';
+        $hex .= str_pad(dechex($rgb[0]), 2, '0', STR_PAD_LEFT);
+        $hex .= str_pad(dechex($rgb[1]), 2, '0', STR_PAD_LEFT);
+        $hex .= str_pad(dechex($rgb[2]), 2, '0', STR_PAD_LEFT);
+
+        return $hex;
+    }
     
     /**
      * Changes the given UNIX timestamp to a string saying 'xxx ago'.
