@@ -261,6 +261,64 @@ class StringUtils
     }
 
     /**
+     * Adds a prefix to the filename even if a path to file has been given.
+     *
+     * When a path to file has been given then the prefix will still be prepended to the
+     * filename and not the full path.
+     * 
+     * @param  string $file   File name. Either just the file name or a full path to file.
+     * @param  string $prefix Prefix to be added.
+     * @return string
+     */
+    public static function fileNamePrefix($file, $prefix) {
+        $file = trim($file);
+
+        // if empty path given then just return the prefix :P
+        if (empty($file)) {
+            return $prefix;
+        }
+
+        $path = explode(DS, $file);
+        $fileName = end($path);
+
+        $path[count($path) - 1] = $prefix . $fileName;
+        return implode(DS, $path);
+    }
+
+    /**
+     * Adds a suffix to the filename without breaking its extension.
+     *
+     * The suffix will be added before the last dot.
+     * 
+     * @param  string $file   File name. Either just the file name or a full path to file.
+     * @param  string $suffix Suffix to be added.
+     * @return string
+     */
+    public static function fileNameSuffix($file, $suffix) {
+        $file = trim($file);
+
+        // if empty path given then just return the suffix :P
+        if (empty($file)) {
+            return $suffix;
+        }
+
+        $path = explode(DS, $file);
+        $fileName = end($path);
+
+        // if no dot in filename then just append it
+        if (stripos($fileName, '.') === false) {
+            $path[count($path) - 1] = $fileName . $suffix;
+            return implode(DS, $path);
+        }
+
+        $name = explode('.', $fileName);
+        $extension = array_pop($extension);
+
+        $path[count($path) - 1] = implode('.', $name) . $suffix .'.'. $extension;
+        return implode(DS, $path);
+    }
+
+    /**
      * Convert a string with words separated by a separator to camelCase.
      * 
      * @param string $string
