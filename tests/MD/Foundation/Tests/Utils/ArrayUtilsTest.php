@@ -281,6 +281,22 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testRemoveValues() {
+        $array = array('lorem', 'ipsum', 'dolor', 'sit', 'amet', 'adipiscit', 'elit');
+        $result = array(1 => 'ipsum', 2 => 'dolor', 4 => 'amet', 6 => 'elit');
+        $this->assertEquals($result, ArrayUtils::removeValues($array, array('lorem', 'sit', 'adipiscit')));
+    }
+
+    public function testHasValue() {
+        $array = array('lorem', 'ipsum', 'dolor', 'sit', 'amet', 'adipiscit', 'elit');
+        $this->assertTrue(ArrayUtils::hasValue($array, array('dolor')));
+        $this->assertTrue(ArrayUtils::hasValue($array, array('lorem', 'elit')));
+        $this->assertTrue(ArrayUtils::hasValue($array, $array));
+        $this->assertFalse(ArrayUtils::hasValue($array, array('non equitas')));
+        $this->assertFalse(ArrayUtils::hasValue($array, array('')));
+        $this->assertFalse(ArrayUtils::hasValue($array, array()));
+    }
+
     public function testMultiSort() {
         $this->assertEmpty(ArrayUtils::multiSort($this->_getArrayPreset('empty_array'), 'id'));
 

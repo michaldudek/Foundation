@@ -306,6 +306,8 @@ class ArrayUtils
 
     /**
      * Removes $values from the $array.
+     *
+     * It doesn't change the array keys.
      * 
      * @param  array  $array  Array to remove items from.
      * @param  array  $values Values to be removed.
@@ -317,6 +319,8 @@ class ArrayUtils
 
     /**
      * Checks whether $array has at least one of the $values.
+     *
+     * Returns false if $values is empty.
      * 
      * @param  array   $array  Array to be checked.
      * @param  array   $values Values to be found.
