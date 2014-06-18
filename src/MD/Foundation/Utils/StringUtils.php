@@ -180,8 +180,12 @@ class StringUtils
      * @return string
      */
     public static function getFirstSentence($string) {
+        // attach new line to all block closing tags
+        $string = preg_replace('/(\<\/(p|div|article|section)\>)/si', '$1'. NL, $string);
         $string = strip_tags($string);
+
         $breakers = array('. ', '! ', '? ', "\n");
+
         $breakerPosition = mb_strlen($string);
         foreach($breakers as $breaker) {
             $position = stripos($string, $breaker);
@@ -189,7 +193,8 @@ class StringUtils
                 $breakerPosition = min($breakerPosition, $position);
             }
         }
-        return mb_substr($string, 0, $breakerPosition);
+        $sentence = mb_substr($string, 0, $breakerPosition + 1);
+        return trim($sentence);
     }
     
     /**
@@ -312,7 +317,7 @@ class StringUtils
         }
 
         $name = explode('.', $fileName);
-        $extension = array_pop($extension);
+        $extension = array_pop($name);
 
         $path[count($path) - 1] = implode('.', $name) . $suffix .'.'. $extension;
         return implode(DS, $path);
@@ -617,6 +622,8 @@ class StringUtils
 
     /**
      * Converts the given RGB value (either as a separated string or an array) to hex value.
+     *
+     * Returns the hex value in lowercase.
      * 
      * @param  array|string $rgb Either a zero-indexed array of red, green and blue values
      *                           or a string separated by $separator.
@@ -626,8 +633,14 @@ class StringUtils
      */
     public static function rgbToHex($rgb, $separator = ',') {
         $rgb = is_array($rgb) ? $rgb : explode($separator, $rgb);
-        $rgb = array_map(function($item) {
-            return intval(trim($item));
+        $rgb = array_map(function($item) use ($rgb) {
+            $item = trim($item);
+
+            if (!is_numeric($item)) {
+                throw new InvalidArgumentException('valid RGB value', $rgb);
+            }
+            
+            return intval($item);
         }, $rgb);
 
         // validate if really RGB

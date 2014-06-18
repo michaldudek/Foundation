@@ -85,6 +85,44 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('lorem', StringUtils::getFirstWord('lor/em ipsum'));
     }
 
+    /**
+     * @dataProvider provideStringsWithSentences
+     */
+    public function testGetFirstSentence($str, $sentence) {
+        $this->assertEquals($sentence, StringUtils::getFirstSentence($str));
+    }
+
+    public function provideStringsWithSentences() {
+        return array(
+            array(
+                'To be or not to be - that is a question.',
+                'To be or not to be - that is a question.'
+            ),
+            array(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum lobortis erat id diam elementum elementum. Curabitur auctor vehicula ante.',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            ),
+            array(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit! Vestibulum lobortis erat id diam elementum elementum. Curabitur auctor vehicula ante.',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit!'
+            ),
+            array(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit
+                Vestibulum lobortis erat id diam elementum elementum. Curabitur auctor vehicula ante.',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+            ),
+            array(
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit
+Vestibulum lobortis erat id diam elementum elementum. Curabitur auctor vehicula ante.',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+            ),
+            array(
+                '<p>Lorem ipsum dolor sit amet, <span>consectetur</span> adipiscing elit.</p><br><p>Vestibulum lobortis erat id diam elementum elementum. Curabitur auctor vehicula ante.</p>',
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            )
+        );
+    }
+
     public function testWordCount() {
         $this->assertEquals(0, StringUtils::wordCount(''));
         $this->assertEquals(2, StringUtils::wordCount('lorem ipsum'));
@@ -171,6 +209,39 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
             array('<html><head /></html>', 'html-head-html'),
             array('I want to do something like that & whatever', 'I-want-to-do-something-like-that-and-whatever'),
             array('something / else . js', 'something-else-.-js')
+        );
+    }
+
+    /**
+     * @dataProvider provideFileNamePrefixStrings
+     */
+    public function testFileNamePrefix($file, $prefix, $result) {
+        $this->assertEquals($result, StringUtils::fileNamePrefix($file, $prefix));
+    }
+
+    public function provideFileNamePrefixStrings() {
+        return array(
+            array('/var/www/files/lipsum.txt', 'lorem.', '/var/www/files/lorem.lipsum.txt'),
+            array('ipsum.txt', 'lorem.', 'lorem.ipsum.txt'),
+            array('path/to/ipsum.txt', 'lorem.', 'path/to/lorem.ipsum.txt'),
+            array('', 'lorem.', 'lorem.')
+        );
+    }
+
+    /**
+     * @dataProvider provideFileNameSuffixStrings
+     */
+    public function testFileNameSuffix($file, $suffix, $result) {
+        $this->assertEquals($result, StringUtils::fileNameSuffix($file, $suffix));
+    }
+
+    public function provideFileNameSuffixStrings() {
+        return array(
+            array('/var/www/files/lipsum.txt', '.dolor', '/var/www/files/lipsum.dolor.txt'),
+            array('ipsum.txt', '.dolor', 'ipsum.dolor.txt'),
+            array('path/to/ipsum.txt', '.dolor', 'path/to/ipsum.dolor.txt'),
+            array('', '.dolor', '.dolor'),
+            array('ipsum', '.dolor', 'ipsum.dolor')
         );
     }
 
@@ -321,6 +392,63 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('1.0 MB', StringUtils::bytesToString(1024 * 1024));
         $this->assertEquals('1.5 MB', StringUtils::bytesToString(1024 * 1024 * 1.5));
         $this->assertEquals('1.25 GB', StringUtils::bytesToString(1024 * 1024 * 1024 * 1.25));
+    }
+
+    /**
+     * @dataProvider provideHexToRgb
+     */
+    public function testHexToRgb($hex, array $rgb) {
+        $this->assertEquals($rgb, StringUtils::hexToRgb($hex));
+    }
+
+    public function provideHexToRgb() {
+        return array(
+            array('#ffffff', array(255, 255, 255)),
+            array('ffffff', array(255, 255, 255)),
+            array('f00', array(255, 0, 0)),
+            array('000000', array(0, 0, 0)),
+            array('#000', array(0, 0, 0)),
+            array('#C0C0C0', array(192, 192, 192)),
+            array('#B8860B', array(184, 134, 11)),
+            array('7FFFD4', array(127, 255, 212)),
+            array('#ff69B4', array(255, 105, 180))
+        );
+    }
+
+    /**
+     * @dataProvider provideRgbToHex
+     */
+    public function testRgbToHex($rgb, $hex, $separator = ',') {
+        $this->assertEquals($hex, StringUtils::rgbToHex($rgb, $separator));
+    }
+
+    public function provideRgbToHex() {
+        return array(
+            array(array(255,0,255), 'ff00ff'),
+            array(array(255, 182, 193), 'ffb6c1'),
+            array('119,136,153', '778899'),
+            array('75, 0, 130', '4b0082'),
+            array('124-252-0', '7cfc00', '-'),
+            array('189:183:107', 'bdb76b', ':')
+        );
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @dataProvider provideInvalidRgb
+     */
+    public function testRgbToHexWithInvalidRgb($invalidRgb) {
+        StringUtils::rgbToHex($invalidRgb);
+    }
+
+    public function provideInvalidRgb() {
+        return array(
+            array(array(256, 0, 255)),
+            array(array(255, 255, 255, 0.5)),
+            array('lorem,ipsum,dolor,sit'),
+            array('lorem,ipsum,dolor'),
+            array('1lorem,false,true')
+        );
     }
 
     public function testTimeAgo() {
