@@ -13,11 +13,13 @@ class DebuggerTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testIsCli() {
-        // @todo Not sure how... ;)
+        // tests are ran from CLI so this should be true
+        $this->assertTrue(Debugger::isCli());
+        $this->assertFalse(Debugger::isWebRequest());
     }
 
     public function testIsWebRequest() {
-        // @todo Not sure how... ;)
+        $this->markTestIncomplete('No idea how to mock a web request in PHPUnit.');
     }
 
     public function testGetType() {
