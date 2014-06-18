@@ -64,11 +64,11 @@ class TimerStepTest extends \PHPUnit_Framework_TestCase
         // test default
         $timerStep = $this->_provideStep(true);
         $duration = explode('.', $timerStep->stop());
-        $this->assertEquals(8, strlen(end($duration)));
+        $this->assertTrue(strlen(end($duration)) <= 8);
 
         // now test custom
         foreach(array(0, 1, 2, 5, 8, 10, 20) as $precision) {
-           $timerStep = $this->_provideStep(true);
+            $timerStep = $this->_provideStep(true);
             $duration = explode('.', $timerStep->stop($precision));
             if (count($duration) === 2) {
                 $this->assertTrue(strlen(end($duration)) <= $precision);
