@@ -53,14 +53,6 @@ class FilesystemUtilsTest extends \PHPUnit_Framework_TestCase
             $globDir .'newdir/file.txt'
         ), FilesystemUtils::glob($globDir .'**/*.*'), 'Failed to assert using a simple double star wildcard.');
 
-        \MD\dump('GLOB_MARK', GLOB_MARK);
-        \MD\dump('GLOB_NOSORT', GLOB_NOSORT);
-        \MD\dump('GLOB_NOCHECK', GLOB_NOCHECK);
-        \MD\dump('GLOB_NOESCAPE', GLOB_NOESCAPE);
-        \MD\dump('GLOB_BRACE', GLOB_BRACE);
-        \MD\dump('GLOB_ONLYDIR', GLOB_ONLYDIR);
-        \MD\dump('GLOB_ERR', GLOB_ERR);
-
         $this->assertEquals(array(
             $globDir .'company/bilbo.txt',
             $globDir .'company/dwarves/bifur.txt',

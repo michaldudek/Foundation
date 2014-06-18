@@ -19,8 +19,8 @@ use MD\Foundation\Utils\ArrayUtils;
 class FilesystemUtils
 {
 
-    const GLOB_ROOTFIRST = 1024;
-    const GLOB_CHILDFIRST =  2048;
+    const GLOB_ROOTFIRST = 32768;
+    const GLOB_CHILDFIRST =  65536;
     
     /**
      * Extended glob() functionality that supports double star "**" wildcard.
