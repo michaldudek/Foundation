@@ -83,6 +83,18 @@ class Hasher
      * @param integer $hashByteSize [optional] Hash size in bytes. Default: 24.
      */
     public function __construct($algorithm = 'sha256', $iterations = 1000, $saltByteSize = 24, $hashByteSize = 24) {
+        if (!is_int($iterations) && !is_numeric($iterations)) {
+            throw new InvalidArgumentException('valid positive number', $iterations, 2);
+        }
+
+        if ((!is_int($saltByteSize) && !is_numeric($saltByteSize)) || $saltByteSize <= 0) {
+            throw new InvalidArgumentException('valid positive number', $saltByteSize, 3);
+        }
+
+        if (!is_int($hashByteSize) && !is_numeric($hashByteSize)) {
+            throw new InvalidArgumentException('valid positive number', $hashByteSize, 4);
+        }
+
         $this->algorithm = $algorithm;
         $this->iterations = $iterations;
         $this->saltByteSize = $saltByteSize;
@@ -185,6 +197,7 @@ class Hasher
             throw new InvalidArgumentException('positive integer', 'int('. $count .')', 5);
         }
 
+        // on PHP >= 5.5 use the builtin function
         if (function_exists("hash_pbkdf2")) {
             // The output length is in NIBBLES (4-bits) if $rawOutput is false!
             if (!$rawOutput) {
