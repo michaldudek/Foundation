@@ -41,14 +41,14 @@ class FilesystemUtils
             // turn off the custom flags
             $files = glob($pattern, ($flags | static::GLOB_CHILDFIRST | static::GLOB_ROOTFIRST) ^ (static::GLOB_CHILDFIRST | static::GLOB_ROOTFIRST));
 
-            // sort alphabetically
-            sort($files);
-
             // sort by root first?
             if ($flags & static::GLOB_ROOTFIRST) {
                 $files = ArrayUtils::sortPaths($files, true);
             } else if ($flags & static::GLOB_CHILDFIRST) {
                 $files = ArrayUtils::sortPaths($files, false);
+            } else {
+                // default sort order is alphabetically
+                sort($files);
             }
 
             return $files;
@@ -100,14 +100,14 @@ class FilesystemUtils
 
         $files = array_unique($files);
 
-        // sort alphabetically
-        sort($files);
-
         // sort by root first?
         if ($flags & static::GLOB_ROOTFIRST) {
             $files = ArrayUtils::sortPaths($files, true);
         } else if ($flags & static::GLOB_CHILDFIRST) {
             $files = ArrayUtils::sortPaths($files, false);
+        } else {
+            // default sort order is alphabetically
+            sort($files);
         }
 
         return $files;
