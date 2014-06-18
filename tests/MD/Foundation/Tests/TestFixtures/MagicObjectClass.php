@@ -1,9 +1,9 @@
 <?php
 namespace MD\Foundation\Tests\TestFixtures;
 
-use MD\Foundation\MDObject;
+use MD\Foundation\MagicObject;
 
-class MDObjectClass extends MDObject
+class MagicObjectClass extends MagicObject
 {
 
     protected $ipsum;

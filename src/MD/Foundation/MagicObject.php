@@ -14,7 +14,7 @@ use MD\Foundation\Debug\Interfaces\Dumpable;
 use MD\Foundation\Utils\ObjectUtils;
 use MD\Foundation\Utils\StringUtils;
 
-class MDObject implements Dumpable
+class MagicObject implements Dumpable
 {
 
     /**

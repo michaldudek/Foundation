@@ -3,17 +3,17 @@ namespace MD\Foundation\Tests;
 
 use ReflectionClass;
 
-use MD\Foundation\MDObject;
+use MD\Foundation\MagicObject;
 
-use MD\Foundation\Tests\TestFixtures\MDObjectClass;
+use MD\Foundation\Tests\TestFixtures\MagicObjectClass;
 
-class MDObjectTest extends \PHPUnit_Framework_TestCase
+class MagicObjectTest extends \PHPUnit_Framework_TestCase
 {
 
     protected $reflections = array();
 
     public function setUp() {
-        $class = new ReflectionClass('MD\Foundation\MDObject');
+        $class = new ReflectionClass('MD\Foundation\MagicObject');
         foreach(array('__setProperty', '__getProperty') as $methodName) {
             $method = $class->getMethod($methodName);
             $method->setAccessible(true);
@@ -26,7 +26,7 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
     }
 
     public function test_SetProperty() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $this->assertInternalType('array', $this->reflections['__properties']->getValue($obj));
 
         $this->reflections['__setProperty']->invoke($obj, 'lorem', 'ipsum');
@@ -40,12 +40,12 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
      * @expectedException PHPUnit_Framework_Error
      */
     public function test_SetProperty_Invalid() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $this->reflections['__setProperty']->invoke($obj, array(), 'ipsum');
     }
 
     public function test_GetProperty() {
-        $obj= new MDObject();
+        $obj= new MagicObject();
         $this->reflections['__setProperty']->invoke($obj, 'lorem', 'ipsum');
 
         $value = $this->reflections['__getProperty']->invoke($obj, 'lorem');
@@ -59,29 +59,29 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
      * @expectedException PHPUnit_Framework_Error
      */
     public function test_GetProperty_Invalid() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $this->reflections['__getProperty']->invoke($obj, array());
     }
 
     public function testSet() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->lorem = 'ipsum';
 
         $properties = $this->reflections['__properties']->getValue($obj);
         $this->assertArrayHasKey('lorem', $properties);
         $this->assertEquals('ipsum', $properties['lorem']);
 
-        $obj2 = new MDObjectClass();
+        $obj2 = new MagicObjectClass();
         $obj2->ipsum = 'dolor';
         $this->assertAttributeEquals('dolor', 'ipsum', $obj2);
     }
 
     public function testGet() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->lorem = 'ipsum';
         $this->assertEquals('ipsum', $obj->lorem);
 
-        $obj2 = new MDObjectClass();
+        $obj2 = new MagicObjectClass();
         $obj2->ipsum = 'lorem';
         $this->assertEquals('lorem', $obj2->ipsum);
     }
@@ -90,17 +90,17 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
      * @expectedException PHPUnit_Framework_Error_Notice
      */
     public function testGetUndefined() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $value = $obj->undefinedVar;
     }
 
     public function testIsset() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->lorem = 'ipsum';
         $this->assertTrue(isset($obj->lorem));
         $this->assertFalse(isset($obj->ipsum));
 
-        $obj2 = new MDObjectClass();
+        $obj2 = new MagicObjectClass();
         $obj2->ipsum = 'lorem';
         $this->assertTrue(isset($obj2->ipsum));
         $this->assertFalse(isset($obj2->lorem));
@@ -110,7 +110,7 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
      * @expectedException PHPUnit_Framework_Error_Notice
      */
     public function testUnset() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->lorem = 'ipsum';
         $this->assertEquals('ipsum', $obj->lorem);
         unset($obj->lorem);
@@ -121,7 +121,7 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
      * @expectedException PHPUnit_Framework_Error_Notice
      */
     public function testUnsetProperty() {
-        $obj2 = new MDObjectClass();
+        $obj2 = new MagicObjectClass();
         $obj2->ipsum = 'lorem';
         $this->assertEquals('lorem', $obj2->ipsum);
         unset($obj2->ipsum);
@@ -129,7 +129,7 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testCallSetter() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->setLorem('ipsum');
         $this->assertEquals('ipsum', $obj->lorem);
 
@@ -149,12 +149,12 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
      * @expectedException PHPUnit_Framework_Error
      */
     public function testCallSetterInvalid() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->setLorem();
     }
 
     public function testCallGetter() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->lorem = 'ipsum';
         $this->assertEquals('ipsum', $obj->getLorem());
 
@@ -169,7 +169,7 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testCallIsser() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->lorem = true;
         $this->assertTrue($obj->isLorem());
 
@@ -196,25 +196,25 @@ class MDObjectTest extends \PHPUnit_Framework_TestCase
      * @expectedException PHPUnit_Framework_Error
      */
     public function testCallInvalid() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->doSomethingWeird();
     }
 
     public function test_GetClass() {
-        $obj = new MDObject();
-        $this->assertEquals('MD\Foundation\MDObject', $obj->__getClass());
+        $obj = new MagicObject();
+        $this->assertEquals('MD\Foundation\MagicObject', $obj->__getClass());
 
-        $obj2 = new MDObjectClass();
-        $this->assertEquals('MD\Foundation\Tests\TestFixtures\MDObjectClass', $obj2->__getClass());
+        $obj2 = new MagicObjectClass();
+        $this->assertEquals('MD\Foundation\Tests\TestFixtures\MagicObjectClass', $obj2->__getClass());
     }
 
     public function test_Class() {
-        $this->assertEquals('MD\Foundation\MDObject', MDObject::__class());
-        $this->assertEquals('MD\Foundation\Tests\TestFixtures\MDObjectClass', MDObjectClass::__class());
+        $this->assertEquals('MD\Foundation\MagicObject', MagicObject::__class());
+        $this->assertEquals('MD\Foundation\Tests\TestFixtures\MagicObjectClass', MagicObjectClass::__class());
     }
 
     public function testToDumpableArray() {
-        $obj = new MDObject();
+        $obj = new MagicObject();
         $obj->lorem = 'ipsum';
         $obj->dolor = 'sit';
         $this->assertInternalType('array', $obj->toDumpableArray());
