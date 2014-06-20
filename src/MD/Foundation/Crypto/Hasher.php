@@ -184,6 +184,11 @@ class Hasher
      * @return string
      */
     protected function pbkdf2($algorithm, $str, $salt, $count, $keyLength, $rawOutput = false) {
+        // cannot hash empty string
+        if (empty($str) || $str === null) {
+            throw new InvalidArgumentException('non-empty string', $str, 2);
+        }
+
         $algorithm = mb_strtolower($algorithm);
         if (!in_array($algorithm, hash_algos(), true)) {
             throw new InvalidArgumentException('valid hash algorithm name', $algorithm);

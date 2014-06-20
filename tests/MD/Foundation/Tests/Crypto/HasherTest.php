@@ -37,6 +37,22 @@ class HasherTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \InvalidArgumentException
      */
+    public function testHashingEmptyString() {
+        $hasher = new Hasher();
+        $hash = $hasher->hash('');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testHashingNull() {
+        $hasher = new Hasher();
+        $hash = $hasher->hash(null);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
     public function testUsingInvalidAlgorithm() {
         $hasher = new Hasher('jedi_hash');
         $hash = $hasher->hash('loremipsumdolorsitamet');
@@ -128,8 +144,6 @@ class HasherTest extends \PHPUnit_Framework_TestCase
         $strings[] = array('1', '1', true);
         $strings[] = array('asdsv24dfsdf', '2tggsdfsdf', false);
         $strings[] = array('loremipsumdolorsitamet', 'loremipsumdolorsitamet', true);
-        $strings[] = array('', '', true);
-        $strings[] = array(null, null, true);
         $strings[] = array(1, 1, true);
         $strings[] = array(1, 2, false);
         $strings[] = array(123123123, '123123123', true);
@@ -144,7 +158,6 @@ class HasherTest extends \PHPUnit_Framework_TestCase
         $strings[] = array('asdsv24dfsdf');
         $strings[] = array('2tggsdfsdf');
         $strings[] = array('loremipsumdolorsitamet');
-        $strings[] = array('');
 
         return $strings;
     }
