@@ -10,8 +10,8 @@
  */
 
 // convenience constants
-defined('TAB') or define('TAB', "\t");
-defined('NL') or define('NL', "\n");
-defined('DS') or define('DS', DIRECTORY_SEPARATOR);
-defined('PS') or define('PS', PATH_SEPARATOR);
-defined('NS') or define('NS', '\\'); // namespace separator
+defined('TAB') || define('TAB', "\t");
+defined('NL') || define('NL', "\n");
+defined('DS') || define('DS', DIRECTORY_SEPARATOR);
+defined('PS') || define('PS', PATH_SEPARATOR);
+defined('NS') || define('NS', '\\'); // namespace separator

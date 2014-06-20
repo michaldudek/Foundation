@@ -741,12 +741,6 @@ class StringUtils
                 break;
             }
         }
-        /*
-        for (
-            $val = count($lengths) - 1;
-            ($val >= 0) && (($number = $difference / $lengths[$val]) < 1);
-            $val--
-        );*/
 
         $val = ($val < 0) ? 0 : $val;
         $number = floor($number);

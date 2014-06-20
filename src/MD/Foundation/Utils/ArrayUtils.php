@@ -95,7 +95,7 @@ class ArrayUtils
         $return = array();
 
         foreach($array as $k => &$row) {
-            if ((isset($row[$key])) AND ($row[$key] == $value)) {
+            if ((isset($row[$key])) && ($row[$key] == $value)) {
                 if ($preserveKey) {
                     $return[$k] = $row;
                 } else {
@@ -244,7 +244,7 @@ class ArrayUtils
      */
     public static function search(array $array, $key, $value) {
         foreach ($array as $k => &$row) {
-            if ((isset($row[$key])) AND ($row[$key] === $value)) {
+            if ((isset($row[$key])) && ($row[$key] === $value)) {
                 return $k;
             }
         }

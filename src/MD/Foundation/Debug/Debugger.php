@@ -11,13 +11,9 @@
  */
 namespace MD\Foundation\Debug;
 
-use MD\Foundation\Utils\StringUtils;
 use MD\Foundation\Utils\ArrayUtils;
-use MD\Foundation\Debug\Timer;
 use MD\Foundation\Debug\Interfaces\Dumpable;
 
-use MD\Foundation\Exceptions\NotUniqueException;
-use MD\Foundation\Exceptions\NotFoundException;
 use MD\Foundation\Exceptions\NotImplementedException;
 
 /**
@@ -222,9 +218,9 @@ class Debugger
         foreach($arguments as $variable) {
             $dump .= '<pre style="background-color: white; color: black;" class="md-dump">';
             if (is_array($variable)) {
-                $dump .= self::_arrayToString($variable);
+                $dump .= self::arrayToString($variable);
             } elseif (is_object($variable)) {
-                $dump .= self::_objectToString($variable);
+                $dump .= self::objectToString($variable);
             } elseif (is_bool($variable)) {
                 $dump .= ($variable) ? 'true' : 'false';
             } else {
@@ -437,7 +433,7 @@ class Debugger
      * 
      * @codeCoverageIgnore
      */
-    private static function _arrayToString($array, $level = 0, $objectFormat = false) {
+    private static function arrayToString($array, $level = 0, $objectFormat = false) {
         $indentation = str_repeat(TAB, $level);
         $string = '';
         
@@ -445,7 +441,7 @@ class Debugger
         $keyRight = ($objectFormat) ? '' : ']';
         $assign   = ($objectFormat) ? ' = ' : ' => ';
         
-        if (empty($array) AND (!$level)) {
+        if (empty($array) && (!$level)) {
             $array = array($array);
         }
         
@@ -457,12 +453,12 @@ class Debugger
             switch ($rowType) {
                 case 'array':
                     $string .= '<i>array('. count($row) .')'. NL . $indentation .'(</i>'. NL;
-                    $string .= self::_arrayToString($row, $level + 1);          
+                    $string .= self::arrayToString($row, $level + 1);          
                     $string .= $indentation .'<i>)</i>';
                 break;
                 
                 case 'object':
-                    $string .= self::_objectToString($row, $level);
+                    $string .= self::objectToString($row, $level);
                 break;
                 
                 case 'string':
@@ -495,11 +491,11 @@ class Debugger
      * 
      * @codeCoverageIgnore
      */
-    private static function _objectToString($object, $level = 0) {
+    private static function objectToString($object, $level = 0) {
         $indentation = str_repeat(TAB, $level);
         
         if (!is_object($object)) {
-            self::_arrayToString($object, $level);
+            self::arrayToString($object, $level);
         }
         
         $variables = ($object instanceof Dumpable) ? $object->toDumpableArray() : get_object_vars($object);
@@ -508,7 +504,7 @@ class Debugger
         $ancestorsString = (!empty($ancestors)) ? implode(' &lt; ', $ancestors) : '';
 
         $string = '<i>Object of </i>'. $className . (!empty($ancestorsString) ? ' &lt; '. $ancestorsString .' ' : null) .'<i> with properties:'. NL . $indentation .'(</i>'. NL;
-        $string .= self::_arrayToString($variables, $level + 1, true);
+        $string .= self::arrayToString($variables, $level + 1, true);
         $string .= $indentation .'<i>)</i>';
         
         return $string;
