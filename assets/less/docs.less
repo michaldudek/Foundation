@@ -287,6 +287,8 @@ pre[class*="language-"] {
         text-transform: uppercase;
         font-size: 14px;
         color: #9799a7;
+        .transition;
+        opacity: 0;
     }
 
     ul {
@@ -302,5 +304,9 @@ pre[class*="language-"] {
         top: 0;
         max-height: ~"calc(100% - 100px)";
         overflow: auto;
+        
+        .backtop {
+            opacity: 1;
+        }
     }
 }

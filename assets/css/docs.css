@@ -238,6 +238,11 @@ pre[class*="language-"] {
   text-transform: uppercase;
   font-size: 14px;
   color: #9799a7;
+  -webkit-transition: all 0.3s cubic-bezier(0.2, 0.3, 0, 1);
+  -moz-transition: all 0.3s cubic-bezier(0.2, 0.3, 0, 1);
+  -o-transition: all 0.3s cubic-bezier(0.2, 0.3, 0, 1);
+  transition: all 0.3s cubic-bezier(0.2, 0.3, 0, 1);
+  opacity: 0;
 }
 .docs-toc ul {
   margin-left: 15px;
@@ -250,4 +255,7 @@ pre[class*="language-"] {
   top: 0;
   max-height: calc(100% - 100px);
   overflow: auto;
+}
+.docs-toc.fixed .backtop {
+  opacity: 1;
 }
