@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>FilesystemUtils class in MD\Foundation</title>
+    <meta name="description" content="">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../../assets/images/favicon.png">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    
+    
+
+    
+    
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" data-package="lib">
+<link rel="stylesheet" href="../../../assets/components/prism/prism.css" data-package="lib">
+<link rel="stylesheet" href="../../../assets/css/docs.css" data-package="app">
+
+</head>
+
+<body class="class-page">
+                        <nav class="toc">
+                                    <h2><a href="../../../index.html"><i class="fa fa-cube"></i> MD\Foundation</a></h2>
+                    <p class="tagline">A set of useful PHP classes.</p>
+                
+                <div class="buttons">
+                    <a href="../../../index.html" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Documentation</a>
+                    <a href="https://github.com/michaldudek/Foundation" class="btn btn-default btn-sm"><i class="fa fa-github"></i> GitHub</a>
+                </div>
+
+                                                                                                                                                                                                                        <div class="namespace root">
+                            <h4>\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/LogLevels.html">LogLevels</a></li>
+                                                                    <li><a href="../../../MD/Foundation/MagicObject.html">MagicObject</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Crypto\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Crypto/Cipher.html">Cipher</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Crypto/Hasher.html">Hasher</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Debug\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Debug/Debugger.html">Debugger</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Debug/Timer.html">Timer</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Debug/TimerStep.html">TimerStep</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                                                                                                                            <div class="namespace">
+                            <h4>Exceptions\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Exceptions/InvalidArgumentException.html">InvalidArgumentException</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Exceptions/NotImplementedException.html">NotImplementedException</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Utils\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Utils/ArrayUtils.html">ArrayUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/FilesystemUtils.html">FilesystemUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/ObjectUtils.html">ObjectUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/StringUtils.html">StringUtils</a></li>
+                                                            </ul>
+                        </div>
+                                                </nav>
+        
+        <div class="docs language-none">
+                <header id="class" class="nav navbar-default">
+        <div class="container-fluid">
+            <h1>MD\Foundation\Utils\FilesystemUtils <small>Class</small></h1>
+            <div class="short-desc">
+                
+
+            </div>
+        </div>
+    </header>
+
+    <section class="class-container">
+        <div class="row">
+            <div class="col-md-8 class-body">
+                <section class="class-info language-php">
+                    
+
+                </section>
+
+                                    <section class="constants" id="section-constants">
+                        <h2>Constants <small>This class defines the following constants:</small></h2>
+
+                        <table class="table table-striped table-condensed">
+                            <tbody>
+                                                                    <tr>
+                                        <td class="code">FilesystemUtils::GLOB_ROOTFIRST</td>
+                                        <td>
+</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="code">FilesystemUtils::GLOB_CHILDFIRST</td>
+                                        <td>
+</td>
+                                    </tr>
+                                                            </tbody>
+                        </table>
+                    </section>
+                
+                                    <section class="methods" id="section-methods">
+                        <h2>Methods <small>This class defines the following methods:</small></h2>
+
+                                                    <div id="glob" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">glob</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$pattern</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">integer</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$flags</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array|boolean</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Extended glob() functionality that supports double star "**" wildcard.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>PHP's glob() implementation doesn't allow for "**" wildcard. In Bash 4 it can be enabled with "globstar" setting.</p>
+
+<p>In case the "**" wildcard is not used in the pattern then this method just calls PHP's glob().</p>
+
+<p>For full documentation see PHP's glob() documentation.</p>
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $pattern
+                                                        </td>
+                                                        <td><p>The pattern. Supports "**" wildcard.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">integer</td>
+                                                        <td class="code param-name">
+                                                                                                                        $flags
+                                                        </td>
+                                                        <td><p>[optional] glob() flags. See glob()'s documentation. Default: 0.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array|boolean                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                            </section>
+                            </div>
+
+            <div class="col-md-4">
+                <nav class="docs-toc">
+                    
+                                            <h4><a href="#section-constants">Constants</a></h4>
+                    
+                                            <h4><a href="#section-methods">Methods</a></h4>
+                        <ul class="list-unstyled">
+                                                            <li><a href="#glob" class="code">glob</a></li>
+                                                    </ul>
+                    
+                    <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
+                </nav>
+            </div>
+        </div>
+    </section>
+        </div>
+    
+    
+        
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-package="lib"></script>
+<script type="text/javascript" src="../../../assets/components/prism/prism.js" data-package="lib"></script>
+<script type="text/javascript" src="../../../assets/js/docs.js" data-package="app"></script>
+
+</body>
+</html>

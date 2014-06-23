@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MagicObject class in MD\Foundation</title>
+    <meta name="description" content="">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    
+    
+
+    
+    
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" data-package="lib">
+<link rel="stylesheet" href="../../assets/components/prism/prism.css" data-package="lib">
+<link rel="stylesheet" href="../../assets/css/docs.css" data-package="app">
+
+</head>
+
+<body class="class-page">
+                        <nav class="toc">
+                                    <h2><a href="../../index.html"><i class="fa fa-cube"></i> MD\Foundation</a></h2>
+                    <p class="tagline">A set of useful PHP classes.</p>
+                
+                <div class="buttons">
+                    <a href="../../index.html" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Documentation</a>
+                    <a href="https://github.com/michaldudek/Foundation" class="btn btn-default btn-sm"><i class="fa fa-github"></i> GitHub</a>
+                </div>
+
+                                                                                                                                                                                                                        <div class="namespace root">
+                            <h4>\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/LogLevels.html">LogLevels</a></li>
+                                                                    <li><a href="../../MD/Foundation/MagicObject.html">MagicObject</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Crypto\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/Crypto/Cipher.html">Cipher</a></li>
+                                                                    <li><a href="../../MD/Foundation/Crypto/Hasher.html">Hasher</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Debug\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/Debug/Debugger.html">Debugger</a></li>
+                                                                    <li><a href="../../MD/Foundation/Debug/Timer.html">Timer</a></li>
+                                                                    <li><a href="../../MD/Foundation/Debug/TimerStep.html">TimerStep</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                                                                                                                            <div class="namespace">
+                            <h4>Exceptions\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/Exceptions/InvalidArgumentException.html">InvalidArgumentException</a></li>
+                                                                    <li><a href="../../MD/Foundation/Exceptions/NotImplementedException.html">NotImplementedException</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Utils\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/Utils/ArrayUtils.html">ArrayUtils</a></li>
+                                                                    <li><a href="../../MD/Foundation/Utils/FilesystemUtils.html">FilesystemUtils</a></li>
+                                                                    <li><a href="../../MD/Foundation/Utils/ObjectUtils.html">ObjectUtils</a></li>
+                                                                    <li><a href="../../MD/Foundation/Utils/StringUtils.html">StringUtils</a></li>
+                                                            </ul>
+                        </div>
+                                                </nav>
+        
+        <div class="docs language-none">
+                <header id="class" class="nav navbar-default">
+        <div class="container-fluid">
+            <h1>MD\Foundation\MagicObject <small>Class</small></h1>
+            <div class="short-desc">
+                
+
+            </div>
+        </div>
+    </header>
+
+    <section class="class-container">
+        <div class="row">
+            <div class="col-md-8 class-body">
+                <section class="class-info language-php">
+                    
+
+                </section>
+
+                
+                                    <section class="methods" id="section-methods">
+                        <h2>Methods <small>This class defines the following methods:</small></h2>
+
+                                                    <div id="__set" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                            <span class="method-modifier">final</span>
+                        <span class="method-name">__set</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$property</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">mixed</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$value</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Set a property.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>It will try to call a defined setter first.</p>
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $property
+                                                        </td>
+                                                        <td><p>Name of the property.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">mixed</td>
+                                                        <td class="code param-name">
+                                                                                                                        $value
+                                                        </td>
+                                                        <td><p>Value to set to.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="__get" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                            <span class="method-modifier">final</span>
+                        <span class="method-name">__get</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">MD\Foundation\name</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$property</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; mixed</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Get the property.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>It will try to call a defined getter first.</p>
+
+<p>If the property does not exist then it will trigger an E_USER_NOTICE.</p>
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">MD\Foundation\name</td>
+                                                        <td class="code param-name">
+                                                                                                                        $property
+                                                        </td>
+                                                        <td><p>Name of the property.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">mixed                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="__isset" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                            <span class="method-modifier">final</span>
+                        <span class="method-name">__isset</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$property</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; bool</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Is the given property set?</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $property
+                                                        </td>
+                                                        <td><p>Name of the property.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">bool                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="__unset" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                            <span class="method-modifier">final</span>
+                        <span class="method-name">__unset</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$property</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Unset the given property.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $property
+                                                        </td>
+                                                        <td><p>Name of the property.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="__call" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                            <span class="method-modifier">final</span>
+                        <span class="method-name">__call</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$method</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">array</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$arguments</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; mixed</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Overload setters and getters and do what they would normally do.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $method
+                                                        </td>
+                                                        <td><p>Method name.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">array</td>
+                                                        <td class="code param-name">
+                                                                                                                        $arguments
+                                                        </td>
+                                                        <td><p>Array of arguments.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">mixed                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="__getClass" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                            <span class="method-modifier">final</span>
+                        <span class="method-name">__getClass</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns full name of the class of this object.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="__class" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                            <span class="method-modifier">final</span>
+                            <span class="method-modifier">static</span>
+                <span class="method-name">__class</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns full name of the class.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="toDumpableArray" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">toDumpableArray</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns the object in a form of printable array.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                            </section>
+                            </div>
+
+            <div class="col-md-4">
+                <nav class="docs-toc">
+                    
+                    
+                                            <h4><a href="#section-methods">Methods</a></h4>
+                        <ul class="list-unstyled">
+                                                            <li><a href="#__set" class="code">__set</a></li>
+                                                            <li><a href="#__get" class="code">__get</a></li>
+                                                            <li><a href="#__isset" class="code">__isset</a></li>
+                                                            <li><a href="#__unset" class="code">__unset</a></li>
+                                                            <li><a href="#__call" class="code">__call</a></li>
+                                                            <li><a href="#__getClass" class="code">__getClass</a></li>
+                                                            <li><a href="#__class" class="code">__class</a></li>
+                                                            <li><a href="#toDumpableArray" class="code">toDumpableArray</a></li>
+                                                    </ul>
+                    
+                    <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
+                </nav>
+            </div>
+        </div>
+    </section>
+        </div>
+    
+    
+        
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-package="lib"></script>
+<script type="text/javascript" src="../../assets/components/prism/prism.js" data-package="lib"></script>
+<script type="text/javascript" src="../../assets/js/docs.js" data-package="app"></script>
+
+</body>
+</html>

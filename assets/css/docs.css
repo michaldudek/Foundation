@@ -1,0 +1,253 @@
+/*---------------------------------------------------
+    LESS Elements 0.9-md\foundation
+  ---------------------------------------------------
+    A set of useful LESS mixins
+    More info at: http://lesselements.com
+  ---------------------------------------------------
+    Modified for Genry                            */
+pre[class*="language-"] {
+  border: none;
+  box-shadow: none;
+}
+.toc,
+.docs {
+  display: block;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  padding: 10px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.toc {
+  left: 0;
+  width: 20%;
+  background: #ffffff url(../images/bg.jpg) no-repeat top right;
+  background-size: cover;
+  color: #fff;
+}
+.toc h2 {
+  text-align: center;
+  margin-bottom: 0;
+}
+.toc h2 a {
+  color: #fff;
+}
+.toc h2 a:hover {
+  text-decoration: none;
+}
+.toc .tagline {
+  text-align: center;
+  font-weight: 100;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.toc .buttons {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.toc .namespace {
+  margin-top: 10px;
+  font-weight: 100;
+  letter-spacing: 1px;
+}
+.toc .namespace h4 {
+  font-size: 16px;
+  font-weight: 100;
+  color: #999;
+}
+.toc .namespace ul li {
+  margin: 3px 0;
+}
+.toc .namespace a {
+  color: white;
+  -webkit-transition: all 0.15s linear;
+  -moz-transition: all 0.15s linear;
+  -o-transition: all 0.15s linear;
+  transition: all 0.15s linear;
+}
+.toc .namespace a:hover {
+  color: #999;
+  text-decoration: none;
+}
+.toc .namespace.root h4 {
+  display: none;
+}
+.toc .namespace.root ul {
+  padding-left: 0;
+}
+.index-page .toc .buttons {
+  margin-top: 20px;
+}
+.index-page .header {
+  text-align: center;
+  margin-bottom: 75px;
+}
+.index-page .header h1 {
+  font-size: 64px;
+  margin-bottom: 0;
+}
+.index-page .header .tagline {
+  font-weight: 100;
+  font-size: 30px;
+}
+.index-page .header .badges {
+  margin-top: 35px;
+}
+.index-page .what-why {
+  width: 66.666666%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 24px;
+  font-weight: 200;
+  line-height: 2;
+  color: #555;
+  margin-bottom: 100px;
+}
+.index-page .what-why p {
+  margin-bottom: 0;
+}
+.index-page .using {
+  width: 75%;
+  margin: 0 auto;
+  text-align: center;
+}
+.index-page .using pre {
+  display: inline-block;
+}
+.index-page .features {
+  margin: 65px 0;
+  margin-bottom: 0;
+}
+.index-page .features .feature {
+  margin: 20px 30px;
+  min-height: 250px;
+}
+.index-page .features .feature .icon {
+  color: #888;
+  font-size: 72px;
+  text-align: center;
+  line-height: 100px;
+  padding-top: 20px;
+}
+.index-page .footer {
+  text-align: center;
+  width: 50%;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  color: #888;
+  font-size: 13px;
+  font-weight: 200;
+}
+.docs {
+  right: 0;
+  width: 80%;
+}
+.class-page .docs {
+  padding: 0;
+}
+.class-page .docs .code {
+  font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+  color: #606;
+}
+.class-page .docs .short-desc {
+  font-size: 19px;
+  font-weight: 300;
+}
+.class-page .docs .class-container {
+  padding: 0 15px;
+}
+.class-page .docs .class-body {
+  padding-left: 50px;
+}
+.class-page .docs .class-toc {
+  padding: 25px 40px;
+}
+.class-page .docs .class-info {
+  margin-top: 50px;
+}
+.class-page .docs h2 {
+  font-size: 24px;
+  background: #f8f8f8;
+  margin-top: 50px;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 10px 15px;
+}
+.class-page .docs h3 {
+  background: #f8f8f8;
+  margin-left: -15px;
+  margin-right: -15px;
+  padding: 10px 15px;
+}
+.class-page .docs .table p {
+  margin: 0;
+}
+.class-page .docs .method {
+  margin-bottom: 100px;
+}
+.class-page .docs .method-name {
+  font-weight: bold;
+}
+.class-page .docs .method-modifier {
+  font-size: 18px;
+  color: #999;
+}
+.class-page .docs .method-arguments {
+  color: #444;
+  font-size: 20px;
+}
+.class-page .docs .method-argument-hint {
+  font-size: 18px;
+  color: #999;
+}
+.class-page .docs .method-return {
+  font-size: 20px;
+  color: #444;
+}
+.class-page .docs .method-short-desc {
+  font-size: 18px;
+  font-weight: 300;
+}
+.class-page .docs .method-info {
+  margin-left: 50px;
+}
+.class-page .docs .method-info h5 {
+  margin-top: 25px;
+}
+.class-page .docs .method-info .param-name {
+  color: #000;
+  font-weight: bold;
+}
+.docs-toc {
+  width: 275px;
+  margin: 50px;
+  padding: 30px 35px;
+  border: 1px solid #cecfd5;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+.docs-toc h4 a {
+  text-transform: uppercase;
+  font-size: 16px;
+  font-weight: 600;
+  color: #9799a7;
+}
+.docs-toc .backtop {
+  text-transform: uppercase;
+  font-size: 14px;
+  color: #9799a7;
+}
+.docs-toc ul {
+  margin-left: 15px;
+}
+.docs-toc ul li {
+  margin: 3px 0;
+}
+.docs-toc.fixed {
+  position: fixed;
+  top: 0;
+  max-height: calc(100% - 100px);
+  overflow: auto;
+}

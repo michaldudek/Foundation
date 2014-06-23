@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Timer class in MD\Foundation</title>
+    <meta name="description" content="">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../../assets/images/favicon.png">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    
+    
+
+    
+    
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" data-package="lib">
+<link rel="stylesheet" href="../../../assets/components/prism/prism.css" data-package="lib">
+<link rel="stylesheet" href="../../../assets/css/docs.css" data-package="app">
+
+</head>
+
+<body class="class-page">
+                        <nav class="toc">
+                                    <h2><a href="../../../index.html"><i class="fa fa-cube"></i> MD\Foundation</a></h2>
+                    <p class="tagline">A set of useful PHP classes.</p>
+                
+                <div class="buttons">
+                    <a href="../../../index.html" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Documentation</a>
+                    <a href="https://github.com/michaldudek/Foundation" class="btn btn-default btn-sm"><i class="fa fa-github"></i> GitHub</a>
+                </div>
+
+                                                                                                                                                                                                                        <div class="namespace root">
+                            <h4>\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/LogLevels.html">LogLevels</a></li>
+                                                                    <li><a href="../../../MD/Foundation/MagicObject.html">MagicObject</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Crypto\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Crypto/Cipher.html">Cipher</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Crypto/Hasher.html">Hasher</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Debug\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Debug/Debugger.html">Debugger</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Debug/Timer.html">Timer</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Debug/TimerStep.html">TimerStep</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                                                                                                                            <div class="namespace">
+                            <h4>Exceptions\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Exceptions/InvalidArgumentException.html">InvalidArgumentException</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Exceptions/NotImplementedException.html">NotImplementedException</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Utils\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Utils/ArrayUtils.html">ArrayUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/FilesystemUtils.html">FilesystemUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/ObjectUtils.html">ObjectUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/StringUtils.html">StringUtils</a></li>
+                                                            </ul>
+                        </div>
+                                                </nav>
+        
+        <div class="docs language-none">
+                <header id="class" class="nav navbar-default">
+        <div class="container-fluid">
+            <h1>MD\Foundation\Debug\Timer <small>Class</small></h1>
+            <div class="short-desc">
+                
+
+            </div>
+        </div>
+    </header>
+
+    <section class="class-container">
+        <div class="row">
+            <div class="col-md-8 class-body">
+                <section class="class-info language-php">
+                    
+
+                </section>
+
+                
+                                    <section class="methods" id="section-methods">
+                        <h2>Methods <small>This class defines the following methods:</small></h2>
+
+                                                    <div id="__construct" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">__construct</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$instantStart</span><!--
+                                                    --><span class="method-default"> = true</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Constructor.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>Starts the timer automatically by default.</p>
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">bool</td>
+                                                        <td class="code param-name">
+                                                                                                                        $instantStart
+                                                        </td>
+                                                        <td><p>[optional] Should the timer be started immediately? Default: true.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="start" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">start</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Start the timer.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                    
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">BadMethodCallException</td>
+                                                        <td><p>When the timer was already started.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                                                    </div>
+                            </div>
+                                                    <div id="stop" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">stop</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">int</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$precision</span><!--
+                                                    --><span class="method-default"> = 8</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; float</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Stop the timer and return the result duration in seconds.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">int</td>
+                                                        <td class="code param-name">
+                                                                                                                        $precision
+                                                        </td>
+                                                        <td><p>[optional] How many places to round to. Default: 8</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">float                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="step" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">step</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$name</span><!--
+                                                    --><span class="method-default"> = null</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; MD\Foundation\Debug\TimerStep</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Stops the current step, starts a new one and returns the stopped one.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $name
+                                                        </td>
+                                                        <td><p>[optional] Name of the step that should be returned.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">MD\Foundation\Debug\TimerStep                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getDuration" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getDuration</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">int</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$precision</span><!--
+                                                    --><span class="method-default"> = 8</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; float</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns the duration of the timer.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>If not stopped yet then it will simply return time difference between its' start and current time.</p>
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">int</td>
+                                                        <td class="code param-name">
+                                                                                                                        $precision
+                                                        </td>
+                                                        <td><p>[optional] How many places to round to. Default: 8.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">float                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getMemoryUsage" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getMemoryUsage</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns the memory usage during the timer - the difference between the start memory and peak memory during the timer.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>If not stopped yet then it will simply return memory difference between its' start and current memory usage.</p>
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getStartTime" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getStartTime</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; float</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns seconds with microtime when the timer started.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">float                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getStartMemory" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getStartMemory</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns how many bytes of memory PHP was using when the timer started.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getStartMemoryPeak" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getStartMemoryPeak</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns how many bytes of memory PHP was using at most (peak) when the timer started.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getCurrentStep" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getCurrentStep</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; MD\Foundation\Debug\TimerStep</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns the current active step.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">MD\Foundation\Debug\TimerStep                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getStopTime" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getStopTime</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; float</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns seconds with microtime when the timer stopped.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">float                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getStopMemory" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getStopMemory</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns how many bytes of memory PHP was using when the timer stopped.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getStopMemoryPeak" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getStopMemoryPeak</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns how many bytes of memory PHP was using at most (peak) when the timer stopped.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getSteps" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                <span class="method-name">getSteps</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns the steps.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="difference" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">difference</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">float</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$startTime</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">float</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$endTime</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">int</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$precision</span><!--
+                                                    --><span class="method-default"> = 8</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; float</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Calculates the difference between two times.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">float</td>
+                                                        <td class="code param-name">
+                                                                                                                        $startTime
+                                                        </td>
+                                                        <td><p>Start time.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">float</td>
+                                                        <td class="code param-name">
+                                                                                                                        $endTime
+                                                        </td>
+                                                        <td><p>End time.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">int</td>
+                                                        <td class="code param-name">
+                                                                                                                        $precision
+                                                        </td>
+                                                        <td><p>[optional] How many places to round to. Default: 8</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">float                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="memoryDifference" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">memoryDifference</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">int</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$startMemory</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">int</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$endMemory</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Calculates the difference between two memory usages.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">int</td>
+                                                        <td class="code param-name">
+                                                                                                                        $startMemory
+                                                        </td>
+                                                        <td><p>Start memory usage.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">int</td>
+                                                        <td class="code param-name">
+                                                                                                                        $endMemory
+                                                        </td>
+                                                        <td><p>End memory usage.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getMicroTime" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getMicroTime</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; float</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Creates an easier to use value of PHP's microtime()</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">float                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getCurrentMemory" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getCurrentMemory</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns the current memory usage.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getCurrentMemoryPeak" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getCurrentMemoryPeak</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns the current peak memory usage.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                            </section>
+                            </div>
+
+            <div class="col-md-4">
+                <nav class="docs-toc">
+                    
+                    
+                                            <h4><a href="#section-methods">Methods</a></h4>
+                        <ul class="list-unstyled">
+                                                            <li><a href="#__construct" class="code">__construct</a></li>
+                                                            <li><a href="#start" class="code">start</a></li>
+                                                            <li><a href="#stop" class="code">stop</a></li>
+                                                            <li><a href="#step" class="code">step</a></li>
+                                                            <li><a href="#getDuration" class="code">getDuration</a></li>
+                                                            <li><a href="#getMemoryUsage" class="code">getMemoryUsage</a></li>
+                                                            <li><a href="#getStartTime" class="code">getStartTime</a></li>
+                                                            <li><a href="#getStartMemory" class="code">getStartMemory</a></li>
+                                                            <li><a href="#getStartMemoryPeak" class="code">getStartMemoryPeak</a></li>
+                                                            <li><a href="#getCurrentStep" class="code">getCurrentStep</a></li>
+                                                            <li><a href="#getStopTime" class="code">getStopTime</a></li>
+                                                            <li><a href="#getStopMemory" class="code">getStopMemory</a></li>
+                                                            <li><a href="#getStopMemoryPeak" class="code">getStopMemoryPeak</a></li>
+                                                            <li><a href="#getSteps" class="code">getSteps</a></li>
+                                                            <li><a href="#difference" class="code">difference</a></li>
+                                                            <li><a href="#memoryDifference" class="code">memoryDifference</a></li>
+                                                            <li><a href="#getMicroTime" class="code">getMicroTime</a></li>
+                                                            <li><a href="#getCurrentMemory" class="code">getCurrentMemory</a></li>
+                                                            <li><a href="#getCurrentMemoryPeak" class="code">getCurrentMemoryPeak</a></li>
+                                                    </ul>
+                    
+                    <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
+                </nav>
+            </div>
+        </div>
+    </section>
+        </div>
+    
+    
+        
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-package="lib"></script>
+<script type="text/javascript" src="../../../assets/components/prism/prism.js" data-package="lib"></script>
+<script type="text/javascript" src="../../../assets/js/docs.js" data-package="app"></script>
+
+</body>
+</html>

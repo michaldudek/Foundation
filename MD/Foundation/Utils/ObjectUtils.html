@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>ObjectUtils class in MD\Foundation</title>
+    <meta name="description" content="">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../../assets/images/favicon.png">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    
+    
+
+    
+    
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" data-package="lib">
+<link rel="stylesheet" href="../../../assets/components/prism/prism.css" data-package="lib">
+<link rel="stylesheet" href="../../../assets/css/docs.css" data-package="app">
+
+</head>
+
+<body class="class-page">
+                        <nav class="toc">
+                                    <h2><a href="../../../index.html"><i class="fa fa-cube"></i> MD\Foundation</a></h2>
+                    <p class="tagline">A set of useful PHP classes.</p>
+                
+                <div class="buttons">
+                    <a href="../../../index.html" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Documentation</a>
+                    <a href="https://github.com/michaldudek/Foundation" class="btn btn-default btn-sm"><i class="fa fa-github"></i> GitHub</a>
+                </div>
+
+                                                                                                                                                                                                                        <div class="namespace root">
+                            <h4>\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/LogLevels.html">LogLevels</a></li>
+                                                                    <li><a href="../../../MD/Foundation/MagicObject.html">MagicObject</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Crypto\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Crypto/Cipher.html">Cipher</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Crypto/Hasher.html">Hasher</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Debug\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Debug/Debugger.html">Debugger</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Debug/Timer.html">Timer</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Debug/TimerStep.html">TimerStep</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                                                                                                                            <div class="namespace">
+                            <h4>Exceptions\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Exceptions/InvalidArgumentException.html">InvalidArgumentException</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Exceptions/NotImplementedException.html">NotImplementedException</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Utils\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Utils/ArrayUtils.html">ArrayUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/FilesystemUtils.html">FilesystemUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/ObjectUtils.html">ObjectUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/StringUtils.html">StringUtils</a></li>
+                                                            </ul>
+                        </div>
+                                                </nav>
+        
+        <div class="docs language-none">
+                <header id="class" class="nav navbar-default">
+        <div class="container-fluid">
+            <h1>MD\Foundation\Utils\ObjectUtils <small>Class</small></h1>
+            <div class="short-desc">
+                
+
+            </div>
+        </div>
+    </header>
+
+    <section class="class-container">
+        <div class="row">
+            <div class="col-md-8 class-body">
+                <section class="class-info language-php">
+                    
+
+                </section>
+
+                
+                                    <section class="methods" id="section-methods">
+                        <h2>Methods <small>This class defines the following methods:</small></h2>
+
+                                                    <div id="pluck" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">pluck</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns an array with a list of all values (not unique) assigned to a key in a collection of objects.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key to filter by.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">InvalidArgumentException</td>
+                                                        <td><p>When the given $objects argument is not an array or cannot be converted to an array.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                                                    </div>
+                            </div>
+                                                    <div id="keyFilter" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">keyFilter</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Alias for ::pluck().</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key to filter by.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="indexBy" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">indexBy</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Assigns a value under a key of a collection of objects to its main (top level) key.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key on which to explode.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">InvalidArgumentException</td>
+                                                        <td><p>When the given $objects argument is not an array or cannot be converted to an array.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                                                    </div>
+                            </div>
+                                                    <div id="keyExplode" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">keyExplode</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Alias for ::indexBy().</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key on which to explode.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="filter" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">filter</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">mixed</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$value</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$preserveKey</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Filters out all values from a multidimensional array that contains objects that match the given value of they given associative level 2 key.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key to filter by.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">mixed</td>
+                                                        <td class="code param-name">
+                                                                                                                        $value
+                                                        </td>
+                                                        <td><p>Value to filter by.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">bool</td>
+                                                        <td class="code param-name">
+                                                                                                                        $preserveKey
+                                                        </td>
+                                                        <td><p>[optional] Should the level 1 key be preserved or not? Default false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">InvalidArgumentException</td>
+                                                        <td><p>When the given $objects argument is not an array or cannot be converted to an array.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                                                    </div>
+                            </div>
+                                                    <div id="filterByKeyValue" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">filterByKeyValue</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">mixed</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$value</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$preserveKey</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Alias for ::filter().</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key to filter by.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">mixed</td>
+                                                        <td class="code param-name">
+                                                                                                                        $value
+                                                        </td>
+                                                        <td><p>Value to filter by.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">bool</td>
+                                                        <td class="code param-name">
+                                                                                                                        $preserveKey
+                                                        </td>
+                                                        <td><p>[optional] Should the level 1 key be preserved or not? Default false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="groupBy" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">groupBy</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$preserveKey</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Categorize all items from the collection of objects by the value of a specific key.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key to categorize by.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">bool</td>
+                                                        <td class="code param-name">
+                                                                                                                        $preserveKey
+                                                        </td>
+                                                        <td><p>[optional] Preserve keys? Default: false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">InvalidArgumentException</td>
+                                                        <td><p>When the given $objects argument is not an array or cannot be converted to an array.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                                                    </div>
+                            </div>
+                                                    <div id="categorizeByKey" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">categorizeByKey</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$preserveKey</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Alias for ::groupBy().</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key to categorize by.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">bool</td>
+                                                        <td class="code param-name">
+                                                                                                                        $preserveKey
+                                                        </td>
+                                                        <td><p>[optional] Preserve keys? Default: false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="multiSort" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">multiSort</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$key</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$reverse</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Sorts a collection of object based on the specified key.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $key
+                                                        </td>
+                                                        <td><p>Key to sort by.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">bool</td>
+                                                        <td class="code param-name">
+                                                                                                                        $reverse
+                                                        </td>
+                                                        <td><p>[optional] True for descending order, false for ascending. Default: false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">InvalidArgumentException</td>
+                                                        <td><p>When the given $objects argument is not an array or cannot be converted to an array.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                                                    </div>
+                            </div>
+                                                    <div id="resetKeys" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">resetKeys</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array|</span><!--
+                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$objects</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Resets keys of an array containing a collection of objects to numerical values starting with 0.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array|object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $objects
+                                                        </td>
+                                                        <td><p>Collection of objects - either an array or a collection object that implements 'toArray' method.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">InvalidArgumentException</td>
+                                                        <td><p>When the given $objects argument is not an array or cannot be converted to an array.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                                                    </div>
+                            </div>
+                                                    <div id="getter" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getter</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$property</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Creates a getter name for the given object property name.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $property
+                                                        </td>
+                                                        <td><p>Property name.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="setter" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">setter</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$property</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Creates a setter name for the given object property name.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $property
+                                                        </td>
+                                                        <td><p>Property name.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                            </section>
+                            </div>
+
+            <div class="col-md-4">
+                <nav class="docs-toc">
+                    
+                    
+                                            <h4><a href="#section-methods">Methods</a></h4>
+                        <ul class="list-unstyled">
+                                                            <li><a href="#pluck" class="code">pluck</a></li>
+                                                            <li><a href="#keyFilter" class="code">keyFilter</a></li>
+                                                            <li><a href="#indexBy" class="code">indexBy</a></li>
+                                                            <li><a href="#keyExplode" class="code">keyExplode</a></li>
+                                                            <li><a href="#filter" class="code">filter</a></li>
+                                                            <li><a href="#filterByKeyValue" class="code">filterByKeyValue</a></li>
+                                                            <li><a href="#groupBy" class="code">groupBy</a></li>
+                                                            <li><a href="#categorizeByKey" class="code">categorizeByKey</a></li>
+                                                            <li><a href="#multiSort" class="code">multiSort</a></li>
+                                                            <li><a href="#resetKeys" class="code">resetKeys</a></li>
+                                                            <li><a href="#getter" class="code">getter</a></li>
+                                                            <li><a href="#setter" class="code">setter</a></li>
+                                                    </ul>
+                    
+                    <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
+                </nav>
+            </div>
+        </div>
+    </section>
+        </div>
+    
+    
+        
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-package="lib"></script>
+<script type="text/javascript" src="../../../assets/components/prism/prism.js" data-package="lib"></script>
+<script type="text/javascript" src="../../../assets/js/docs.js" data-package="app"></script>
+
+</body>
+</html>

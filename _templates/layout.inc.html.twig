@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block page_title %}{% endblock %}MD\Foundation</title>
+    <meta name="description" content="{% block page_description %}A set of useful PHP classes.{% endblock %}">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ link('assets/images/favicon.png') }}">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    {{ stylesheet('http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css', 'lib') }}
+    {{ stylesheet('http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css', 'lib') }}
+
+    {{ stylesheet('/assets/components/prism/prism.css', 'lib') }}
+    {{ stylesheet('/assets/css/docs.css', 'app') }}
+
+    {{ stylesheets() }}
+</head>
+
+<body {% block body_attr %}{% endblock %}>
+    {% block body %}
+        {% block nav %}
+            <nav class="toc">
+                {% if hide_title is not defined or not hide_title %}
+                    <h2><a href="{{ link('index.html') }}"><i class="fa fa-cube"></i> MD\Foundation</a></h2>
+                    <p class="tagline">A set of useful PHP classes.</p>
+                {% endif %}
+
+                <div class="buttons">
+                    <a href="{{ link('index.html') }}" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Documentation</a>
+                    <a href="https://github.com/michaldudek/Foundation" class="btn btn-default btn-sm"><i class="fa fa-github"></i> GitHub</a>
+                </div>
+
+                {% for namespace in docs.namespaces %}
+                    {% set shortNamespace = namespace|strip_namespace %}
+                    {% set shortNamespaceLength = shortNamespace is empty ? -1 : shortNamespace|length %}
+                    {% set classes = docs.namespaceClasses(namespace) %}
+                    {% if classes is not empty %}
+                        <div class="namespace{% if shortNamespace is empty %} root{% endif %}">
+                            <h4>{{ shortNamespace }}\</h4>
+
+                            <ul>
+                                {% for class in classes %}
+                                    <li><a href="{{ link_class(class) }}">{{ class|strip_namespace|slice(shortNamespaceLength + 1) }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </nav>
+        {% endblock %}
+
+        <div class="docs language-none">
+            {% block content %}
+            {% endblock %}
+        </div>
+    {% endblock %}
+
+    {{ javascript('http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js', 'lib') }}
+    {#{ javascript('http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js', 'lib') }#}
+    {{ javascript('/assets/components/prism/prism.js', 'lib') }}
+    {{ javascript('/assets/js/docs.js') }}
+    {{ javascripts() }}
+</body>
+</html>

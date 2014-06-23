@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>LogLevels class in MD\Foundation</title>
+    <meta name="description" content="Helper class to use with `\Psr\Log` that helps in evaluating log levels hierarchy.">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../assets/images/favicon.png">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    
+    
+
+    
+    
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" data-package="lib">
+<link rel="stylesheet" href="../../assets/components/prism/prism.css" data-package="lib">
+<link rel="stylesheet" href="../../assets/css/docs.css" data-package="app">
+
+</head>
+
+<body class="class-page">
+                        <nav class="toc">
+                                    <h2><a href="../../index.html"><i class="fa fa-cube"></i> MD\Foundation</a></h2>
+                    <p class="tagline">A set of useful PHP classes.</p>
+                
+                <div class="buttons">
+                    <a href="../../index.html" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Documentation</a>
+                    <a href="https://github.com/michaldudek/Foundation" class="btn btn-default btn-sm"><i class="fa fa-github"></i> GitHub</a>
+                </div>
+
+                                                                                                                                                                                                                        <div class="namespace root">
+                            <h4>\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/LogLevels.html">LogLevels</a></li>
+                                                                    <li><a href="../../MD/Foundation/MagicObject.html">MagicObject</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Crypto\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/Crypto/Cipher.html">Cipher</a></li>
+                                                                    <li><a href="../../MD/Foundation/Crypto/Hasher.html">Hasher</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Debug\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/Debug/Debugger.html">Debugger</a></li>
+                                                                    <li><a href="../../MD/Foundation/Debug/Timer.html">Timer</a></li>
+                                                                    <li><a href="../../MD/Foundation/Debug/TimerStep.html">TimerStep</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                                                                                                                            <div class="namespace">
+                            <h4>Exceptions\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/Exceptions/InvalidArgumentException.html">InvalidArgumentException</a></li>
+                                                                    <li><a href="../../MD/Foundation/Exceptions/NotImplementedException.html">NotImplementedException</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Utils\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../MD/Foundation/Utils/ArrayUtils.html">ArrayUtils</a></li>
+                                                                    <li><a href="../../MD/Foundation/Utils/FilesystemUtils.html">FilesystemUtils</a></li>
+                                                                    <li><a href="../../MD/Foundation/Utils/ObjectUtils.html">ObjectUtils</a></li>
+                                                                    <li><a href="../../MD/Foundation/Utils/StringUtils.html">StringUtils</a></li>
+                                                            </ul>
+                        </div>
+                                                </nav>
+        
+        <div class="docs language-none">
+                <header id="class" class="nav navbar-default">
+        <div class="container-fluid">
+            <h1>MD\Foundation\LogLevels <small>Class</small></h1>
+            <div class="short-desc">
+                <p>Helper class to use with <code>\Psr\Log</code> that helps in evaluating log levels hierarchy.</p>
+
+            </div>
+        </div>
+    </header>
+
+    <section class="class-container">
+        <div class="row">
+            <div class="col-md-8 class-body">
+                <section class="class-info language-php">
+                    <p>Example use case:</p>
+
+<pre><code> use MD\Foundation\LogLevels;
+ use Psr\Log\LogLevel;
+ use Psr\Log\LoggerInterface;
+
+ class SMSLogger implements LoggerInterface
+ {
+     public function log($level, $message, array $context) {
+         if (LogLevels::isHigherLevel($level, LogLevel::ALERT, true)) {
+             $this-&gt;sendSms($message, $context);
+         }
+     }
+ }
+</code></pre>
+
+<p>It is useful when you want to filter out some log messages based on their importance,
+as PSR-3 doesn't really define the hierarchy here.</p>
+
+                </section>
+
+                                    <section class="constants" id="section-constants">
+                        <h2>Constants <small>This class defines the following constants:</small></h2>
+
+                        <table class="table table-striped table-condensed">
+                            <tbody>
+                                                                    <tr>
+                                        <td class="code">LogLevels::EMERGENCY</td>
+                                        <td><p>600</p>
+</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="code">LogLevels::ALERT</td>
+                                        <td><p>550</p>
+</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="code">LogLevels::CRITICAL</td>
+                                        <td><p>500</p>
+</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="code">LogLevels::ERROR</td>
+                                        <td><p>400</p>
+</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="code">LogLevels::WARNING</td>
+                                        <td><p>300</p>
+</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="code">LogLevels::NOTICE</td>
+                                        <td><p>250</p>
+</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="code">LogLevels::INFO</td>
+                                        <td><p>200</p>
+</td>
+                                    </tr>
+                                                                    <tr>
+                                        <td class="code">LogLevels::DEBUG</td>
+                                        <td><p>100</p>
+</td>
+                                    </tr>
+                                                            </tbody>
+                        </table>
+                    </section>
+                
+                                    <section class="methods" id="section-methods">
+                        <h2>Methods <small>This class defines the following methods:</small></h2>
+
+                                                    <div id="evaluateLevel" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">evaluateLevel</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$level</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; int</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Evaluates the given PSR log level as an integer.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $level
+                                                        </td>
+                                                        <td><p>One of Psr\Log\LogLevel constants.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">int                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">InvalidArgumentException</td>
+                                                        <td><p>When unrecognized log level.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                                                    </div>
+                            </div>
+                                                    <div id="isHigherLevel" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">isHigherLevel</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$level</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$against</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">boolean</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$inclusive</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; boolean</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Checks if the given level is higher than the other one.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $level
+                                                        </td>
+                                                        <td><p>Level to be compared. One of Psr\Log\LogLevel constants.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $against
+                                                        </td>
+                                                        <td><p>Level to be compared against. One of Psr\Log\LogLevel constants.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">boolean</td>
+                                                        <td class="code param-name">
+                                                                                                                        $inclusive
+                                                        </td>
+                                                        <td><p>[optional] Should the comparison be inclusive, ie. higher than or equal. Default: false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">boolean                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="isLowerLevel" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">isLowerLevel</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$level</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$against</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">boolean</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$inclusive</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; boolean</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Checks if the given level is lower than the other one.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $level
+                                                        </td>
+                                                        <td><p>Level to be compared. One of Psr\Log\LogLevel constants.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $against
+                                                        </td>
+                                                        <td><p>Level to be compared against. One of Psr\Log\LogLevel constants.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">boolean</td>
+                                                        <td class="code param-name">
+                                                                                                                        $inclusive
+                                                        </td>
+                                                        <td><p>[optional] Should the comparison be inclusive, ie. lower than or equal. Default: false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">boolean                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                            </section>
+                            </div>
+
+            <div class="col-md-4">
+                <nav class="docs-toc">
+                    
+                                            <h4><a href="#section-constants">Constants</a></h4>
+                    
+                                            <h4><a href="#section-methods">Methods</a></h4>
+                        <ul class="list-unstyled">
+                                                            <li><a href="#evaluateLevel" class="code">evaluateLevel</a></li>
+                                                            <li><a href="#isHigherLevel" class="code">isHigherLevel</a></li>
+                                                            <li><a href="#isLowerLevel" class="code">isLowerLevel</a></li>
+                                                    </ul>
+                    
+                    <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
+                </nav>
+            </div>
+        </div>
+    </section>
+        </div>
+    
+    
+        
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-package="lib"></script>
+<script type="text/javascript" src="../../assets/components/prism/prism.js" data-package="lib"></script>
+<script type="text/javascript" src="../../assets/js/docs.js" data-package="app"></script>
+
+</body>
+</html>

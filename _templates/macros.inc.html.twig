@@ -1,0 +1,34 @@
+{% macro method_signature(method) %}
+    <span class="method-signature">
+        {% if method.abstract %}
+            <span class="method-modifier">abstract</span>
+        {% endif %}
+        {% if method.final %}
+            <span class="method-modifier">final</span>
+        {% endif %}
+        {% if method.static %}
+            <span class="method-modifier">static</span>
+        {% endif %}
+        <span class="method-name">{{ method.name }}</span>
+        <span class="method-arguments">
+            (<!--
+                {% for parameter in method.parameters %}
+                    {% for hint in parameter.hint %}
+                        --><span class="method-argument-hint">{{ hint.name }}{% if not loop.last %}|{% endif %}</span><!--
+                    {% endfor %}
+                    --><span class="method-argument">
+                        <span class="code">{% if parameter.byRef %}<span class="method-argument-byref">&amp;</span>{% endif %}${{ parameter.name }}</span><!--
+                        {% if parameter.default %}
+                            --><span class="method-default"> = {{ parameter.default }}</span><!--
+                        {% endif %}
+                    --></span><!--
+
+                    {% if not loop.last %}-->, <!--{% endif %}
+                {% endfor %}
+            -->)
+        </span>
+        {% if method.hint is not empty %}
+            <span class="method-return">-&gt; {% for hint in method.hint %}{{ hint.name }}{% if not loop.last %}|{% endif %}{% endfor %}</span>
+        {% endif %}
+    </span>
+{% endmacro %}

@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Debugger class in MD\Foundation</title>
+    <meta name="description" content="">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="../../../assets/images/favicon.png">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    
+    
+
+    
+    
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" data-package="lib">
+<link rel="stylesheet" href="../../../assets/components/prism/prism.css" data-package="lib">
+<link rel="stylesheet" href="../../../assets/css/docs.css" data-package="app">
+
+</head>
+
+<body class="class-page">
+                        <nav class="toc">
+                                    <h2><a href="../../../index.html"><i class="fa fa-cube"></i> MD\Foundation</a></h2>
+                    <p class="tagline">A set of useful PHP classes.</p>
+                
+                <div class="buttons">
+                    <a href="../../../index.html" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Documentation</a>
+                    <a href="https://github.com/michaldudek/Foundation" class="btn btn-default btn-sm"><i class="fa fa-github"></i> GitHub</a>
+                </div>
+
+                                                                                                                                                                                                                        <div class="namespace root">
+                            <h4>\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/LogLevels.html">LogLevels</a></li>
+                                                                    <li><a href="../../../MD/Foundation/MagicObject.html">MagicObject</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Crypto\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Crypto/Cipher.html">Cipher</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Crypto/Hasher.html">Hasher</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Debug\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Debug/Debugger.html">Debugger</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Debug/Timer.html">Timer</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Debug/TimerStep.html">TimerStep</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                                                                                                                            <div class="namespace">
+                            <h4>Exceptions\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Exceptions/InvalidArgumentException.html">InvalidArgumentException</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Exceptions/NotImplementedException.html">NotImplementedException</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Utils\</h4>
+
+                            <ul>
+                                                                    <li><a href="../../../MD/Foundation/Utils/ArrayUtils.html">ArrayUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/FilesystemUtils.html">FilesystemUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/ObjectUtils.html">ObjectUtils</a></li>
+                                                                    <li><a href="../../../MD/Foundation/Utils/StringUtils.html">StringUtils</a></li>
+                                                            </ul>
+                        </div>
+                                                </nav>
+        
+        <div class="docs language-none">
+                <header id="class" class="nav navbar-default">
+        <div class="container-fluid">
+            <h1>MD\Foundation\Debug\Debugger <small>Class</small></h1>
+            <div class="short-desc">
+                
+
+            </div>
+        </div>
+    </header>
+
+    <section class="class-container">
+        <div class="row">
+            <div class="col-md-8 class-body">
+                <section class="class-info language-php">
+                    
+
+                </section>
+
+                
+                                    <section class="methods" id="section-methods">
+                        <h2>Methods <small>This class defines the following methods:</small></h2>
+
+                                                    <div id="isCli" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">isCli</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; bool</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Checks if PHP is running from CLI (command line interface).</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">bool                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="isWebRequest" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">isWebRequest</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; bool</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Checks if PHP is running from a web request (as opposed to CLI).</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">bool                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getType" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getType</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">mixed</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$var</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns type of the given variable.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>Similiar to PHP's gettype() function, but instead of "object" it will return an actual class name.</p>
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">mixed</td>
+                                                        <td class="code param-name">
+                                                                                                                        $var
+                                                        </td>
+                                                        <td><p>Variable to be checked.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getClass" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getClass</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">object|</span><!--
+                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$object</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$stripNamespace</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns the name of the passed object's class.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">object|string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $object
+                                                        </td>
+                                                        <td><p>Will also accept a string (name of a class) but will return it untouched.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">bool</td>
+                                                        <td class="code param-name">
+                                                                                                                        $stripNamespace
+                                                        </td>
+                                                        <td><p>[optional] Should only base class name be returned, void of namespace? Default: false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getNamespace" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getNamespace</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">object|</span><!--
+                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$object</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns namespace for the given object or class, without the class name itself.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">object|string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $object
+                                                        </td>
+                                                        <td><p>Will also accept a string (name of a class).</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getClassFile" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getClassFile</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">object</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$object</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; string|bool</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns a path to a file where the class of the given object was defined.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">object</td>
+                                                        <td class="code param-name">
+                                                                                                                        $object
+                                                        </td>
+                                                        <td>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string|bool                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getObjectAncestors" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getObjectAncestors</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">object|</span><!--
+                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$object</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns a list of ancestors of the given object in an array.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">object|string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $object
+                                                        </td>
+                                                        <td><p>Object or string name of a class.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="isImplementing" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">isImplementing</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">object|</span><!--
+                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$class</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$interface</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; bool</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Checks whether the given class or object implements the interface.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">object|string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $class
+                                                        </td>
+                                                        <td><p>Either an object or a string name of the class.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $interface
+                                                        </td>
+                                                        <td><p>Name of the interface to check.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">bool                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="isExtending" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">isExtending</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">object|</span><!--
+                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$class</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$parent</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$includeSelf</span><!--
+                                                    --><span class="method-default"> = false</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; bool</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Checks if the given class or object extends the given parent class.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">object|string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $class
+                                                        </td>
+                                                        <td><p>Either an object or a string name of the class.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $parent
+                                                        </td>
+                                                        <td><p>Name of the parent class to check.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">bool</td>
+                                                        <td class="code param-name">
+                                                                                                                        $includeSelf
+                                                        </td>
+                                                        <td><p>[optional] If set to true, it will also check if $class is $parent. Default: false.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">bool                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="callableToString" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">callableToString</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">callable</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$callable</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Converts the given PHP callable to a string that should contain its' name.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">callable</td>
+                                                        <td class="code param-name">
+                                                                                                                        $callable
+                                                        </td>
+                                                        <td>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="dump" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">dump</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Friendly output of variables.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>It will print them out in</p>
+
+<p>&lt;</p>
+
+<p>pre class="md-dump"> tag.</p>
+
+<p>It will dump all arguments sent to this function.</p>
+
+<p>If PHP is running from CLI then it will dump all the arguments in one line separated by spaces.</p>
+</div>
+
+                                    
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="stringDump" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">stringDump</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns a string containing HTML formatted information about the passed variable.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="consoleDump" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">consoleDump</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Dumps all the arguments into browser's JavaScript console.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>Attempts to convert all objects into arrays.</p>
+</div>
+
+                                    
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="consoleStringDump" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">consoleStringDump</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+                    <span class="method-return">-&gt; string</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Returns a string containing JavaScript code that will log all the arguments into browser's JavaScript console.</p>
+</div>
+                                    <div class="method-long-desc language-php"><p>Attempts to convert all objects into arrays.</p>
+</div>
+
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">string                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="getPrettyTrace" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">getPrettyTrace</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">array</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$trace</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; array</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>"Prettifies" the stack trace array to include less fields combining some of them.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">array</td>
+                                                        <td class="code param-name">
+                                                                                                                        $trace
+                                                        </td>
+                                                        <td><p>Original trace array.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">array                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="handleException" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">handleException</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">MD\Foundation\Debug\Exception</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$e</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">array</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$log</span><!--
+                                                    --><span class="method-default"> = array()</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">int</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$httpResponseCode</span><!--
+                                                    --><span class="method-default"> = 500</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Handles an exception by printing it out nicely.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">MD\Foundation\Debug\Exception</td>
+                                                        <td class="code param-name">
+                                                                                                                        $e
+                                                        </td>
+                                                        <td><p>Exception that you want to handle.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">array</td>
+                                                        <td class="code param-name">
+                                                                                                                        $log
+                                                        </td>
+                                                        <td><p>[optional] Any log to be attached to the error page.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">int</td>
+                                                        <td class="code param-name">
+                                                                                                                        $httpResponseCode
+                                                        </td>
+                                                        <td><p>[optional] What HTTP response code to use? Default: 500.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="handleError" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">handleError</span>
+        <span class="method-arguments">
+            (<!--
+                                                            --><span class="method-argument-hint">int</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$code</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$message</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$file</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">int</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$line</span><!--
+                                            --></span><!--
+
+                    -->, <!--                                                            --><span class="method-argument-hint">array</span><!--
+                                        --><span class="method-argument">
+                        <span class="code">$context</span><!--
+                                            --></span><!--
+
+                                                -->)
+        </span>
+                    <span class="method-return">-&gt; bool</span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Custom error handler.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                                                            <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">int</td>
+                                                        <td class="code param-name">
+                                                                                                                        $code
+                                                        </td>
+                                                        <td><p>Error code.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $message
+                                                        </td>
+                                                        <td><p>Error message.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">string</td>
+                                                        <td class="code param-name">
+                                                                                                                        $file
+                                                        </td>
+                                                        <td><p>Path to the file in which the error occurred.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">int</td>
+                                                        <td class="code param-name">
+                                                                                                                        $line
+                                                        </td>
+                                                        <td><p>Line number of the file in which the error occurred.</p>
+</td>
+                                                    </tr>
+                                                                                                    <tr>
+                                                        <td class="code">array</td>
+                                                        <td class="code param-name">
+                                                                                                                        $context
+                                                        </td>
+                                                        <td><p>The error's context.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
+                                    
+                                                                            <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">bool                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    
+                                                                    </div>
+                            </div>
+                                                    <div id="handleFatalError" class="method">
+                                <h3 class="code">
+                                        <span class="method-signature">
+                                    <span class="method-modifier">static</span>
+                <span class="method-name">handleFatalError</span>
+        <span class="method-arguments">
+            (<!--
+                            -->)
+        </span>
+            </span>
+
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc"><p>Handles a fatal error.</p>
+</div>
+                                    <div class="method-long-desc language-php">
+</div>
+
+                                    
+                                    
+                                                                    </div>
+                            </div>
+                                            </section>
+                            </div>
+
+            <div class="col-md-4">
+                <nav class="docs-toc">
+                    
+                    
+                                            <h4><a href="#section-methods">Methods</a></h4>
+                        <ul class="list-unstyled">
+                                                            <li><a href="#isCli" class="code">isCli</a></li>
+                                                            <li><a href="#isWebRequest" class="code">isWebRequest</a></li>
+                                                            <li><a href="#getType" class="code">getType</a></li>
+                                                            <li><a href="#getClass" class="code">getClass</a></li>
+                                                            <li><a href="#getNamespace" class="code">getNamespace</a></li>
+                                                            <li><a href="#getClassFile" class="code">getClassFile</a></li>
+                                                            <li><a href="#getObjectAncestors" class="code">getObjectAncestors</a></li>
+                                                            <li><a href="#isImplementing" class="code">isImplementing</a></li>
+                                                            <li><a href="#isExtending" class="code">isExtending</a></li>
+                                                            <li><a href="#callableToString" class="code">callableToString</a></li>
+                                                            <li><a href="#dump" class="code">dump</a></li>
+                                                            <li><a href="#stringDump" class="code">stringDump</a></li>
+                                                            <li><a href="#consoleDump" class="code">consoleDump</a></li>
+                                                            <li><a href="#consoleStringDump" class="code">consoleStringDump</a></li>
+                                                            <li><a href="#getPrettyTrace" class="code">getPrettyTrace</a></li>
+                                                            <li><a href="#handleException" class="code">handleException</a></li>
+                                                            <li><a href="#handleError" class="code">handleError</a></li>
+                                                            <li><a href="#handleFatalError" class="code">handleFatalError</a></li>
+                                                    </ul>
+                    
+                    <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
+                </nav>
+            </div>
+        </div>
+    </section>
+        </div>
+    
+    
+        
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-package="lib"></script>
+<script type="text/javascript" src="../../../assets/components/prism/prism.js" data-package="lib"></script>
+<script type="text/javascript" src="../../../assets/js/docs.js" data-package="app"></script>
+
+</body>
+</html>

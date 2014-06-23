@@ -1,0 +1,8 @@
+modules:
+    - MD\GenryDocsModule\GenryDocsModule
+
+docs:
+    source: vendor/michaldudek/foundation/src/MD/Foundation
+    namespace: MD\Foundation
+    templates:
+        class:  class.inc.html.twig

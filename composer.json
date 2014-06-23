@@ -1,6 +1,10 @@
 {
     "require": {
-        "michaldudek/genry": "~0.2"
+        "michaldudek/genry": "dev-master",
+        "michaldudek/genry-docs": "dev-master"
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin"
+    }
 }

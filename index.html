@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MD\Foundation</title>
+    <meta name="description" content="A set of useful PHP classes.">
+    
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/es5-shim/2.0.8/es5-shim.min.js"></script>
+    <![endif]-->
+
+    
+    
+
+    
+    
+
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" data-package="lib">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" data-package="lib">
+<link rel="stylesheet" href="assets/components/prism/prism.css" data-package="lib">
+<link rel="stylesheet" href="assets/css/docs.css" data-package="app">
+
+</head>
+
+<body class="index-page">
+                                <nav class="toc">
+                
+                <div class="buttons">
+                    <a href="index.html" class="btn btn-success btn-sm"><i class="fa fa-book"></i> Documentation</a>
+                    <a href="https://github.com/michaldudek/Foundation" class="btn btn-default btn-sm"><i class="fa fa-github"></i> GitHub</a>
+                </div>
+
+                                                                                                                                                                                                                        <div class="namespace root">
+                            <h4>\</h4>
+
+                            <ul>
+                                                                    <li><a href="MD/Foundation/LogLevels.html">LogLevels</a></li>
+                                                                    <li><a href="MD/Foundation/MagicObject.html">MagicObject</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Crypto\</h4>
+
+                            <ul>
+                                                                    <li><a href="MD/Foundation/Crypto/Cipher.html">Cipher</a></li>
+                                                                    <li><a href="MD/Foundation/Crypto/Hasher.html">Hasher</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Debug\</h4>
+
+                            <ul>
+                                                                    <li><a href="MD/Foundation/Debug/Debugger.html">Debugger</a></li>
+                                                                    <li><a href="MD/Foundation/Debug/Timer.html">Timer</a></li>
+                                                                    <li><a href="MD/Foundation/Debug/TimerStep.html">TimerStep</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                                                                                                                            <div class="namespace">
+                            <h4>Exceptions\</h4>
+
+                            <ul>
+                                                                    <li><a href="MD/Foundation/Exceptions/InvalidArgumentException.html">InvalidArgumentException</a></li>
+                                                                    <li><a href="MD/Foundation/Exceptions/NotImplementedException.html">NotImplementedException</a></li>
+                                                            </ul>
+                        </div>
+                                                                                                                                            <div class="namespace">
+                            <h4>Utils\</h4>
+
+                            <ul>
+                                                                    <li><a href="MD/Foundation/Utils/ArrayUtils.html">ArrayUtils</a></li>
+                                                                    <li><a href="MD/Foundation/Utils/FilesystemUtils.html">FilesystemUtils</a></li>
+                                                                    <li><a href="MD/Foundation/Utils/ObjectUtils.html">ObjectUtils</a></li>
+                                                                    <li><a href="MD/Foundation/Utils/StringUtils.html">StringUtils</a></li>
+                                                            </ul>
+                        </div>
+                                                </nav>
+        
+
+        <div class="docs language-none">
+                <a href="https://github.com/michaldudek/Foundation" target="_blank" style="position: absolute; top: 0; right: 0; border: 0; z-index: 10;"><img src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+
+    <div class="container">
+        <header class="header">
+            <h1><i class="fa fa-cube"></i> MD\Foundation</h1>
+            <p class="tagline">A set of useful PHP classes.</p>
+
+            <div class="badges">
+                <a href="https://travis-ci.org/michaldudek/Foundation"><img src="https://travis-ci.org/michaldudek/Foundation.svg?branch=master" alt="Build Status"></a>
+                <a href="https://insight.sensiolabs.com/projects/5690ef76-b97c-4ae1-9d20-695b2840b8ae"><img src="https://insight.sensiolabs.com/projects/5690ef76-b97c-4ae1-9d20-695b2840b8ae/mini.png" alt="SensioLabsInsight"></a>
+                <a href="http://hhvm.h4cc.de/package/michaldudek/foundation"><img src="http://hhvm.h4cc.de/badge/michaldudek/foundation.png" alt="HHVM Status"></a>
+            </div>
+        </header>
+
+        <section class="what-why">
+            <p>MD\Foundation is a set of useful PHP classes and functions that ease your development and abstract away some very common code.</p>
+            <p>It is what <a href="http://lodash.com/" target="_blank">Lo-Dash</a> is for JavaScript.</p>
+        </section>
+
+        <section class="using">
+            <p>You can install <code>MD\Foundation</code> using <a href="https://getcomposer.org/" target="_blank">Composer</a>.</p>
+            <pre><code>$ composer require michaldudek/foundation dev-master</code></pre>
+        </section>
+
+        <section class="features">
+            <div class="row">
+
+                <div class="col-md-5 feature">
+                    <div class="row">
+                        <div class="col-md-4 icon"><i class="fa fa-wrench"></i></div>
+                        <div class="col-md-8">
+                            <h3>Utils</h3>
+                            <p>Namespace <code>MD\Foundation\Utils</code> contains several static classes that contain common functions that can e.g. change your array filtering code into a one-liner. Classes are split into <code>StringUtils</code>, <code>ArrayUtils</code>, <code>ObjectUtils</code> and <code>FilesystemUtils</code>.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 feature">
+                    <div class="row">
+                        <div class="col-md-4 icon"><i class="fa fa-lock"></i></div>
+                        <div class="col-md-8">
+                            <h3>Crypto</h3>
+                            <p>Password hashing and cryptography is a solved problem, yet a lot of projects still reinvent the wheel with funky hashing algorithms. <code>MD\Foundation\Crypto</code> namespaces provides a standard and best-practice methods to deal with basic cryptography, especially if you are not running PHP 5.5 yet.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 feature">
+                    <div class="row">
+                        <div class="col-md-4 icon"><i class="fa fa-bug"></i></div>
+                        <div class="col-md-8">
+                            <h3>Debug</h3>
+                            <p>Inside the <code>MD\Foundation\Debug</code> namespace you will find few classes that help debug and profile your code, especially fit for runtime. The <code>Debugger</code> can be especially useful for analyzing variables at runtime and the <code>Timer</code> will help you find bottlenecks in your code.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5 feature">
+                    <div class="row">
+                        <div class="col-md-4 icon"><i class="fa fa-exclamation-triangle"></i></div>
+                        <div class="col-md-8">
+                            <h3>Exceptions</h3>
+                            <p>We all love to throw exceptions and while PHP provides a lot of exceptions to throw, <code>MD\Foundation\Exceptions</code> adds a few more (like <code>NotImplementedException</code> with automatic method name resolution) or extends existing ones for easier use (<code>InvalidArgumentException</code>).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 feature wide">
+                    <div class="row">
+                        <div class="col-md-2 icon"><i class="fa fa-cog"></i></div>
+                        <div class="col-md-10">
+                            <h3>Other</h3>
+                            <p>There is also a couple of uncategorized classes which occassionally might be of use and which range from creating <code>MagicObject</code>s with automatic magic getters and setters (e.g. for very quick data storage) to ease working with other vendors like very common <code>Psr\Log</code>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <footer class="footer">
+            <p>
+                MD\Foundation was created by <a href="http://www.michaldudek.pl/" target="_blank">Michał Dudek</a> in Wrocław, Poland.<br>
+                Copyright &copy; Michał Dudek 2013-2014. MD\Foundation is released under MIT license.<br>
+                This page was generated using <a href="http://www.michaldudek.pl/genry/" target="_blank">Genry Static Page Generator</a> and <a href="https://github.com/michaldudek/genry-docs">Genry Docs Module</a>
+            </p>
+        </footer>
+    </div>
+        </div>
+    
+    
+        
+    
+    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js" data-package="lib"></script>
+<script type="text/javascript" src="assets/components/prism/prism.js" data-package="lib"></script>
+<script type="text/javascript" src="assets/js/docs.js" data-package="app"></script>
+
+</body>
+</html>

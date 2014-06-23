@@ -1,0 +1,126 @@
+{% extends "layout.inc.html.twig" %}
+{% import "macros.inc.html.twig" as helpers %}
+
+{% block page_title %}{{ class.shortName }} class in {% endblock %}
+{% block page_description %}{{ class.shortDesc }}{% endblock %}
+{% block body_attr %}class="class-page"{% endblock %}
+
+{% block content %}
+    <header id="class" class="nav navbar-default">
+        <div class="container-fluid">
+            <h1>{{ class }} <small>Class</small></h1>
+            <div class="short-desc">
+                {{ class.shortDesc|markdown }}
+            </div>
+        </div>
+    </header>
+
+    <section class="class-container">
+        <div class="row">
+            <div class="col-md-8 class-body">
+                <section class="class-info language-php">
+                    {{ class.longDesc|markdown }}
+                </section>
+
+                {% if class.constants is not empty %}
+                    <section class="constants" id="section-constants">
+                        <h2>Constants <small>This class defines the following constants:</small></h2>
+
+                        <table class="table table-striped table-condensed">
+                            <tbody>
+                                {% for constant in class.constants %}
+                                    <tr>
+                                        <td class="code">{{ class.shortName }}::{{ constant.name }}</td>
+                                        <td>{{ constant.shortDesc|markdown }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </section>
+                {% endif %}
+
+                {% if class.methods is not empty %}
+                    <section class="methods" id="section-methods">
+                        <h2>Methods <small>This class defines the following methods:</small></h2>
+
+                        {% for method in class.methods %}
+                            <div id="{{ method.name }}" class="method">
+                                <h3 class="code">
+                                    {{ helpers.method_signature(method) }}
+                                </h3>
+
+                                <div class="method-info">
+                                    <div class="method-short-desc">{{ method.shortDesc|markdown }}</div>
+                                    <div class="method-long-desc language-php">{{ method.longDesc|markdown }}</div>
+
+                                    {% if method.parameters is not empty %}
+                                        <h5>Arguments:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                {% for parameter in method.parameters %}
+                                                    <tr>
+                                                        <td class="code">{% for hint in parameter.hint %}{{ hint.name }}{% if not loop.last %}|{% endif %}{% endfor %}</td>
+                                                        <td class="code param-name">
+                                                            {% if parameter.byRef %}&amp;{% endif %}
+                                                            ${{ parameter.name }}
+                                                        </td>
+                                                        <td>{{ parameter.shortDesc|markdown }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+
+                                    {% if method.hint is not empty %}
+                                        <h5>Returns:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="code">{% for hint in method.hint %}{{ hint.name }}{% if not loop.last %}|{% endif %}{% endfor %}
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+
+                                    {% if method.exceptions is not empty %}
+                                        <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                {% for exception in method.exceptions %}
+                                                    <tr>
+                                                        <td class="code">{{ exception[0] }}</td>
+                                                        <td>{{ exception[1]|markdown }}</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </section>
+                {% endif %}
+            </div>
+
+            <div class="col-md-4">
+                <nav class="docs-toc">
+                    
+                    {% if class.constants is not empty %}
+                        <h4><a href="#section-constants">Constants</a></h4>
+                    {% endif %}
+
+                    {% if class.methods is not empty %}
+                        <h4><a href="#section-methods">Methods</a></h4>
+                        <ul class="list-unstyled">
+                            {% for method in class.methods %}
+                                <li><a href="#{{ method.name }}" class="code">{{ method.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
+                </nav>
+            </div>
+        </div>
+    </section>
+{% endblock %}
