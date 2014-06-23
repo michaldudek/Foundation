@@ -1,7 +1,5 @@
 <?php
 /**
- * Class that adds some magic and useful functionalities to objects.
- * 
  * @package Foundation
  * @author Michał Dudek <michal@michaldudek.pl>
  * 
@@ -14,6 +12,45 @@ use MD\Foundation\Debug\Interfaces\Dumpable;
 use MD\Foundation\Utils\ObjectUtils;
 use MD\Foundation\Utils\StringUtils;
 
+/**
+ * Extending this class will automatically add magic functionalities to your objects.
+ *
+ * It creates automatic getters and setters for any property you set on it.
+ *
+ * This is useful for when you want to quickly create an object and store some data in it,
+ * but don't know what data it will be until runtime.
+ *
+ * It also adds two public methods `->__getClass()` and `::__class()` which return the name
+ * of the class of the instantiated object.
+ *
+ * Example:
+ *
+ *      $object = new \MD\Foundation\MagicObject();
+ *      $object->setId(2);
+ *      echo $object->getId();
+ *      // -> 2
+ *      echo $object->id;
+ *      // -> 2
+ *      $object->id = 4;
+ *      echo $object->getId();
+ *      // -> 4
+ *
+ *      echo isset($object->id);
+ *      // -> true
+ *      echo isset($object->title);
+ *      // -> false
+ *
+ *      #################
+ *
+ *      class MyClass extends \MD\Foundation\MagicObject {}
+ *      $myObject = new MyClass();
+ *
+ *      echo $myObject->__getClass();
+ *      // -> MyClass
+ *
+ *      echo MyClass::__class();
+ *      // -> MyClass
+ */
 class MagicObject implements Dumpable
 {
 
@@ -57,6 +94,27 @@ class MagicObject implements Dumpable
 
     /**
      * Set a property. It will try to call a defined setter first.
+     *
+     * The called setter function will be camelcased version of the `$property`, e.g.
+     *
+     *      use MD\Foundation\MagicUtils;
+     *
+     *      class MyClass extends MagicUtils
+     *      {
+     *          protected $full_title;
+     *
+     *          public function setFullTitle($full_title)
+     *          {
+     *              $this->full_title = $full_title;
+     *              echo 'Set full title to "'. $full_title .'"';
+     *          }
+     *      }
+     *
+     *      $object = new MyClass();
+     *      $object->full_title = 'Lorem ipsum dolor sit amet.';
+     *      // -> 'Set full title to "Lorem ipsum dolor sit amet."'
+     *
+     * If the property does not exist then it will be created.
      * 
      * @param string $property Name of the property.
      * @param mixed $value Value to set to.
@@ -75,9 +133,26 @@ class MagicObject implements Dumpable
     /**
      * Get the property. It will try to call a defined getter first.
      * 
-     * If the property does not exist then it will trigger an E_USER_NOTICE.
+     * If the property does not exist then it will trigger an `E_USER_NOTICE`.
+     *
+     *      use MD\Foundation\MagicUtils;
+     *
+     *      class MyClass extends MagicUtils
+     *      {
+     *          protected $full_title = 'Lorem ipsum dolor sit amet.';
+     *
+     *          public function getFullTitle()
+     *          {
+     *              echo 'Getting full title "'. $this->full_title .'"';
+     *              return $this->full_title;
+     *          }
+     *      }
+     *
+     *      $object = new MyClass();
+     *      echo $object->full_title;
+     *      // -> 'Getting full title "Lorem ipsum dolor sit amet."'
      * 
-     * @param name $property Name of the property.
+     * @param string $property Name of the property.
      * @return mixed
      */
     final public function __get($property) {
@@ -98,9 +173,15 @@ class MagicObject implements Dumpable
     
     /**
      * Is the given property set?
+     *
+     * Example:
+     *
+     *      $object = new MD\Foundation\MagicObject();
+     *      echo isset($object->title);
+     *      // -> false
      * 
      * @param string $property Name of the property.
-     * @return bool
+     * @return boolean
      */
     final public function __isset($property) {
         if (property_exists($this, $property)) {
@@ -112,6 +193,17 @@ class MagicObject implements Dumpable
     
     /**
      * Unset the given property.
+     *
+     * Example:
+     *
+     *      $object = new MD\Foundation\MagicObject();
+     *      $object->title = 'Lorem ipsum';
+     *      echo $object->title;
+     *      // -> 'Lorem ipsum'
+     *
+     *      unset($object->title);
+     *      echo $object->title;
+     *      // -> null
      * 
      * @param string $property Name of the property.
      */
@@ -126,10 +218,30 @@ class MagicObject implements Dumpable
     
     /**
      * Overload setters and getters and do what they would normally do.
+     *
+     * This enables "automatic"/"magic" setters and getters on an object.
+     *
+     *      $object = new MD\Foundation\MagicObject();
+     *      $object->setTitle('Lorem ipsum');
+     *      echo $object->getTitle();
+     *      // -> 'Lorem ipsum'
+     *
+     *      $object->setSomeRandomAnotherProperty(true);
+     *      echo $object->getSomeRandomAnotherProperty();
+     *      // -> true
+     *
+     * It also creates "issers" that always return `boolean` values.
+     *
+     *      $object = new MD\Foundation\MagicObject();
+     *      $object->setEnabled(true);
+     *      echo $object->isEnabled();
+     *      // -> true
+     *
+     * If there is no property for the called getter then it will return `null`.
      * 
      * @param string $method Method name.
      * @param array $arguments Array of arguments.
-     * @return mixed The requested property value for a getter, null for anything else.
+     * @return mixed|null
      */
     final public function __call($method, $arguments) {
         $type = strtolower(substr($method, 0, 3));
@@ -179,6 +291,14 @@ class MagicObject implements Dumpable
      *****************************************************/
     /**
      * Returns full name of the class of this object.
+     *
+     * Example:
+     *
+     *      class MyClass extends \MD\Foundation\MagicObject {}
+     *      $myObject = new MyClass();
+     *
+     *      echo $myObject->__getClass();
+     *      // -> MyClass
      * 
      * @return string
      */
@@ -188,6 +308,14 @@ class MagicObject implements Dumpable
 
     /**
      * Returns full name of the class.
+     *
+     * Example:
+     *
+     *      class MyClass extends \MD\Foundation\MagicObject {}
+     *      echo MyClass::__class();
+     *      // -> MyClass
+     *
+     * This is the same as calling PHP 5.5 `MyClass::class`.
      * 
      * @return string
      */
@@ -200,6 +328,19 @@ class MagicObject implements Dumpable
      *****************************************************/
     /**
      * Returns magic properties of the object.
+     *
+     * Example:
+     *
+     *      $object = new MD\Foundation\MagicObject();
+     *      $object->setId(5);
+     *      $object->setTitle('Lorem ipsum');
+     *
+     *      echo $object->toDumpableArray();
+     *      // array('id' => 5, 'title' => 'Lorem ipsum')
+     *
+     * This method realizes `MD\Foundation\Debug\Interfaces\Dumpable` interface,
+     * making it possible to display all properties of this object when dumping
+     * it using `\MD\dump()` function.
      * 
      * @return array
      */
