@@ -20,6 +20,13 @@
                     <small>Class</small>
                 {% endif %}
             </h1>
+            {% if class.interfaces is not empty %}
+                <ul class="class-interfaces list-unstyled">
+                    {% for interface in class.interfaces %}
+                        <li><small>Implements</small> <span class="code">{{ helpers.link_type(interface, class, _genry_page) }}</span></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <div class="short-desc">
                 {{ class.shortDesc|markdown }}
             </div>
@@ -99,7 +106,7 @@
                                             <tbody>
                                                 {% for exception in method.exceptions %}
                                                     <tr>
-                                                        <td class="code">{{ exception[0] }}</td>
+                                                        <td class="code">{{ helpers.link_type(exception[0], class, _genry_page) }}</td>
                                                         <td>{{ exception[1]|markdown }}</td>
                                                     </tr>
                                                 {% endfor %}

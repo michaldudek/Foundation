@@ -150,6 +150,20 @@ pre[class*="language-"] {
   font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
   color: #606;
 }
+.class-page .docs .code a {
+  color: #606;
+  text-decoration: underline;
+}
+.class-page .docs .code a:hover {
+  text-decoration: none;
+}
+.class-page .docs .class-interfaces {
+  font-size: 17px;
+}
+.class-page .docs .class-interfaces small {
+  font-weight: 400;
+  color: #999;
+}
 .class-page .docs .short-desc {
   font-size: 19px;
   font-weight: 300;

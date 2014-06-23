@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>MagicObject class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="Extending this class will automatically add magic functionalities to your objects.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,8 +111,13 @@
                 MD\Foundation\MagicObject
                                     <small>Class</small>
                             </h1>
-            <div class="short-desc">
-                
+                            <ul class="class-interfaces list-unstyled">
+                                            <li><small>Implements</small> <span class="code">                                                                                        
+                    <a href="../../MD/Foundation/Debug/Interfaces/Dumpable.html">MD\Foundation\Debug\Interfaces\Dumpable</a>
+            </span></li>
+                                    </ul>
+                        <div class="short-desc">
+                <p>Extending this class will automatically add magic functionalities to your objects.</p>
 
             </div>
         </div>
@@ -122,7 +127,42 @@
         <div class="row">
             <div class="col-md-8 class-body">
                 <section class="class-info language-php">
-                    
+                    <p>It creates automatic getters and setters for any property you set on it.</p>
+
+<p>This is useful for when you want to quickly create an object and store some data in it,
+but don't know what data it will be until runtime.</p>
+
+<p>It also adds two public methods <code>-&gt;__getClass()</code> and <code>::__class()</code> which return the name
+of the class of the instantiated object.</p>
+
+<p>Example:</p>
+
+<pre><code> $object = new \MD\Foundation\MagicObject();
+ $object-&gt;setId(2);
+ echo $object-&gt;getId();
+ // -&gt; 2
+ echo $object-&gt;id;
+ // -&gt; 2
+ $object-&gt;id = 4;
+ echo $object-&gt;getId();
+ // -&gt; 4
+
+ echo isset($object-&gt;id);
+ // -&gt; true
+ echo isset($object-&gt;title);
+ // -&gt; false
+
+ #################
+
+ class MyClass extends \MD\Foundation\MagicObject {}
+ $myObject = new MyClass();
+
+ echo $myObject-&gt;__getClass();
+ // -&gt; MyClass
+
+ echo MyClass::__class();
+ // -&gt; MyClass
+</code></pre>
 
                 </section>
 
@@ -157,6 +197,28 @@
                                     <div class="method-short-desc"><p>Set a property.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>It will try to call a defined setter first.</p>
+
+<p>The called setter function will be camelcased version of the <code>$property</code>, e.g.</p>
+
+<pre><code> use MD\Foundation\MagicUtils;
+
+ class MyClass extends MagicUtils
+ {
+     protected $full_title;
+
+     public function setFullTitle($full_title)
+     {
+         $this-&gt;full_title = $full_title;
+         echo 'Set full title to "'. $full_title .'"';
+     }
+ }
+
+ $object = new MyClass();
+ $object-&gt;full_title = 'Lorem ipsum dolor sit amet.';
+ // -&gt; 'Set full title to "Lorem ipsum dolor sit amet."'
+</code></pre>
+
+<p>If the property does not exist then it will be created.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -191,7 +253,7 @@
                         <span class="method-name">__get</span>
         <span class="method-arguments">
             (<!--
-                                                            --><span class="method-argument-hint">MD\Foundation\name</span><!--
+                                                            --><span class="method-argument-hint">string</span><!--
                                         --><span class="method-argument">
                         <span class="code">$property</span><!--
                                             --></span><!--
@@ -208,14 +270,32 @@
 </div>
                                     <div class="method-long-desc language-php"><p>It will try to call a defined getter first.</p>
 
-<p>If the property does not exist then it will trigger an E_USER_NOTICE.</p>
+<p>If the property does not exist then it will trigger an <code>E_USER_NOTICE</code>.</p>
+
+<pre><code> use MD\Foundation\MagicUtils;
+
+ class MyClass extends MagicUtils
+ {
+     protected $full_title = 'Lorem ipsum dolor sit amet.';
+
+     public function getFullTitle()
+     {
+         echo 'Getting full title "'. $this-&gt;full_title .'"';
+         return $this-&gt;full_title;
+     }
+ }
+
+ $object = new MyClass();
+ echo $object-&gt;full_title;
+ // -&gt; 'Getting full title "Lorem ipsum dolor sit amet."'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                                                                     <tr>
-                                                        <td class="code">MD\Foundation\name</td>
+                                                        <td class="code">string</td>
                                                         <td class="code param-name">
                                                                                                                         $property
                                                         </td>
@@ -249,7 +329,7 @@
 
                                                 -->)
         </span>
-                    <span class="method-return">-&gt; bool</span>
+                    <span class="method-return">-&gt; boolean</span>
             </span>
 
                                 </h3>
@@ -257,7 +337,12 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Is the given property set?</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> $object = new MD\Foundation\MagicObject();
+ echo isset($object-&gt;title);
+ // -&gt; false
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -278,7 +363,7 @@
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                 <tr>
-                                                    <td class="code">bool                                                </tr>
+                                                    <td class="code">boolean                                                </tr>
                                             </tbody>
                                         </table>
                                     
@@ -305,7 +390,17 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Unset the given property.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> $object = new MD\Foundation\MagicObject();
+ $object-&gt;title = 'Lorem ipsum';
+ echo $object-&gt;title;
+ // -&gt; 'Lorem ipsum'
+
+ unset($object-&gt;title);
+ echo $object-&gt;title;
+ // -&gt; null
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -344,7 +439,7 @@
 
                                                 -->)
         </span>
-                    <span class="method-return">-&gt; mixed</span>
+                    <span class="method-return">-&gt; mixed|null</span>
             </span>
 
                                 </h3>
@@ -352,7 +447,27 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Overload setters and getters and do what they would normally do.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>This enables "automatic"/"magic" setters and getters on an object.</p>
+
+<pre><code> $object = new MD\Foundation\MagicObject();
+ $object-&gt;setTitle('Lorem ipsum');
+ echo $object-&gt;getTitle();
+ // -&gt; 'Lorem ipsum'
+
+ $object-&gt;setSomeRandomAnotherProperty(true);
+ echo $object-&gt;getSomeRandomAnotherProperty();
+ // -&gt; true
+</code></pre>
+
+<p>It also creates "issers" that always return <code>boolean</code> values.</p>
+
+<pre><code> $object = new MD\Foundation\MagicObject();
+ $object-&gt;setEnabled(true);
+ echo $object-&gt;isEnabled();
+ // -&gt; true
+</code></pre>
+
+<p>If there is no property for the called getter then it will return <code>null</code>.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -381,7 +496,7 @@
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                 <tr>
-                                                    <td class="code">mixed                                                </tr>
+                                                    <td class="code">mixed|null                                                </tr>
                                             </tbody>
                                         </table>
                                     
@@ -404,7 +519,14 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Returns full name of the class of this object.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> class MyClass extends \MD\Foundation\MagicObject {}
+ $myObject = new MyClass();
+
+ echo $myObject-&gt;__getClass();
+ // -&gt; MyClass
+</code></pre>
 </div>
 
                                     
@@ -436,7 +558,14 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Returns full name of the class.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> class MyClass extends \MD\Foundation\MagicObject {}
+ echo MyClass::__class();
+ // -&gt; MyClass
+</code></pre>
+
+<p>This is the same as calling PHP 5.5 <code>MyClass::class</code>.</p>
 </div>
 
                                     

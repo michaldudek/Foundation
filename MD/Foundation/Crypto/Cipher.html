@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Cipher class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="A basic Cipher tool for easy encrypting and decrypting messages with a secret key.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,8 +111,8 @@
                 MD\Foundation\Crypto\Cipher
                                     <small>Class</small>
                             </h1>
-            <div class="short-desc">
-                
+                        <div class="short-desc">
+                <p>A basic Cipher tool for easy encrypting and decrypting messages with a secret key.</p>
 
             </div>
         </div>
@@ -122,7 +122,21 @@
         <div class="row">
             <div class="col-md-8 class-body">
                 <section class="class-info language-php">
-                    
+                    <p>Requires <code>ext-mcrypt</code>.</p>
+
+<p>Taken from <a href="http://pl1.php.net/manual/en/function.mcrypt-encrypt.php#78531">http://pl1.php.net/manual/en/function.mcrypt-encrypt.php#78531</a>
+and slightly adjusted, so credit goes to <strong>dylan at wedefy dot com</strong>.</p>
+
+<p>Usage:</p>
+
+<pre><code> $cipher = new \MD\Foundation\Crypto\Cipher('thisismysecret');
+ $message = $cipher-&gt;encrypt('Hide from NSA... not really...');
+ echo $message;
+ // -&gt; 'LEm/lBP+IVPlLvKQbUOlTkNAG34EwXH+mwqp4QCdOxQ='
+
+ echo $cipher-&gt;decrypt($message);
+ // -&gt; 'Hide from NSA... not really...'
+</code></pre>
 
                 </section>
 
@@ -175,7 +189,7 @@
                                                         <td class="code param-name">
                                                                                                                         $algorithm
                                                         </td>
-                                                        <td><p>[optional] Encryption algorithm. Preferably one of MCRYPT_ciphername constants or a string with the name of the algorithm. Default: MCRYPT_RIJNDAEL_256.</p>
+                                                        <td><p>[optional] Encryption algorithm. Preferably one of <code>MCRYPT_{ciphername}</code> constants or a string with the name of the algorithm. Default: <code>MCRYPT_RIJNDAEL_256</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -203,9 +217,17 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Encrypt the input string.</p>
+                                    <div class="method-short-desc"><p>Encrypt a string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>The secret and the algorithm passed to the constructor will be used for the encryption.</p>
+
+<p>Example:</p>
+
+<pre><code> $cipher = new \MD\Foundation\Crypto\Cipher('thisismysecret');
+ $message = $cipher-&gt;encrypt('Hide from NSA... not really...');
+ echo $message;
+ // -&gt; 'LEm/lBP+IVPlLvKQbUOlTkNAG34EwXH+mwqp4QCdOxQ='
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -251,9 +273,17 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Decrypt the input string.</p>
+                                    <div class="method-short-desc"><p>Decrypt an encrypted string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>The encrypted string must be encrypted with the same parameters (secret and algorithm)
+as the instantiated <code>Cipher</code> object.</p>
+
+<p>Example:</p>
+
+<pre><code> $cipher = new \MD\Foundation\Crypto\Cipher('thisismysecret');
+ echo $cipher-&gt;decrypt('LEm/lBP+IVPlLvKQbUOlTkNAG34EwXH+mwqp4QCdOxQ=');
+ // -&gt; 'Hide from NSA... not really...'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>

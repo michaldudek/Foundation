@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Hasher class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="Class for standardized hashing of passwords that follows the best practices.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,8 +111,8 @@
                 MD\Foundation\Crypto\Hasher
                                     <small>Class</small>
                             </h1>
-            <div class="short-desc">
-                
+                        <div class="short-desc">
+                <p>Class for standardized hashing of passwords that follows the best practices.</p>
 
             </div>
         </div>
@@ -122,7 +122,41 @@
         <div class="row">
             <div class="col-md-8 class-body">
                 <section class="class-info language-php">
-                    
+                    <p>This class as an adapted code taken from <a href="http://crackstation.net/hashing-security.htm">http://crackstation.net/hashing-security.htm</a>
+and you should refer to that <strong>great</strong> article about password hashing.</p>
+
+<p>Some of the features include:</p>
+
+<ul>
+<li>Long auto-generated random salts for every hashed password.</li>
+<li>Same password hashed twice will have completely different hashes.</li>
+<li>Hashing algorithm can be changed at any time and will not break previously hashed passwords.</li>
+<li>Slow hash functions to make brute force attacks a little bit less convenient.</li>
+<li>Doesn't use "wacky" hash functions, e.g. <code>sha1(md5($password) . sha1($password))</code>.</li>
+</ul>
+
+<p>Once again, please refer to the <strong>great</strong> <a href="http://crackstation.net/hashing-security.htm">article about password hashing</a>
+and bear in mind that this is only an adaptation of the code found there (rewritten into a class).</p>
+
+<p>Usage example:</p>
+
+<pre><code> $hasher = new \MD\Foundation\Crypto\Hasher();
+ $hash = $hasher-&gt;hash('pa$$word');
+ echo $hash;
+ // -&gt; 'sha256:1000:lGWhVGUVxQArXgfOckPmJCVZD0l0cYPT:9UMoX8p10AgI7wd1bkvqjuRzTSXv6YF7'
+
+ echo $hasher-&gt;validate('notmypassword', $hash);
+ // -&gt; false
+ echo $hasher-&gt;validate('pa$$word', $hash);
+ // -&gt; true
+</code></pre>
+
+<p>A general rule is that you should store the full generated hash, but if you want
+to store the hash in an external place (like a browser cookie) then just use the last
+part of the generated hash (after last <code>:</code>) because otherwise you will give an
+attacker all information they need to crack it.</p>
+
+<p>This class should be used especially by people not on PHP 5.5 yet.</p>
 
                 </section>
 
@@ -175,19 +209,19 @@
                                                     --><span class="method-default"> = &#039;sha256&#039;</span><!--
                                             --></span><!--
 
-                    -->, <!--                                                            --><span class="method-argument-hint">integer</span><!--
+                    -->, <!--                                                            --><span class="method-argument-hint">int</span><!--
                                         --><span class="method-argument">
                         <span class="code">$iterations</span><!--
                                                     --><span class="method-default"> = 1000</span><!--
                                             --></span><!--
 
-                    -->, <!--                                                            --><span class="method-argument-hint">integer</span><!--
+                    -->, <!--                                                            --><span class="method-argument-hint">int</span><!--
                                         --><span class="method-argument">
                         <span class="code">$saltByteSize</span><!--
                                                     --><span class="method-default"> = 24</span><!--
                                             --></span><!--
 
-                    -->, <!--                                                            --><span class="method-argument-hint">integer</span><!--
+                    -->, <!--                                                            --><span class="method-argument-hint">int</span><!--
                                         --><span class="method-argument">
                         <span class="code">$hashByteSize</span><!--
                                                     --><span class="method-default"> = 24</span><!--
@@ -213,31 +247,31 @@
                                                         <td class="code param-name">
                                                                                                                         $algorithm
                                                         </td>
-                                                        <td><p>[optional] Hash algorithm. Default: sha256.</p>
+                                                        <td><p>[optional] Hash algorithm. Default: <code>sha256</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
-                                                        <td class="code">integer</td>
+                                                        <td class="code">int</td>
                                                         <td class="code param-name">
                                                                                                                         $iterations
                                                         </td>
-                                                        <td><p>[optional] Number of hash iterations. Default: 1000.</p>
+                                                        <td><p>[optional] Number of hash iterations. Default: <code>1000</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
-                                                        <td class="code">integer</td>
+                                                        <td class="code">int</td>
                                                         <td class="code param-name">
                                                                                                                         $saltByteSize
                                                         </td>
-                                                        <td><p>[optional] Salt size in bytes. Default: 24.</p>
+                                                        <td><p>[optional] Salt size in bytes. Default: <code>24</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
-                                                        <td class="code">integer</td>
+                                                        <td class="code">int</td>
                                                         <td class="code param-name">
                                                                                                                         $hashByteSize
                                                         </td>
-                                                        <td><p>[optional] Hash size in bytes. Default: 24.</p>
+                                                        <td><p>[optional] Hash size in bytes. Default: <code>24</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -267,7 +301,15 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Hash the given string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Will hash the <code>$str</code> using parameters passed to the constructor or sane defaults.</p>
+
+<p>Example:</p>
+
+<pre><code> $hasher = new \MD\Foundation\Crypto\Hasher();
+ $hash = $hasher-&gt;hash('pa$$word');
+ echo $hash;
+ // -&gt; 'sha256:1000:UI3BhfdMMlZ9Jr6Jgl6tLAc+X6CcTXhD:E6HrUs3Hjv/sbz4rCule5+3m2d8qDkxu'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -312,7 +354,7 @@
 
                                                 -->)
         </span>
-                    <span class="method-return">-&gt; boolean</span>
+                    <span class="method-return">-&gt; bool</span>
             </span>
 
                                 </h3>
@@ -349,7 +391,7 @@
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                 <tr>
-                                                    <td class="code">boolean                                                </tr>
+                                                    <td class="code">bool                                                </tr>
                                             </tbody>
                                         </table>
                                     
@@ -373,13 +415,13 @@
 
                                                 -->)
         </span>
-                    <span class="method-return">-&gt; boolean</span>
+                    <span class="method-return">-&gt; bool</span>
             </span>
 
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Compares two strings $a and $b in length-constant time.</p>
+                                    <div class="method-short-desc"><p>Compares two strings <code>$a</code> and <code>$b</code> in length-constant time.</p>
 </div>
                                     <div class="method-long-desc language-php">
 </div>
@@ -410,7 +452,7 @@
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                 <tr>
-                                                    <td class="code">boolean                                                </tr>
+                                                    <td class="code">bool                                                </tr>
                                             </tbody>
                                         </table>
                                     

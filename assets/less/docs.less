@@ -177,6 +177,24 @@ pre[class*="language-"] {
     .code {
         font-family: @codeFontFamily;
         color: #606;
+
+        a {
+            color: #606;
+            text-decoration: underline;
+
+            &:hover {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .class-interfaces {
+        font-size: 17px;
+        
+        small {
+            font-weight: 400;
+            color: #999;
+        }
     }
 
     .short-desc {

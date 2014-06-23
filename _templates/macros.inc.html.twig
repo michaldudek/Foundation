@@ -1,3 +1,22 @@
+{% macro link_type(type, class, _genry_page) %}
+    {% if docs.isPhpType(type) %}
+        {{ type }}
+    {% else %}
+        {% set full_type = type %}
+        {% for short, full in class.aliases %}
+            {% if short == type %}
+                {% set full_type = full %}
+            {% endif %}
+        {% endfor %}
+        
+        {% if docs.isProjectClass(full_type) %}
+            <a href="{{ link_class(full_type) }}">{{ full_type }}</a>
+        {% else %}
+            {{ full_type }}
+        {% endif %}
+    {% endif %}
+{% endmacro %}
+
 {% macro method_signature(method) %}
     <span class="method-signature">
         {% if method.abstract %}
