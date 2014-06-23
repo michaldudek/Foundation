@@ -2,6 +2,7 @@
     "name": "michaldudek/foundation",
     "description": "A set of useful PHP classes.",
     "keywords": ["tools", "utils", "array", "object", "string"],
+    "homepage": "http://www.michaldudek.pl/Foundation/",
     "license": "MIT",
     "authors": [
         {
