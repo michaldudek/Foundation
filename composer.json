@@ -1,7 +1,7 @@
 {
     "name": "michaldudek/foundation",
-    "description": "A set of useful PHP functions and (mostly static) classes.",
-    "keywords": ["tools", "utils", "array", "object", "string", "foundation"],
+    "description": "A set of useful PHP classes.",
+    "keywords": ["tools", "utils", "array", "object", "string"],
     "license": "MIT",
     "authors": [
         {
