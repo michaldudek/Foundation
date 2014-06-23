@@ -71,8 +71,13 @@ class LogLevels
 
     /**
      * Evaluates the given PSR log level as an integer.
+     *
+     * Example:
      * 
-     * @param  string $level One of Psr\Log\LogLevel constants.
+     *      echo \MD\Foundation\LogLevels::evaluateLevel(\Psr\Log\LogLevel::CRITICAL);
+     *      // -> 500
+     * 
+     * @param  string $level One of `\Psr\Log\LogLevel` constants.
      * @return int
      *
      * @throws InvalidArgumentException When unrecognized log level.
@@ -87,10 +92,15 @@ class LogLevels
 
     /**
      * Checks if the given level is higher than the other one.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\LogLevels::isHigherLevel(\Psr\Log\LogLevel::CRITICAL, \PSR\Log\LogLevel::WARNING);
+     *      // -> true
      * 
-     * @param  string  $level   Level to be compared. One of Psr\Log\LogLevel constants.
-     * @param  string  $against Level to be compared against. One of Psr\Log\LogLevel constants.
-     * @param  boolean $inclusive [optional] Should the comparison be inclusive, ie. higher than or equal. Default: false.
+     * @param  string  $level   Level to be compared. One of `\Psr\Log\LogLevel` constants.
+     * @param  string  $against Level to be compared against. One of `\Psr\Log\LogLevel` constants.
+     * @param  boolean $inclusive [optional] Should the comparison be inclusive, ie. higher than or equal. Default: `false`.
      * @return boolean
      */
     public static function isHigherLevel($level, $against, $inclusive = false) {
@@ -101,10 +111,15 @@ class LogLevels
 
     /**
      * Checks if the given level is lower than the other one.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\LogLevels::isLowerLevel(\Psr\Log\LogLevel::CRITICAL, \PSR\Log\LogLevel::WARNING);
+     *      // -> false
      * 
-     * @param  string  $level   Level to be compared. One of Psr\Log\LogLevel constants.
-     * @param  string  $against Level to be compared against. One of Psr\Log\LogLevel constants.
-     * @param  boolean $inclusive [optional] Should the comparison be inclusive, ie. lower than or equal. Default: false.
+     * @param  string  $level   Level to be compared.  One of `\Psr\Log\LogLevel` constants.
+     * @param  string  $against Level to be compared against.  One of `\Psr\Log\LogLevel` constants.
+     * @param  boolean $inclusive [optional] Should the comparison be inclusive, ie. lower than or equal. Default: `false`.
      * @return boolean
      */
     public static function isLowerLevel($level, $against, $inclusive = false) {
