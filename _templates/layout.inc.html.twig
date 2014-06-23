@@ -49,7 +49,7 @@
                 {% for namespace in docs.namespaces %}
                     {% set shortNamespace = namespace|strip_namespace %}
                     {% set shortNamespaceLength = shortNamespace is empty ? -1 : shortNamespace|length %}
-                    {% set classes = docs.namespaceClasses(namespace) %}
+                    {% set classes = docs.namespaceAllClasses(namespace) %}
                     {% if classes is not empty %}
                         <div class="namespace{% if shortNamespace is empty %} root{% endif %}">
                             <h4>{{ shortNamespace }}\</h4>

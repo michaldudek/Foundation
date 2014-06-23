@@ -8,7 +8,18 @@
 {% block content %}
     <header id="class" class="nav navbar-default">
         <div class="container-fluid">
-            <h1>{{ class }} <small>Class</small></h1>
+            <h1>
+                {{ class }}
+                {% if class.isInterface %}
+                    <small>Interface</small>
+                {% elseif class.isTrait %}
+                    <small>Trait</small>
+                {% elseif class.isException %}
+                    <small>Exception</small>
+                {% else %}
+                    <small>Class</small>
+                {% endif %}
+            </h1>
             <div class="short-desc">
                 {{ class.shortDesc|markdown }}
             </div>
@@ -103,23 +114,25 @@
             </div>
 
             <div class="col-md-4">
-                <nav class="docs-toc">
-                    
-                    {% if class.constants is not empty %}
-                        <h4><a href="#section-constants">Constants</a></h4>
-                    {% endif %}
+                {% if class.constants is not empty or class.methods is not empty %}
+                    <nav class="docs-toc">
+                        
+                        {% if class.constants is not empty %}
+                            <h4><a href="#section-constants">Constants</a></h4>
+                        {% endif %}
 
-                    {% if class.methods is not empty %}
-                        <h4><a href="#section-methods">Methods</a></h4>
-                        <ul class="list-unstyled">
-                            {% for method in class.methods %}
-                                <li><a href="#{{ method.name }}" class="code">{{ method.name }}</a></li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
+                        {% if class.methods is not empty %}
+                            <h4><a href="#section-methods">Methods</a></h4>
+                            <ul class="list-unstyled">
+                                {% for method in class.methods %}
+                                    <li><a href="#{{ method.name }}" class="code">{{ method.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
 
-                    <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
-                </nav>
+                        <a href="#class" class="backtop"><i class="fa fa-angle-up"></i> Back to Top</a>
+                    </nav>
+                {% endif %}
             </div>
         </div>
     </section>
