@@ -3,11 +3,13 @@
 
     $(function() {
         var $docs = $('.docs'),
-            $docsToc = $('.docs-toc'),
-            docsTocTop = $docsToc.offset().top - 50;
+            $docsToc = $('.docs-toc');
+
         if (!$docsToc.length) {
             return;
         }
+        
+        var docsTocTop = $docsToc.offset().top - 50;
 
         $docs.on('scroll', function() {
             var scrollTop = $docs.scrollTop();
