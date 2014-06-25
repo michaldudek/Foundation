@@ -1,7 +1,5 @@
 <?php
 /**
- * Interface that allows the Debugger to easily dump clean objects.
- * 
  * @package Foundation
  * @subpackage Debug
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -11,6 +9,9 @@
  */
 namespace MD\Foundation\Debug\Interfaces;
 
+/**
+ * Interface that allows the Debugger to easily dump clean objects.
+ */
 interface Dumpable
 {
 

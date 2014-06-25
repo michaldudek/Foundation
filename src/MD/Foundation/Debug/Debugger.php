@@ -1,7 +1,5 @@
 <?php
 /**
- * Debugger class that helps with working with PHP code, variables, types and overall debugging.
- * 
  * @package Foundation
  * @subpackage Debug
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -11,19 +9,26 @@
  */
 namespace MD\Foundation\Debug;
 
+use ReflectionClass;
+
 use MD\Foundation\Utils\ArrayUtils;
 use MD\Foundation\Debug\Interfaces\Dumpable;
 
 use MD\Foundation\Exceptions\NotImplementedException;
 
 /**
- * @static
+ * Helps with working with PHP code, variables, types and overall debugging.
  */
 class Debugger
 {
 
     /**
      * Checks if PHP is running from CLI (command line interface).
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Debug\Debugger::isCli();
+     *      // -> true or false
      * 
      * @return bool
      */
@@ -33,6 +38,11 @@ class Debugger
 
     /**
      * Checks if PHP is running from a web request (as opposed to CLI).
+     *
+     * Example:
+     *
+     *      echo |MD\Foundation\Debug\Debugger::isWebRequest();
+     *      // -> true or false
      * 
      * @return bool
      */
@@ -43,7 +53,24 @@ class Debugger
     /**
      * Returns type of the given variable.
      * 
-     * Similiar to PHP's gettype() function, but instead of "object" it will return an actual class name.
+     * Similiar to PHP's `gettype()` function, but instead of `object` it will return an actual class name.
+     *
+     * Example:
+     *
+     *      use \MD\Foundation\Debug\Debugger;
+     *
+     *      echo Debugger::getType(1);
+     *      // -> integer
+     *
+     *      echo Debugger::getType('Lorem ipsum');
+     *      // -> string
+     *
+     *      echo Debugger::getType(array());
+     *      // -> array
+     *      
+     *      $obj = new stdObject();
+     *      echo Debugger::getType($obj);
+     *      // -> stdObject
      * 
      * @param mixed $var Variable to be checked.
      * @return string
@@ -60,9 +87,26 @@ class Debugger
 
     /**
      * Returns the name of the passed object's class.
+     *
+     * Example:
+     *
+     *      use \MD\Foundation\Debug\Debugger;
+     *
+     *      $obj = new \Psr\Log\NullLogger();
+     *      echo Debugger::getClass($obj);
+     *      // -> Psr\Log\NullLogger
+     *
+     *      echo Debugger::getClass($obj, true);
+     *      // -> NullLogger
+     *
+     *      echo Debugger::getClass('Psr\Log\NullLogger');
+     *      // -> Psr\Log\NullLogger
+     *
+     *      echo Debugger::getClass('Psr\Log\NullLogger', true);
+     *      // -> NullLogger
      * 
      * @param object|string $object Will also accept a string (name of a class) but will return it untouched.
-     * @param bool $stripNamespace [optional] Should only base class name be returned, void of namespace? Default: false.
+     * @param bool $stripNamespace [optional] Should only base class name be returned, void of namespace? Default: `false`.
      * @return string
      */
     public static function getClass($object, $stripNamespace = false) {
@@ -83,6 +127,17 @@ class Debugger
 
     /**
      * Returns namespace for the given object or class, without the class name itself.
+     *
+     * Example:
+     *
+     *      use \MD\Foundation\Debug\Debugger;
+     *
+     *      $obj = new \Psr\Log\NullLogger();
+     *      echo Debugger::getNamespace($obj);
+     *      // -> Psr\Log
+     *
+     *      echo Debugger::getNamespace('Psr\Log\NullLogger');
+     *      // -> Psr\Log
      * 
      * @param object|string Will also accept a string (name of a class).
      * @return string
@@ -91,23 +146,45 @@ class Debugger
         $class = self::getClass($object);
         $namespace = explode(NS, $class);
         array_pop($namespace);
-        return implode('\\', $namespace);
+        return implode(NS, $namespace);
     }
 
     /**
      * Returns a path to a file where the class of the given object was defined.
+     *
+     * Example:
+     *
+     *      use \MD\Foundation\Debug\Debugger;
+     *
+     *      $obj = new \Psr\Log\NullLogger();
+     *      echo Debugger::getClassFile($obj);
+     *      // -> /var/www/homepage/vendor/psr/log/Psr/Log/NullLogger.php
+     *
+     *      echo Debugger::getClassFile('Psr\Log\NullLogger');
+     *      // -> /var/www/homepage/vendor/psr/log/Psr/Log/NullLogger.php
+     *
+     * Returns `false` if failed to determine the file.
      * 
      * @param object $object
-     * @return string|bool False if failed.
+     * @return string|bool `false` if failed.
      */
     public static function getClassFile($object) {
         $class = self::getClass($object);
-        $reflector = new \ReflectionClass($class);
+        $reflector = new ReflectionClass($class);
         return $reflector->getFileName();
     }
 
     /**
      * Returns a list of ancestors of the given object in an array.
+     *
+     * Example:
+     *
+     *      $logger = new \Psr\Log\NullLogger();
+     *      echo \MD\Foundation\Debug\Debugger::getObjectAncestors($logger);
+     *      // -> array('Psr\Log\AbstractLogger')
+     *
+     *      echo \MD\Foundation\Debug\Debugger::getObjectAncestors('\Psr\Log\NullLogger');
+     *      // -> array('Psr\Log\AbstractLogger')
      * 
      * @param object|string $object Object or string name of a class.
      * @return array
@@ -123,6 +200,11 @@ class Debugger
     
     /**
      * Checks whether the given class or object implements the interface.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Debug\Debugger::isImplementing('Psr\Log\NullLogger', 'Psr\Log\LoggerInterface');
+     *      // -> true
      * 
      * @param object|string $class Either an object or a string name of the class.
      * @param string $interface Name of the interface to check.
@@ -138,11 +220,16 @@ class Debugger
     }
 
     /**
-     * Checks if the given class or object extends the given parent class.
+     * Checks if the given class or object extends the given class.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Debug\Debugger::isExtending('Psr\Log\NullLogger', 'stdObject');
+     *      // -> false
      * 
      * @param object|string $class Either an object or a string name of the class.
      * @param string $parent Name of the parent class to check.
-     * @param bool $includeSelf [optional] If set to true, it will also check if $class is $parent. Default: false.
+     * @param bool $includeSelf [optional] If set to true, it will also check if `$class` is `$parent`. Default: `false`.
      * @return bool
      */
     public static function isExtending($class, $parent, $includeSelf = false) {
@@ -156,10 +243,14 @@ class Debugger
     }
 
     /**
-     * Converts the given PHP callable to a string that should contain its' name.
+     * Converts the given PHP callable to a string that should contain its name.
+     *
+     * **Not implemented yet**
      * 
      * @param callable $callable
      * @return string
+     *
+     * @throws NotImplementedException This method is not yet implemented.
      * 
      * @todo
      * 
@@ -170,11 +261,13 @@ class Debugger
     }
 
     /**
-     * Friendly output of variables. It will print them out in <pre class="md-dump"> tag.
+     * Friendly output of variables. It will print them out in `<pre class="md-dump">` tag.
      * 
      * It will dump all arguments sent to this function.
      * 
      * If PHP is running from CLI then it will dump all the arguments in one line separated by spaces.
+     *
+     * There is a shortcut alias function `\MD\dump()`.
      * 
      * @param mixed $variable1 Variable to be dumped.
      * @param mixed $variable2 Another variable to be dumped.
@@ -204,6 +297,8 @@ class Debugger
 
     /**
      * Returns a string containing HTML formatted information about the passed variable.
+     *
+     * There is a shortcut alias function `\MD\string_dump()`.
      * 
      * @param mixed $variable1 Variable to be dumped.
      * @param mixed $variable2 Another variable to be dumped.
@@ -236,6 +331,8 @@ class Debugger
      * Dumps all the arguments into browser's JavaScript console.
      * 
      * Attempts to convert all objects into arrays.
+     *
+     * There are two shortcut alias functions `\MD\console_dump()` and `\MD\console_log()`.
      * 
      * @param mixed $variable1 Variable to be dumped.
      * @param mixed $variable2 Another variable to be dumped.
@@ -256,6 +353,8 @@ class Debugger
      * Returns a string containing JavaScript code that will log all the arguments into browser's JavaScript console.
      * 
      * Attempts to convert all objects into arrays.
+     *
+     * There is a shortcut alias function `\MD\console_string_dump()`.
      * 
      * @param mixed $variable1 Variable to be dumped.
      * @param mixed $variable2 Another variable to be dumped.
@@ -288,7 +387,13 @@ class Debugger
     }
     
     /**
-     * "Prettifies" the stack trace array to include less fields combining some of them.
+     * "Prettifies" the stack trace array to include less fields by combining some of them.
+     *
+     * Example:
+     *
+     *      $trace = debug_backtrace();
+     *      echo \MD\Foundation\Debug\Debugger::getPrettyTrace($trace);
+     *      // -> array('function' => ..., 'file' => ..., 'arguments' => ...)
      * 
      * @param array $trace Original trace array.
      * @return array "Prettified" trace.
@@ -322,7 +427,7 @@ class Debugger
      * 
      * @param \Exception $e Exception that you want to handle.
      * @param array $log [optional] Any log to be attached to the error page.
-     * @param int $httpResponseCode [optional] What HTTP response code to use? Default: 500.
+     * @param int $httpResponseCode [optional] What HTTP response code to use? Default: `500`.
      * 
      * @codeCoverageIgnore
      */

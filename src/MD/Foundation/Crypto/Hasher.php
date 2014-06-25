@@ -165,6 +165,12 @@ class Hasher
 
     /**
      * Validate if the given hash is a hash of the given string.
+     *
+     * Example:
+     *
+     *      $hasher = new \MD\Foundation\Crypto\Hasher();
+     *      echo $hasher->validate('pa$$word', 'sha256:1000:UI3BhfdMMlZ9Jr6Jgl6tLAc+X6CcTXhD:E6HrUs3Hjv/sbz4rCule5+3m2d8qDkxu')
+     *      // -> true
      * 
      * @param  string $str  String to be verified. (e.g. password a user has entered)
      * @param  string $hash Hash to be verified. (e.g. password hash stored in db)
