@@ -313,7 +313,12 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Stop the timer and return the result duration in seconds.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> $timer = new \MD\Foundation\Debug\Timer();
+ echo $timer-&gt;stop(3);
+ // -&gt; 108.667
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -338,6 +343,18 @@
                                             </tbody>
                                         </table>
                                     
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">                                                                                                
+                    BadMethodCallException
+            </td>
+                                                        <td><p>When the timer was already stopped.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
                                                                     </div>
                             </div>
                                                     <div id="step" class="method">

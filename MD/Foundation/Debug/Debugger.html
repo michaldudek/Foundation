@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Debugger class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="Helps with working with PHP code, variables, types and overall debugging.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,7 +112,7 @@
                                     <small>Class</small>
                             </h1>
                         <div class="short-desc">
-                
+                <p>Helps with working with PHP code, variables, types and overall debugging.</p>
 
             </div>
         </div>
@@ -147,7 +147,11 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Checks if PHP is running from CLI (command line interface).</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Debug\Debugger::isCli();
+ // -&gt; true or false
+</code></pre>
 </div>
 
                                     
@@ -178,7 +182,11 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Checks if PHP is running from a web request (as opposed to CLI).</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo |MD\Foundation\Debug\Debugger::isWebRequest();
+ // -&gt; true or false
+</code></pre>
 </div>
 
                                     
@@ -214,7 +222,25 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Returns type of the given variable.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Similiar to PHP's gettype() function, but instead of "object" it will return an actual class name.</p>
+                                    <div class="method-long-desc language-php"><p>Similiar to PHP's <code>gettype()</code> function, but instead of <code>object</code> it will return an actual class name.</p>
+
+<p>Example:</p>
+
+<pre><code> use \MD\Foundation\Debug\Debugger;
+
+ echo Debugger::getType(1);
+ // -&gt; integer
+
+ echo Debugger::getType('Lorem ipsum');
+ // -&gt; string
+
+ echo Debugger::getType(array());
+ // -&gt; array
+
+ $obj = new stdObject();
+ echo Debugger::getType($obj);
+ // -&gt; stdObject
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -270,7 +296,23 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Returns the name of the passed object's class.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> use \MD\Foundation\Debug\Debugger;
+
+ $obj = new \Psr\Log\NullLogger();
+ echo Debugger::getClass($obj);
+ // -&gt; Psr\Log\NullLogger
+
+ echo Debugger::getClass($obj, true);
+ // -&gt; NullLogger
+
+ echo Debugger::getClass('Psr\Log\NullLogger');
+ // -&gt; Psr\Log\NullLogger
+
+ echo Debugger::getClass('Psr\Log\NullLogger', true);
+ // -&gt; NullLogger
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -289,7 +331,7 @@
                                                         <td class="code param-name">
                                                                                                                         $stripNamespace
                                                         </td>
-                                                        <td><p>[optional] Should only base class name be returned, void of namespace? Default: false.</p>
+                                                        <td><p>[optional] Should only base class name be returned, void of namespace? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -328,7 +370,17 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Returns namespace for the given object or class, without the class name itself.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> use \MD\Foundation\Debug\Debugger;
+
+ $obj = new \Psr\Log\NullLogger();
+ echo Debugger::getNamespace($obj);
+ // -&gt; Psr\Log
+
+ echo Debugger::getNamespace('Psr\Log\NullLogger');
+ // -&gt; Psr\Log
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -377,7 +429,19 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Returns a path to a file where the class of the given object was defined.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> use \MD\Foundation\Debug\Debugger;
+
+ $obj = new \Psr\Log\NullLogger();
+ echo Debugger::getClassFile($obj);
+ // -&gt; /var/www/homepage/vendor/psr/log/Psr/Log/NullLogger.php
+
+ echo Debugger::getClassFile('Psr\Log\NullLogger');
+ // -&gt; /var/www/homepage/vendor/psr/log/Psr/Log/NullLogger.php
+</code></pre>
+
+<p>Returns <code>false</code> if failed to determine the file.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -427,7 +491,15 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Returns a list of ancestors of the given object in an array.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> $logger = new \Psr\Log\NullLogger();
+ echo \MD\Foundation\Debug\Debugger::getObjectAncestors($logger);
+ // -&gt; array('Psr\Log\AbstractLogger')
+
+ echo \MD\Foundation\Debug\Debugger::getObjectAncestors('\Psr\Log\NullLogger');
+ // -&gt; array('Psr\Log\AbstractLogger')
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -482,7 +554,11 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Checks whether the given class or object implements the interface.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Debug\Debugger::isImplementing('Psr\Log\NullLogger', 'Psr\Log\LoggerInterface');
+ // -&gt; true
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -549,9 +625,13 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Checks if the given class or object extends the given parent class.</p>
+                                    <div class="method-short-desc"><p>Checks if the given class or object extends the given class.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Debug\Debugger::isExtending('Psr\Log\NullLogger', 'stdObject');
+ // -&gt; false
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -578,7 +658,7 @@
                                                         <td class="code param-name">
                                                                                                                         $includeSelf
                                                         </td>
-                                                        <td><p>[optional] If set to true, it will also check if $class is $parent. Default: false.</p>
+                                                        <td><p>[optional] If set to true, it will also check if <code>$class</code> is <code>$parent</code>. Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -614,9 +694,9 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Converts the given PHP callable to a string that should contain its' name.</p>
+                                    <div class="method-short-desc"><p>Converts the given PHP callable to a string that should contain its name.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p><strong>Not implemented yet</strong></p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -641,6 +721,18 @@
                                             </tbody>
                                         </table>
                                     
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">                                                                                                                                        
+                    <a href="../../../MD/Foundation/Exceptions/NotImplementedException.html">MD\Foundation\Exceptions\NotImplementedException</a>
+            </td>
+                                                        <td><p>This method is not yet implemented.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
                                                                     </div>
                             </div>
                                                     <div id="dump" class="method">
@@ -659,15 +751,13 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Friendly output of variables.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>It will print them out in</p>
-
-<p>&lt;</p>
-
-<p>pre class="md-dump"> tag.</p>
+                                    <div class="method-long-desc language-php"><p>It will print them out in <code>&lt;pre class="md-dump"&gt;</code> tag.</p>
 
 <p>It will dump all arguments sent to this function.</p>
 
 <p>If PHP is running from CLI then it will dump all the arguments in one line separated by spaces.</p>
+
+<p>There is a shortcut alias function <code>\MD\dump()</code>.</p>
 </div>
 
                                     
@@ -691,7 +781,7 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Returns a string containing HTML formatted information about the passed variable.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>There is a shortcut alias function <code>\MD\string_dump()</code>.</p>
 </div>
 
                                     
@@ -722,6 +812,8 @@
                                     <div class="method-short-desc"><p>Dumps all the arguments into browser's JavaScript console.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>Attempts to convert all objects into arrays.</p>
+
+<p>There are two shortcut alias functions <code>\MD\console_dump()</code> and <code>\MD\console_log()</code>.</p>
 </div>
 
                                     
@@ -746,6 +838,8 @@
                                     <div class="method-short-desc"><p>Returns a string containing JavaScript code that will log all the arguments into browser's JavaScript console.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>Attempts to convert all objects into arrays.</p>
+
+<p>There is a shortcut alias function <code>\MD\console_string_dump()</code>.</p>
 </div>
 
                                     
@@ -779,9 +873,14 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>"Prettifies" the stack trace array to include less fields combining some of them.</p>
+                                    <div class="method-short-desc"><p>"Prettifies" the stack trace array to include less fields by combining some of them.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> $trace = debug_backtrace();
+ echo \MD\Foundation\Debug\Debugger::getPrettyTrace($trace);
+ // -&gt; array('function' =&gt; ..., 'file' =&gt; ..., 'arguments' =&gt; ...)
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -868,7 +967,7 @@
                                                         <td class="code param-name">
                                                                                                                         $httpResponseCode
                                                         </td>
-                                                        <td><p>[optional] What HTTP response code to use? Default: 500.</p>
+                                                        <td><p>[optional] What HTTP response code to use? Default: <code>500</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>

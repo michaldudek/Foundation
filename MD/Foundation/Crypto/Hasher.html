@@ -362,7 +362,12 @@ attacker all information they need to crack it.</p>
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Validate if the given hash is a hash of the given string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> $hasher = new \MD\Foundation\Crypto\Hasher();
+ echo $hasher-&gt;validate('pa$$word', 'sha256:1000:UI3BhfdMMlZ9Jr6Jgl6tLAc+X6CcTXhD:E6HrUs3Hjv/sbz4rCule5+3m2d8qDkxu')
+ // -&gt; true
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>

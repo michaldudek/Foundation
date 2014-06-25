@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Timer class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="Timer to time various events.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,7 +112,7 @@
                                     <small>Class</small>
                             </h1>
                         <div class="short-desc">
-                
+                <p>Timer to time various events.</p>
 
             </div>
         </div>
@@ -122,7 +122,16 @@
         <div class="row">
             <div class="col-md-8 class-body">
                 <section class="class-info language-php">
-                    
+                    <p>Usage:</p>
+
+<pre><code> use \MD\Foundation\Debug\Timer;
+ $timer = new Timer();
+ echo $timer-&gt;stop();
+ // -&gt; 41.54232349
+
+ echo $timer-&gt;getMemoryUsage();
+ // -&gt; 34567123
+</code></pre>
 
                 </section>
 
@@ -162,7 +171,7 @@
                                                         <td class="code param-name">
                                                                                                                         $instantStart
                                                         </td>
-                                                        <td><p>[optional] Should the timer be started immediately? Default: true.</p>
+                                                        <td><p>[optional] Should the timer be started immediately? Default: <code>true</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -227,7 +236,12 @@
                                 <div class="method-info">
                                     <div class="method-short-desc"><p>Stop the timer and return the result duration in seconds.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> $timer = new \MD\Foundation\Debug\Timer();
+ echo $timer-&gt;stop(3);
+ // -&gt; 108.667
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -238,7 +252,7 @@
                                                         <td class="code param-name">
                                                                                                                         $precision
                                                         </td>
-                                                        <td><p>[optional] How many places to round to. Default: 8</p>
+                                                        <td><p>[optional] How many places to round to. Default: <code>8</code></p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -252,6 +266,18 @@
                                             </tbody>
                                         </table>
                                     
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">                                                                                                
+                    BadMethodCallException
+            </td>
+                                                        <td><p>When the timer was already stopped.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
                                                                     </div>
                             </div>
                                                     <div id="step" class="method">
