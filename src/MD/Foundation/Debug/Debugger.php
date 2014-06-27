@@ -393,7 +393,7 @@ class Debugger
      *
      *      $trace = debug_backtrace();
      *      echo \MD\Foundation\Debug\Debugger::getPrettyTrace($trace);
-     *      // -> array('function' => ..., 'file' => ..., 'arguments' => ...)
+     *      // -> array(array('function' => ..., 'file' => ..., 'arguments' => ...)), ...)
      * 
      * @param array $trace Original trace array.
      * @return array "Prettified" trace.

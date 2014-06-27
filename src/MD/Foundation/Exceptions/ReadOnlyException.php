@@ -1,7 +1,5 @@
 <?php
 /**
- * Exception usually thrown when trying to overwrite something that is read only.
- * 
  * @package Foundation
  * @subpackage Exceptions
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -13,6 +11,9 @@ namespace MD\Foundation\Exceptions;
 
 use MD\Foundation\Exceptions\Exception;
 
+/**
+ * Exception usually thrown when trying to overwrite something that is read only.
+ */
 class ReadOnlyException extends Exception
 {
 

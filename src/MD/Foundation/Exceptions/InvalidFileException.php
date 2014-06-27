@@ -1,7 +1,5 @@
 <?php
 /**
- * Exception that is usually thrown when a file to be included or loaded is invalid.
- * 
  * @package Foundation
  * @subpackage Exceptions
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -13,6 +11,9 @@ namespace MD\Foundation\Exceptions;
 
 use MD\Foundation\Exceptions\Exception;
 
+/**
+ * Exception that is usually thrown when a file to be included or loaded is invalid.
+ */
 class InvalidFileException extends Exception
 {
 
