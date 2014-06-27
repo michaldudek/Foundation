@@ -157,10 +157,21 @@ pre[class*="language-"] {
 .class-page .docs .code a:hover {
   text-decoration: none;
 }
-.class-page .docs .class-interfaces {
+.class-page .docs .class-interfaces,
+.class-page .docs .class-parents {
   font-size: 17px;
 }
-.class-page .docs .class-interfaces small {
+.class-page .docs .class-interfaces li,
+.class-page .docs .class-parents li {
+  padding-left: 0;
+  padding-right: 0;
+}
+.class-page .docs .class-interfaces li.meta,
+.class-page .docs .class-parents li.meta {
+  padding-left: 5px;
+}
+.class-page .docs .class-interfaces small,
+.class-page .docs .class-parents small {
   font-weight: 400;
   color: #999;
 }

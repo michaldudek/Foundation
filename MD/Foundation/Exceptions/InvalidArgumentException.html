@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>InvalidArgumentException class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="Invalid argument exception that easily generates the exception message.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -111,8 +111,28 @@
                 MD\Foundation\Exceptions\InvalidArgumentException
                                     <small>Class</small>
                             </h1>
-                        <div class="short-desc">
-                
+                                        <ul class="class-parents list-unstyled list-inline">
+                    <li class="meta"><small>Extends</small></li>
+                                            <li>
+                                                            <span class="code">                                                                                                                                    
+                    InvalidArgumentException
+            </span>
+                                                    </li>
+                                            <li>
+                                                            <small>&gt;</small>
+                                <span class="code">                            
+                    LogicException
+            </span>
+                                                    </li>
+                                            <li>
+                                                            <small>&gt;</small>
+                                <span class="code">                            
+                    Exception
+            </span>
+                                                    </li>
+                                    </ul>
+                                    <div class="short-desc">
+                <p>Invalid argument exception that easily generates the exception message.</p>
 
             </div>
         </div>
@@ -122,7 +142,24 @@
         <div class="row">
             <div class="col-md-8 class-body">
                 <section class="class-info language-php">
-                    
+                    <p>It will inspect the exception stack trace and automatically set the exception message
+to include the function name that threw the exception.</p>
+
+<p>Example:</p>
+
+<pre><code> function myFunction($str) {
+     if (empty($str)) {
+         throw new \MD\Foundation\Exceptions\InvalidArgumentException('non-empty string', $str);
+     }
+ }
+
+ try {
+     myFunction('');
+ } catch(\InvalidArgumentException $e) {
+     echo $e-&gt;getMessage();
+     // -&gt; myFunction expected argument 1 to be non-empty string, string ("") given.
+ }
+</code></pre>
 
                 </section>
 
@@ -202,7 +239,7 @@
                                                         <td class="code param-name">
                                                                                                                         $hideCaller
                                                         </td>
-                                                        <td><p>[optional] Should the function that has thrown this exception be hidden? Default: false.</p>
+                                                        <td><p>[optional] Should the function that has thrown this exception be hidden? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>

@@ -20,6 +20,22 @@
                     <small>Class</small>
                 {% endif %}
             </h1>
+            {% set parents = docs.getClassParents(class) %}
+            {% if parents is not empty %}
+                <ul class="class-parents list-unstyled list-inline">
+                    <li class="meta"><small>Extends</small></li>
+                    {% for parent in parents %}
+                        <li>
+                            {% if not loop.first %}
+                                <small>&gt;</small>
+                                <span class="code">{{ helpers.link_type(parent, false, _genry_page) }}</span>
+                            {% else %}
+                                <span class="code">{{ helpers.link_type(parent, class, _genry_page) }}</span>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             {% if class.interfaces is not empty %}
                 <ul class="class-interfaces list-unstyled">
                     {% for interface in class.interfaces %}

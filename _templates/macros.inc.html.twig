@@ -3,11 +3,13 @@
         {{ type }}
     {% else %}
         {% set full_type = type %}
-        {% for short, full in class.aliases %}
-            {% if short == type %}
-                {% set full_type = full %}
-            {% endif %}
-        {% endfor %}
+        {% if class %}
+            {% for short, full in class.aliases %}
+                {% if short == type %}
+                    {% set full_type = full %}
+                {% endif %}
+            {% endfor %}
+        {% endif %}
         
         {% if docs.isProjectClass(full_type) %}
             <a href="{{ link_class(full_type) }}">{{ full_type }}</a>

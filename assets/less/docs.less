@@ -188,8 +188,17 @@ pre[class*="language-"] {
         }
     }
 
-    .class-interfaces {
+    .class-interfaces, .class-parents {
         font-size: 17px;
+
+        li {
+            padding-left: 0;
+            padding-right: 0;
+
+            &.meta {
+                padding-left: 5px;
+            }
+        }
         
         small {
             font-weight: 400;
