@@ -1,7 +1,5 @@
 <?php
 /**
- * A set of array utility functions.
- *
  * @package Foundation
  * @subpackage Utils
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -11,10 +9,12 @@
  */
 namespace MD\Foundation\Utils;
 
+use StdClass;
+
 use MD\Foundation\Exceptions\InvalidArgumentException;
 
 /**
- * @static
+ * A set of array utility functions.
  */
 class ArrayUtils
 {
@@ -24,6 +24,21 @@ class ArrayUtils
 
     /**
      * Check whether the given array is a collection of data, ie. multidimensional array with a list of data rows.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::isCollection(array(
+     *          array('id' => 1),
+     *          array('id' => 2),
+     *          array('id' => 3)
+     *      ));
+     *      // -> true
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::isCollection(array(
+     *          'id' => 1,
+     *          'title' => 'Lorem ipsum'
+     *      ));
+     *      // -> false
      *
      * @param array $array Array to check.
      * @return bool
@@ -37,6 +52,15 @@ class ArrayUtils
     /**
      * Resets keys of an array to numerical values starting with 0.
      *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::resetKeys(array(
+     *          'a' => 0,
+     *          'b' => 3,
+     *          'c' => '8'
+     *      ));
+     *      // -> array(0, 3, '8')
+     *
      * @param array $array Array to reset.
      * @return array
      */
@@ -45,19 +69,28 @@ class ArrayUtils
     }
 
     /**
-     * Returns an array with a list of all values (not unique) assigned to a key in a collection.
+     * Returns an array with a list of all (non-unique) valuesassigned to a key in a collection.
      *
-     * @param array $array Array to filter from.
-     * @param string $key Key to filter by.
-     * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::pluck(array(
+     *          array('id' => 4, 'title' => 'Lipsum', 'author' => 'John'),
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'author' => 'Jane'),
+     *          array('id' => 2, 'title' => 'Dolor sit amet', 'author' => 'Doe')
+     *      ), 'title');
+     *      // -> array('Lipsum', 'Lorem ipsum', 'Dolor sit amet')
+     *
+     * @param array $array Array collection to get the values from.
+     * @param string $key Get values of this key.
+     * @param bool $preserveIndex [optional] Should the collection index be preserved or not? Default: `false`.
      * @return array
      */
-    public static function pluck(array $array, $key, $preserveKey = false) {
+    public static function pluck(array $array, $key, $preserveIndex = false) {
         $return = array();
 
         foreach($array as $k => &$row) {
             if (isset($row[$key])) {
-                if ($preserveKey) {
+                if ($preserveIndex) {
                     $return[$k] = $row[$key];
                 } else {
                     $return[] = $row[$key];
@@ -69,34 +102,48 @@ class ArrayUtils
     }
 
     /**
-     * Alias for ::pluck().
+     * Alias for [`::pluck()`](#pluck).
      * 
-     * @param array $array Array to filter from.
-     * @param string $key Key to filter by.
-     * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
+     * @param array $array Array collection to get the values from.
+     * @param string $key Get values of this key.
+     * @param bool $preserveIndex [optional] Should the collection index be preserved or not? Default: `false`.
      * @return array
      *
-     * @deprecated Please use ::pluck() instead.
+     * @deprecated Please use [`::pluck()`](#pluck) instead.
      */
-    public static function keyFilter(array $array, $key, $preserveKey = false) {
-        return static::pluck($array, $key, $preserveKey);
+    public static function keyFilter(array $array, $key, $preserveIndex = false) {
+        return static::pluck($array, $key, $preserveIndex);
     }
 
     /**
-     * Filters out all values from a multidimensional array that match the given value of they given associative level 2 key.
+     * Returns all values from an array collection that match the given value of the given associative level 2 key.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::filter(array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'featured' => true),
+     *          array('id' => 2, 'title' => 'Lipsum', 'featured' => true),
+     *          array('id' => 4, 'title' => 'Dolor sit amet', 'featured' => false),
+     *          array('id' => 6, 'title' => 'Adipiscit elit', 'featured' => true)
+     *      ), 'featured', true);
+     *      // -> array(
+     *      //      array('id' => 3, 'title' => 'Lorem ipsum', 'featured' => true),
+     *      //      array('id' => 2, 'title' => 'Lipsum', 'featured' => true),
+     *      //      array('id' => 6, 'title' => 'Adipiscit elit', 'featured' => true)
+     *      // )
      *
      * @param array $array Array to filter from.
      * @param string $key Key to filter by.
      * @param mixed $value Value to filter by.
-     * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
+     * @param bool $preserveIndex [optional] Should the index of the array collection be preserved or not? Default: `false`.
      * @return array
      */
-    public static function filter(array $array, $key, $value, $preserveKey = false) {
+    public static function filter(array $array, $key, $value, $preserveIndex = false) {
         $return = array();
 
         foreach($array as $k => &$row) {
             if ((isset($row[$key])) && ($row[$key] == $value)) {
-                if ($preserveKey) {
+                if ($preserveIndex) {
                     $return[$k] = $row;
                 } else {
                     $return[] = $row;
@@ -108,29 +155,44 @@ class ArrayUtils
     }
 
     /**
-     * Alias for ::filter.
+     * Alias for [`::filter()`](#filter).
      * 
      * @param array $array Array to filter from.
      * @param string $key Key to filter by.
      * @param mixed $value Value to filter by.
-     * @param bool $preserveKey [optional] Should the level 1 key be preserved or not? Default: false.
+     * @param bool $preserveIndex [optional] Should the index of the array collection be preserved or not? Default: `false`.
      * @return array
      *
-     * @deprecated Please use ::filter() instead.
+     * @deprecated Please use [`::filter()`](#filter) instead.
      */
-    public static function filterByKeyValue(array $array, $key, $value, $preserveKey = false) {
-        return static::filter($array, $key, $value, $preserveKey);
+    public static function filterByKeyValue(array $array, $key, $value, $preserveIndex = false) {
+        return static::filter($array, $key, $value, $preserveIndex);
     }
 
     /**
-     * Assigns a value under a key of a collection to its main (top level) key.
+     * Assigns a value under a key of an array collection to its main (top level) key.
      *
-     * @param array $array Array to be exploded.
-     * @param string $key Key on which to explode.
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::indexBy(array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'featured' => true),
+     *          array('id' => 2, 'title' => 'Lipsum', 'featured' => true),
+     *          array('id' => 4, 'title' => 'Dolor sit amet', 'featured' => false),
+     *          array('id' => 6, 'title' => 'Adipiscit elit', 'featured' => true)
+     *      ), 'id');
+     *      // -> array(
+     *      //      3 => array('id' => 3, 'title' => 'Lorem ipsum', 'featured' => true),
+     *      //      2 => array('id' => 2, 'title' => 'Lipsum', 'featured' => true),
+     *      //      4 => array('id' => 4, 'title' => 'Dolor sit amet', 'featured' => false),
+     *      //      6 => array('id' => 6, 'title' => 'Adipiscit elit', 'featured' => true)
+     *      // )
+     *
+     * @param array $array Array to be re-indexed.
+     * @param string $key Key on which to index by.
      * @return array
      *
-     * @throws \RuntimeException When at least one row of the $array doesn't have the $key.
-     * @throws \RuntimeException When values of $key are not unique.
+     * @throws \RuntimeException When at least one row of the `$array` doesn't have the `$key`.
+     * @throws \RuntimeException When values of `$key` are not unique.
      */
     public static function indexBy(array $array, $key) {
         $return = array();
@@ -151,27 +213,50 @@ class ArrayUtils
     }
 
     /**
-     * Alias for ::indexBy.
+     * Alias for [`::indexBy()`](#indexBy).
      * 
-     * @param  array  $array Array to be indexed.
-     * @param  string $key Key to index by.
+     * @param array $array Array to be re-indexed.
+     * @param string $key Key on which to index by.
      * @return array
      *
-     * @deprecated Please use ::indexBy() instead.
+     * @deprecated Please use [`::indexBy()`](#indexBy) instead.
      */
     public static function keyExplode(array $array, $key) {
         return static::indexBy($array, $key);
     }
 
     /**
-     * Group all items from the collection by the value of a specific key.
+     * Group all items from the array collection by the value of a key.
      *
-     * @param array $array Array to parse.
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::groupBy(array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4),
+     *          array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2),
+     *          array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3),
+     *          array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4),
+     *          array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3)
+     *      ), 'categoryId');
+     *      // -> array(
+     *      //      4 => array(
+     *      //          array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4),
+     *      //          array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4)
+     *      //      ),
+     *      //      2 => array(
+     *      //          array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2)
+     *      //      ),
+     *      //      3 => array(
+     *      //          array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3),
+     *      //          array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3)
+     *      //      )
+     *      // )
+     *
+     * @param array $array Array collection.
      * @param string $key Key to group by.
-     * @param bool $preserveKey [optional] Preserve keys? Default: false.
+     * @param bool $preserveIndex [optional] Should the index of the array collection be preserved or not? Default: `false`.
      * @return array
      */
-    public static function groupBy(array $array, $key, $preserveKey = false) {
+    public static function groupBy(array $array, $key, $preserveIndex = false) {
         $return = array();
 
         foreach($array as $k => &$row) {
@@ -183,7 +268,7 @@ class ArrayUtils
                 $return[$row[$key]] = array();
             }
 
-            if ($preserveKey) {
+            if ($preserveIndex) {
                 $return[$row[$key]][$k] = $row;
             } else {
                 $return[$row[$key]][] = $row;
@@ -194,25 +279,34 @@ class ArrayUtils
     }
 
     /**
-     * Alias for ::groupBy().
+     * Alias for [`::groupBy()`](#groupBy).
      * 
-     * @param array $array Array to parse.
+     * @param array $array Array collection.
      * @param string $key Key to group by.
-     * @param bool $preserveKey [optional] Preserve keys? Default: false.
+     * @param bool $preserveIndex [optional] Should the index of the array collection be preserved or not? Default: `false`.
      * @return array
      *
-     * @deprecated Please use ::groupBy() instead.
+     * @deprecated Please use [`::groupBy()`](#groupBy) instead.
      */
-    public static function categorizeByKey(array $array, $key, $preserveKey = false) {
-        return static::groupBy($array, $key, $preserveKey);
+    public static function categorizeByKey(array $array, $key, $preserveIndex = false) {
+        return static::groupBy($array, $key, $preserveIndex);
     }
 
     /**
-     * Special version of implode that uses alternative implode string for the last item in the array.
+     * Implodes values of an array, but allows alternative separator between last two elements.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::implode(array('a', 'b', 'c', 'd'), ', ', ' and ');
+     *      // -> 'a, b, c and d'
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::implode(array('a', 'b'), ', ', ' and ');
+     *      // -> 'a and b'
      * 
      * @param  array  $array         Array to be imploded.
-     * @param  string $separator     [optional] Separator to implode with. Default: ','.
-     * @param  string $lastSeparator [optional] Separator for last imploded element - if none then $separator will be used. Default: null.
+     * @param  string $separator     [optional] Separator to implode with. Default: `,`.
+     * @param  string $lastSeparator [optional] Separator to use between last two elements
+     *                               - if `null` then `$separator` will be used. Default: `null`.
      * @return string
      */
     public static function implode(array $array, $separator = ',', $lastSeparator = null) {
@@ -223,11 +317,22 @@ class ArrayUtils
     }
 
     /**
-     * Implodes all fields with a specific key from a multidimensional array.
+     * Implodes specific key values from an array collection.
      *
-     * @param array $array Array to implode from.
-     * @param string $key Key to implode by.
-     * @param string $separator [optional] Separator to implode by. Default: ",".
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::implodeByKey(array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4),
+     *          array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2),
+     *          array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3),
+     *          array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4),
+     *          array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3)
+     *      ), 'id');
+     *      // -> '3,2,4,6,1'
+     *
+     * @param array $array Array collection to implode.
+     * @param string $key Implode values assigned to this key.
+     * @param string $separator [optional] Separator to implode by. Default: `,`.
      * @return string
      */
     public static function implodeByKey(array $array, $key, $separator = ',') {
@@ -235,12 +340,30 @@ class ArrayUtils
     }
 
     /**
-     * Searches a multidimensional array (a collection, but not necessarily) for a specific value on a key and returns top key (first occurrence!).
+     * Searches an array collection for a value found under a key and returns
+     * the top level key.
      *
-     * @param array $array Array to search through.
-     * @param string $key Key of which value to look for.
-     * @param string $value Value to look for.
-     * @return string|int|bool Key name found (string/int) or bool false if not found.
+     * Only returns key for the first occurence of the searched value.
+     *
+     * Strict comparison `===` is used when searching.
+     *
+     * Returns `false` if not found.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::search(array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4),
+     *          array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2),
+     *          array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3),
+     *          array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4),
+     *          array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3)
+     *      ), 'categoryId', 3);
+     *      // -> 2
+     *
+     * @param array $array Array collection to search through.
+     * @param string $key Search through values of this key.
+     * @param string $value Value to search for.
+     * @return string|int|bool
      */
     public static function search(array $array, $key, $value) {
         foreach ($array as $k => &$row) {
@@ -254,9 +377,23 @@ class ArrayUtils
     /**
      * Get the numerical index for an associative key.
      *
-     * @param array $array Array to search through.
+     * In other words: returns numerical position of a key in an associative array.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::keyPosition(array(
+     *          'one' => 'frodo',
+     *          'two' => 'sam',
+     *          'three' => 'pippin',
+     *          'four' => 'merry'
+     *      ), 'three');
+     *      // -> 2
+     *
+     * Returns `false` if the key doesn't exist.
+     *
+     * @param array $array Associative array to search through.
      * @param string $key Key name.
-     * @return int|bool Int for the position of the key if it was found, bool false if it wasn't found.
+     * @return int|bool
      */
     public static function keyPosition(array $array, $key) {
         $x = 0;
@@ -273,9 +410,24 @@ class ArrayUtils
     }
 
     /**
-     * Removes a key from a collection.
+     * Removes a key from all rows in an array collection.
      *
-     * @param array $array Array to be parsed.
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::keyRemove(array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4),
+     *          array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2),
+     *          array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3),
+     *          array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4),
+     *          array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3)
+     *      ), 'categoryId');
+     *      // -> array('id' => 3, 'title' => 'Lorem ipsum'),
+     *      // -> array('id' => 2, 'title' => 'Lipsum'),
+     *      // -> array('id' => 4, 'title' => 'Dolor sit amet'),
+     *      // -> array('id' => 6, 'title' => 'Adipiscit elit'),
+     *      // -> array('id' => 1, 'title' => 'Aequetam alitat')
+     *
+     * @param array $array Array collection.
      * @param string $key Key to be removed.
      * @return array
      */
@@ -289,11 +441,30 @@ class ArrayUtils
     }
 
     /**
-     * Adds a key to a collection.
+     * Adds a key to every row in an array collection.
      *
-     * @param array $array Array to be parsed.
-     * @param key $key Key to be added.
-     * @param mixed $value [optional] Optional value to be set under this key. Default null.
+     * Optionally you can specify what value to be set under that key.
+     *
+     * It will **overwrite existing key**.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::keyAdd(array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4),
+     *          array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2),
+     *          array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3),
+     *          array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4),
+     *          array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3)
+     *      ), 'featured', true);
+     *      // array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4, 'featured' => true),
+     *      // array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2, 'featured' => true),
+     *      // array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3, 'featured' => true),
+     *      // array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4, 'featured' => true),
+     *      // array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3, 'featured' => true)
+     *
+     * @param array $array Array collection.
+     * @param string $key Key to be added.
+     * @param mixed $value [optional] Optional value to be set under this key. Default: `null`.
      * @return array
      */
     public static function keyAdd(array $array, $key, $value = null) {
@@ -305,9 +476,17 @@ class ArrayUtils
     }
 
     /**
-     * Removes $values from the $array.
+     * Removes all `$values` from the `$array`.
      *
      * It doesn't change the array keys.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::removeValues(
+     *          array('one', 'two', 'three', 'four'),
+     *          array('two', 'three')
+     *      );
+     *      // -> array(0 => 'one', 3 => 'four')
      * 
      * @param  array  $array  Array to remove items from.
      * @param  array  $values Values to be removed.
@@ -318,9 +497,14 @@ class ArrayUtils
     }
 
     /**
-     * Checks whether $array has at least one of the $values.
+     * Checks whether `$array` has at least one of the `$values`.
      *
-     * Returns false if $values is empty.
+     * Returns `false` if `$values` is empty.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::hasValue(array('one', 'two', 'three'), 'two');
+     *      // -> true
      * 
      * @param  array   $array  Array to be checked.
      * @param  array   $values Values to be found.
@@ -331,11 +515,26 @@ class ArrayUtils
     }
 
     /**
-     * Sorts a multidimensional array by key (2-dimensional).
+     * Sorts an array collection by value of a row key.
      *
-     * @param array $array Array to sort.
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::multiSort(array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4),
+     *          array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2),
+     *          array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3),
+     *          array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4),
+     *          array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3)
+     *      ), 'id');
+     *      // -> array('id' => 1, 'title' => 'Aequetam alitat', 'categoryId' => 3),
+     *      // -> array('id' => 2, 'title' => 'Lipsum', 'categoryId' => 2),
+     *      // -> array('id' => 3, 'title' => 'Lorem ipsum', 'categoryId' => 4),
+     *      // -> array('id' => 4, 'title' => 'Dolor sit amet', 'categoryId' => 3),
+     *      // -> array('id' => 6, 'title' => 'Adipiscit elit', 'categoryId' => 4)
+     *
+     * @param array $array Array collection to sort.
      * @param string $key Key to sort by.
-     * @param bool $reverse [optional] True for descending order, false for ascending. Default: false.
+     * @param bool $reverse [optional] `true` for descending order, `false` for ascending. Default: `false`.
      * @return array
      */
     public static function multiSort(array $array, $key, $reverse = false) {
@@ -363,12 +562,33 @@ class ArrayUtils
     /**
      * Sorts an array of paths in either "child first" or "root first" order.
      *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::sortPaths(array(
+     *          'company/wizards/gandalf.txt',
+     *          'company/dwarves/oin.txt',
+     *          'company/dwarves/thorin.txt',
+     *          'company/bilbo.txt',
+     *          'company/dwarves/bifur.txt',
+     *          'company/dwarves/bombur.txt',
+     *          'company/wizards/radagast.txt'
+     *      ));
+     *      // -> array(
+     *      //      'company/dwarves/bifur.txt',
+     *      //      'company/dwarves/bombur.txt',
+     *      //      'company/dwarves/oin.txt',
+     *      //      'company/dwarves/thorin.txt',
+     *      //      'company/wizards/gandalf.txt',
+     *      //      'company/wizards/radagast.txt',
+     *      //      'company/bilbo.txt'
+     *      // );
+     *
      * @param  array   $paths     Array of paths (strings).
-     * @param  boolean $rootFirst [optional] Root first? Default: false (child first).
-     * @param  boolean $separator [optional] Used path separator. Default: DIRECTORY_SEPARATOR.
+     * @param  boolean $rootFirst [optional] Root first? Default: `false` (child first).
+     * @param  boolean $separator [optional] Used path separator. Default: `DIRECTORY_SEPARATOR`.
      * @return array
      */
-    public static function sortPaths(array $paths, $rootFirst = false, $separator = DS) {
+    public static function sortPaths(array $paths, $rootFirst = false, $separator = DIRECTORY_SEPARATOR) {
         usort($paths, function($a, $b) use ($rootFirst, $separator) {
             $a = trim(trim($a, $separator));
             $b = trim(trim($b, $separator));
@@ -407,10 +627,26 @@ class ArrayUtils
     /**
      * Push a value after another one in an array
      *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::pushAfter(array(
+     *          'one' => 'frodo',
+     *          'two' => 'sam',
+     *          'three' => 'pippin',
+     *          'four' => 'merry'
+     *      ), 'bill', 'two', 'mule');
+     *      // -> array(
+     *      //      'one' => 'frodo',
+     *      //      'two' => 'sam',
+     *      //      'mule' => 'bill',
+     *      //      'three' => 'pippin',
+     *      //      'four' => 'merry'
+     *      // );
+     *
      * @param array $array Array to push into.
      * @param mixed $input Value to push.
-     * @param int/string $position Position or key after which to push the value.
-     * @param string $key [optional] Specific key assigned to the value (if wanted). Default: null.
+     * @param int|string $position Position or key after which to push the value.
+     * @param string $key [optional] Specific key assigned to the value. Default: `null`.
      * @return array
      */
     public static function pushAfter(array $array, $input, $position, $key = null) {
@@ -438,10 +674,22 @@ class ArrayUtils
     }
 
     /**
-     * Filters the array so that it contains only the keys from the $allowedKeys list.
+     * Filters the array so that it contains only the keys from the `$allowedKeys` list.
+     *
+     * Ie. removes all keys that are not in `$allowedKeys` array.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::filterKeys(
+     *          array('id' => 2, 'title' => 'Lipsum', 'deleted' => false, 'featured' => true, 'slug' => 'lipsum.html'),
+     *          array('title', 'featured')
+     *      );
+     *      // -> array('title' => 'Lipsum', 'featured' => true)
+     *
+     * Useful for filtering POST-ed input.
      *
      * @param array $array Array to be filtered.
-     * @param array $allowedKeys List of keys that are allowed in the $array
+     * @param array $allowedKeys List of keys that are allowed in the `$array`.
      * @return array
      */
     public static function filterKeys(array $array, array $allowedKeys) {
@@ -455,7 +703,16 @@ class ArrayUtils
     }
 
     /**
-     * Flattens an array, ie. makes it 1-dimensional.
+     * Flattens an array, makes it 1-dimensional.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::flatten(array(
+     *          array('id' => 2, 'title' => 'Lorem ipsum'),
+     *          array('id' => 3, 'title' => 'Lipsum.com'),
+     *          array('id' => 5, 'title' => 'Dolor sit amet')
+     *      ));
+     *      // -> array(2, 'Lorem ipsum', 3, 'Lipsum.com', 5, 'Dolor sit amet');
      *
      * @param array $array Array to be flattened.
      * @return array
@@ -481,10 +738,18 @@ class ArrayUtils
     /**
      * Performs a merge between n arrays, where the last array has the highest priority.
      *
-     * @param array $array1
-     * @param array $array2
-     * @param array $array3
-     * ...
+     * You can pass as many arrays as you want.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::merge(
+     *          array('one' => 'frodo', 'two' => 'bilbo'),
+     *          array('two' => 'sam'),
+     *          array('mule' => 'bill'),
+     *          array('three' => 'pippin', 'four' => 'merry')
+     *      );
+     *      // -> array('one' => 'frodo', 'two' => 'sam', 'mule' => 'bill', 'three' => 'pippin', 'four' => 'merry')
+     * 
      * @return array
      */
     public static function merge() {
@@ -510,6 +775,29 @@ class ArrayUtils
     /**
      * Performs a deep merge between two arrays.
      *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::mergeDeep(array(
+     *          'settings' => array(
+     *              'login_enabled' => true,
+     *              'users' => array('Jane', 'John')
+     *          )
+     *      ), array(
+     *          'settings' => array(
+     *              'logout_enabled' => false
+     *              'users' => array('Doe')
+     *          ),
+     *          'config' => array()
+     *      ));
+     *      // -> array(
+     *      //      'settings' => array(
+     *      //          'login_enabled' => true,
+     *      //          'users' => array('Jane', 'John', 'Doe'),
+     *      //          'logout_enabled' => false
+     *      //      ),
+     *      //      'config' => array()
+     *      // )
+     *
      * @param array $into Array to merge into.
      * @param array $from Array to merge to.
      * @return array
@@ -527,17 +815,45 @@ class ArrayUtils
     }
 
     /**
-     * Joins the second collection into the first based on the given key. Default is outer join meaning
-     * that if matching row wasn't found in the second collection the row in the first collection will still
-     * be displayed (this can be altered by setting the 6th argument to 'inner').
+     * Joins items from the `$from` array collection into the `$into` collection based on matching criteria.
+     * 
+     * Default type of join is _outer_ meaning that if matching row wasn't found in the second collection
+     * the row in the first collection will not be removed (this can be altered by setting
+     * the `$type` argument to `ArrayUtils::JOIN_OUTER`).
+     *
+     * Example:
+     *
+     *      $posts = array(
+     *          array('id' => 3, 'title' => 'Lorem ipsum', 'imageId' => 5),
+     *          array('id' => 4, 'title' => 'Lipsum', 'imageId' => 6),
+     *          array('id' => 5, 'title' => 'Muspi merol', 'imageId' => 5),
+     *          array('id' => 6, 'title' => 'Dolor sit amet', imageId' => 34)
+     *      );
+     *      $images = array(
+     *          array('id' => 5, 'url' => 'http://replygif.net/i/1452.gif'),
+     *          array('id' => 6, 'url' => 'http://replygif.net/i/1448.gif')
+     *      );
+     *      echo \MD\Foundation\Utils\ArrayUtils::join($posts, $images, 'imageId', 'image', 'id');
+     *      // -> array(
+     *      // ->   array('id' => 3, 'title' => 'Lorem ipsum', 'imageId' => 5,
+     *      // ->       'image' => array('id' => 5, 'url' => 'http://replygif.net/i/1452.gif')),
+     *      // ->   array('id' => 4, 'title' => 'Lipsum', 'imageId' => 6,
+     *      // ->       'image' => array('id' => 6, 'url' => 'http://replygif.net/i/1448.gif')),
+     *      // ->   array('id' => 5, 'title' => 'Muspi merol', 'imageId' => 5,
+     *      // ->       'image' => array('id' => 5, 'url' => 'http://replygif.net/i/1452.gif')),
+     *      // ->   array('id' => 6, 'title' => 'Dolor sit amet', imageId' => 34)
+     *      // -> )
+     *
+     * In the above example, if we added 6ths argument `ArrayUtils::JOIN_INNER` then the last `$posts` element (with `id = 6`)
+     * would not be included in the `::join()` results.
      *
      * @param array $into Collection of data in which to put values of $from.
      * @param array $from Collection of data from which get values to put into $into.
      * @param string $onKey What key from $into to compare on?
      * @param string $intoKey Into what key to put values from $from.
      * @param string $fromKey What key from $from to compare on?
-     * @param string $type [optional] Type of join. Default is ArrayUtils::JOIN_OUTER. Can also be ArrayUtils::JOIN_INNER which will remove all items
-     *                  from $into that haven't got values in $from. Default: ArrayUtils::JOIN_OUTER.
+     * @param string $type [optional] Type of join. Can also be `ArrayUtils::JOIN_INNER` which will remove all items
+     *                  from `$into` that don't have values in `$from`. Default: `ArrayUtils::JOIN_OUTER`.
      * @return array
      */
     public static function join(array $into, array $from, $onKey, $intoKey, $fromKey, $type = self::JOIN_OUTER) {
@@ -559,9 +875,22 @@ class ArrayUtils
     }
 
     /**
-     * Check whether the specified keys are set inside the given array and are not empty (strings are trimmed before check).
+     * Check whether the specified keys are set inside the given array and are not empty.
      *
-     * Returns boolean true if all is correct, false otherwise.
+     * Returns `true` if all is correct, `false` otherwise.
+     *
+     * String values are trimmed before checking, so ` ` (single space) is an invalid value.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::checkValues(array(
+     *          'id' => 5,
+     *          'title' => 'Lorem ipsum',
+     *          'slug' => ''
+     *      ), array('id', 'title', 'slug', 'author'));
+     *      // -> false
+     *
+     * The above example fails because `slug` key is empty and there is no `author` key.
      *
      * @param array $array Array to check.
      * @param array $keys Array of keys to check.
@@ -583,6 +912,18 @@ class ArrayUtils
     /**
      * Removes empty keys from an array.
      *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::cleanEmpty(array(
+     *          'one' => 'frodo',
+     *          'two' => 'sam',
+     *          'three' => '',
+     *          'four' => null,
+     *          'five' => 0,
+     *          'six' => false
+     *      ));
+     *      // -> array('one' => 'frodo', 'two' => 'sam', 'five' => 0, 'six' => false)
+     *
      * @param array $array Array to clean.
      * @return array
      */
@@ -600,7 +941,22 @@ class ArrayUtils
     }
 
     /**
-     * Parses the given array into a query string.
+     * Parses an array into a HTTP query string.
+     *
+     * The query string will not include the initial `?` sign, so it can be appended
+     * to an existing query string.
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::toQueryString(array(
+     *          'key' => 'val',
+     *          'key1' => array(
+     *              'subkey' => 'subval',
+     *              'subkey1' => 'subval1'
+     *          ),
+     *          'key2' => array('a', 'b', 'c', 'd')
+     *      ));
+     *      // -> key=val&key1%5Bsubkey%5D=subval&key1%5Bsubkey1%5D=subval1&key2%5B0%5D=a&key2%5B1%5D=b&key2%5B2%5D=c&key2%5B3%5D=d
      *
      * @param array $array Array to be converted to query string.
      * @return string
@@ -610,18 +966,24 @@ class ArrayUtils
     }
 
     /**
-     * Converts the given array to an object. The conversion is "deep", ie. all dimensions will be converted.
+     * Converts the given array to an object.
+     * 
+     * The conversion is "deep", ie. all dimensions will be converted.
+     *
+     * By default it creates an object of `\StdClass`, but you can pass your own object
+     * as the 2nd argument. The array values will be set as public properties on the object.
      *
      * @param array $array Array to convert to object.
-     * @param object $object [optional] Object to which assign the properties, usually for internal use. Default: null.
-     * @return stdClass
+     * @param object $object [optional] Object to which assign the properties, usually for
+     *                       internal use. Default: `null`.
+     * @return object
      */
     public static function toObject(array $array, $object = null) {
         if ($object !== null && !is_object($object)) {
             throw new InvalidArgumentException('object', $object, 2);
         }
 
-        $parent = ($object !== null) ? $object : new \stdClass();
+        $parent = ($object !== null) ? $object : new StdClass();
 
         foreach($array as $key => $value) {
             // make sure the property exists if we're gonna go recursively through it
@@ -640,12 +1002,14 @@ class ArrayUtils
     }
 
     /**
-     * Creates an array from a given object. The conversion is "deep", ie. all dimensions will be converted.
+     * Creates an array from a given object
+     * 
+     * The conversion is "deep", ie. all dimensions will be converted.
      *
-     * @param object|array $object Object to be converted to an array or an array of objects.
-     * @param array $parent [optional] Usually for internal use of the function. A reference to parent array. Default: array().
+     * @param object|array $object Object to be converted to an array or an array of objects (collection).
+     * @param array $parent [optional] Usually for internal use of the function. A reference to parent array. Default: `array()`.
      * @param array $keys [optional] If you don't want the whole object converted to array, specify the names of keys
-     *                    that you are interested in. Default: array().
+     *                    that you are interested in. Default: `array()`.
      * @return array
      */
     public static function fromObject($object, array $parent = array(), array $keys = array()) {
@@ -685,28 +1049,33 @@ class ArrayUtils
     }
 
     /**
-     * Flatten a multi-dimensional associative array with dots.
+     * Flatten a multi-dimensional associative array to dot notation.
      *
-     * @param  array   $array
-     * @param  string  $prepend
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::dot(array(
+     *          'flat' => 'bar',
+     *          'foo' => array(
+     *              'bar' => array(
+     *                  'baz' => true,
+     *                  'bat' => false
+     *              )
+     *          )
+     *      ));
+     *      // -> array('flat' => 'bar', 'foo.bar.baz' => true, 'foo.bar.bat' => false)
+     *
+     * @param  array   $array Array to be converted to dot notation.
+     * @param  string  $prefix [optional] Prepend this string to all keys. Default: `null`.
      * @return array
      */
-    public static function dot($array, $prepend = '')
-    {
+    public static function dot(array $array, $prefix = null) {
         $results = array();
 
-        foreach ($array as $key => $value)
-        {
-            if (is_array($value))
-            {
-                $results = array_merge(
-                    $results,
-                    self::dot($value, $prepend.$key.'.')
-                );
-            }
-            else
-            {
-                $results[$prepend.$key] = $value;
+        foreach ($array as $key => $value) {
+            if (is_array($value)) {
+                $results = array_merge($results, static::dot($value, $prefix . $key .'.'));
+            } else {
+                $results[$prefix . $key] = $value;
             }
         }
 
@@ -714,11 +1083,24 @@ class ArrayUtils
     }
 
     /**
-     * Returns value from the key at given path (using a dot notation).
+     * Returns value from the key at given path (using dot notation).
+     *
+     * Example:
+     *
+     *      echo \MD\Foundation\Utils\ArrayUtils::get(array(
+     *          'flat' => 'bar',
+     *          'foo' => array(
+     *              'bar' => array(
+     *                  'baz' => true,
+     *                  'bat' => false
+     *              )
+     *          )
+     *      ), 'foo.bar.baz');
+     *      // -> true
      *
      * @param  array  $array Array to get the value from.
      * @param  string $key Key or path to key.
-     * @param  mixed  $default Default value if key not found.
+     * @param  mixed  $default [optional] Default value if the key was not found. Default: `null`.
      * @return mixed
      */
     public static function get(array $array, $key, $default = null) {
