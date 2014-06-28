@@ -1,7 +1,5 @@
 <?php
 /**
- * A set of filesystem utility functions.
- * 
  * @package Foundation
  * @subpackage Utils
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -14,7 +12,7 @@ namespace MD\Foundation\Utils;
 use MD\Foundation\Utils\ArrayUtils;
 
 /**
- * @static
+ * A set of filesystem utility functions.
  */
 class FilesystemUtils
 {
@@ -23,17 +21,22 @@ class FilesystemUtils
     const GLOB_CHILDFIRST =  65536;
     
     /**
-     * Extended glob() functionality that supports double star "**" wildcard.
+     * Extended `glob()` functionality that supports double star `**` (globstar) wildcard.
      *
-     * PHP's glob() implementation doesn't allow for "**" wildcard. In Bash 4 it can be enabled with "globstar" setting.
+     * PHP's `glob()` implementation doesn't allow for `**` wildcard. In Bash 4 it can be enabled with `globstar` setting.
      *
-     * In case the "**" wildcard is not used in the pattern then this method just calls PHP's glob().
+     * In case the `**` wildcard is not used in the pattern then this method just calls PHP's `glob()`.
      *
-     * For full documentation see PHP's glob() documentation.
+     * For full documentation see PHP's [`glob()` documentation](http://php.net/manual/en/function.glob.php).
+     *
+     * Additionally it provides sorting option to the results, which you can pass along with
+     * other flags. Constants `FilesystemUtils::GLOB_ROOTFIRST` and `FilesystemUtils::GLOB_CHILDFIRST`
+     * sort the results either as "root first" where files in a directory are listed before directories and
+     * subdirectories, or "child first" where subdirectories are listed before files.
      * 
-     * @param  string  $pattern The pattern. Supports "**" wildcard.
-     * @param  integer $flags [optional] glob() flags. See glob()'s documentation. Default: 0.
-     * @return array|boolean
+     * @param  string  $pattern The pattern. Supports `**` wildcard.
+     * @param  int $flags [optional] `glob()` flags. See `glob()`'s documentation. Default: `0`.
+     * @return array|bool
      */
     public static function glob($pattern, $flags = 0) {
         // if not using ** then just use PHP's glob()

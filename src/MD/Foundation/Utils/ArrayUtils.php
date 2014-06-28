@@ -69,7 +69,7 @@ class ArrayUtils
     }
 
     /**
-     * Returns an array with a list of all (non-unique) valuesassigned to a key in a collection.
+     * Returns an array with a list of all (non-unique) values assigned to a key in a collection.
      *
      * Example:
      *
