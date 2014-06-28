@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>StringUtils class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="A set of string utility functions.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,7 +112,7 @@
                                     <small>Class</small>
                             </h1>
                                                 <div class="short-desc">
-                
+                <p>A set of string utility functions.</p>
 
             </div>
         </div>
@@ -164,7 +164,17 @@
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Truncates a string to a specific length.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Also appends the value of <code>$add</code> (3rd argument) to the end of the string
+(but only if it was actually truncated).</p>
+
+<p>It will also attempt to not break any words and truncate the string
+at the last possible space.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::truncate('Lorem ipsum', 8);
+ // -&gt; 'Lorem...'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -183,7 +193,7 @@
                                                         <td class="code param-name">
                                                                                                                         $limit
                                                         </td>
-                                                        <td><p>[optional] Maximum length of the string. Default is 72.</p>
+                                                        <td><p>[optional] Maximum length of the string. Default: <code>72</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -191,7 +201,7 @@
                                                         <td class="code param-name">
                                                                                                                         $add
                                                         </td>
-                                                        <td><p>[optional] String to append at the end. Default is '...'</p>
+                                                        <td><p>[optional] String to append at the end. Default: <code>...</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -233,9 +243,13 @@
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Prefixes the given string with 0's until its length is what is given in the 2nd argument.</p>
+                                                                        <div class="method-short-desc"><p>Prefixes the given string with <code>0</code>'s until its length is what is given in the 2nd argument.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::zeroFill('ab', 6);
+ // -&gt; '0000ab'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -246,7 +260,7 @@
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td><p>String to be prefixed with 0's.</p>
+                                                        <td><p>String to be prefixed with <code>0</code>'s.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -254,7 +268,7 @@
                                                         <td class="code param-name">
                                                                                                                         $maxLength
                                                         </td>
-                                                        <td><p>[optional] Target length of the string. Default: 4.</p>
+                                                        <td><p>[optional] Target length of the string. Default: <code>4</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -298,7 +312,11 @@
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Clears the given string of any white spaces, punctuation, new lines, tabs, etc.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::clear('   &lt;p&gt;Lorem,    ipsum?&lt;/p&gt;');
+ // -&gt; 'Lorem ipsum'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -309,7 +327,7 @@
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>String to be cleared.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -340,11 +358,13 @@
                 <span class="method-name">getWords</span>
         <span class="method-arguments">
             (<!--
-                                                        --><span class="method-argument">
+                                                            --><span class="method-argument-hint">string</span><!--
+                                        --><span class="method-argument">
                         <span class="code">$string</span><!--
                                             --></span><!--
 
-                    -->, <!--                                                        --><span class="method-argument">
+                    -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
+                                        --><span class="method-argument">
                         <span class="code">$removePunctuation</span><!--
                                                     --><span class="method-default"> = false</span><!--
                                             --></span><!--
@@ -359,26 +379,30 @@
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Returns an array of all words (not unique) in the given string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::getWords('Lorem ipsum dolor &lt;strong&gt;sit amet&lt;/strong&gt;...', true);
+ // -&gt; array('Lorem', 'ipsum', 'dolor', 'sit', 'amet')
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                                                                     <tr>
-                                                        <td class="code"></td>
+                                                        <td class="code">string</td>
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>String to get the words from.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
-                                                        <td class="code"></td>
+                                                        <td class="code">bool</td>
                                                         <td class="code param-name">
                                                                                                                         $removePunctuation
                                                         </td>
-                                                        <td>
+                                                        <td><p>[optional] Should punctuation be removed before extracting words? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -416,7 +440,11 @@
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Return the first word found in the given string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::getFirstWord('Lorem, ipsum dolor sit amet...');
+ // -&gt; 'Lorem'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -427,7 +455,7 @@
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>String to get the first word from.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -465,7 +493,11 @@
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Returns the first sentence from the given string, previously removing any HTML tags.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::getFirstSentence('Lorem ipsum! Dolor sit amet...');
+ // -&gt; 'Lorem ipsum!'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -476,7 +508,7 @@
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>String to get the first sentence from.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -514,7 +546,11 @@
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Returns how many words are used in the string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::wordCount('Lorem, ipsum dolor! Sit amet...');
+ // -&gt; 5
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -525,7 +561,7 @@
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>String to count words for.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -569,7 +605,13 @@
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Tries to remove any accents from letters in the given string by replacing them with similar looking letters.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Experimental. Use only with UTF-8 strings.</p>
+                                    <div class="method-long-desc language-php"><p><strong>Experimental</strong>. Use only with UTF-8 strings.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::translit('Zażółć gęślą jaźń');
+ // -&gt; 'Zazolc gesla jazn'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -588,7 +630,7 @@
                                                         <td class="code param-name">
                                                                                                                         $encoding
                                                         </td>
-                                                        <td><p>[optional] If you know the string's encoding then put it here. Default: 'UTF-8'.</p>
+                                                        <td><p>[optional] If you know the string's encoding then put it here. Default: <code>UTF-8</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -633,6 +675,12 @@
                                                                         <div class="method-short-desc"><p>Make a string that is URL (SEO) friendly.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>Note that it doesn't mean it makes a valid URL - it will escape normally URL accepted characters like %, ?, / or &amp;.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::urlFriendly('Lorem &amp; ipsum dolor sit amet!');
+ // -&gt; 'lorem-and-ipsum-dolor-sit-amet'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -651,7 +699,7 @@
                                                         <td class="code param-name">
                                                                                                                         $lowercase
                                                         </td>
-                                                        <td><p>[optional] Should the string be made lowercase? Default: true.</p>
+                                                        <td><p>[optional] Should the string be made lowercase? Default: <code>true</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -689,7 +737,11 @@
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Make a string that is file system friendly.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::fileNameFriendly('My Pictures (2005).zip');
+ // -&gt; 'My-pictures-(2005).zip'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -744,7 +796,13 @@
                                                                         <div class="method-short-desc"><p>Adds a prefix to the filename even if a path to file has been given.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>When a path to file has been given then the prefix will still be prepended to the
-filename and not the full path.</p>
+filename itself and not the full path.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::fileNamePrefix('/var/www/index.html', 'main.');
+ // -&gt; '/var/www/main.index.html'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -807,6 +865,12 @@ filename and not the full path.</p>
                                                                         <div class="method-short-desc"><p>Adds a suffix to the filename without breaking its extension.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>The suffix will be added before the last dot.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::fileNameSuffix('/var/www/index.html', '.bak');
+ // -&gt; '/var/www/index.bak.html'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -869,7 +933,11 @@ filename and not the full path.</p>
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Convert a string with words separated by a separator to camelCase.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::toCamelCase('upload-file-input');
+ // -&gt; 'uploadFileInput'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -880,7 +948,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>String to be camelcased.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -888,7 +956,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $separator
                                                         </td>
-                                                        <td><p>[optional] Separator to use to split the string. Default: '-'.</p>
+                                                        <td><p>[optional] Separator to use to split the string. Default: <code>-</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -931,7 +999,9 @@ filename and not the full path.</p>
                                                                                     </div>
                                                                         <div class="method-short-desc"><p>Convert a string in camelCase to hyphens, e.g.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>uploadFile to upload-file.</p>
+                                    <div class="method-long-desc language-php"><p><code>uploadFile</code> to <code>upload-file</code>.</p>
+
+<p>This method is deprecated. You should use <a href="#toSeparated"><code>::toSeparated()</code></a> instead.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -942,7 +1012,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>String to be hyphenated.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -984,9 +1054,13 @@ filename and not the full path.</p>
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Convert a string in camelCase to separated by the given separator.</p>
+                                                                        <div class="method-short-desc"><p>Convert a string in <em>camelCase</em> to separated by the given separator.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::toSeparated('loremIpsumDolorSitAmet');
+ // -&gt; 'lorem-ipsum-dolor-sit-amet'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -997,7 +1071,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>Camelcase string to be separated with the <code>$separator</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1005,7 +1079,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $separator
                                                         </td>
-                                                        <td><p>[optional] Separator to use. Default: '-'.</p>
+                                                        <td><p>[optional] Separator to use. Default: <code>-</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1043,7 +1117,14 @@ filename and not the full path.</p>
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Checks whether a string is a valid e-mail address.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::isEmail('me@email.com');
+ // -&gt; true
+
+ echo \MD\Foundation\Utils\StringUtils::isEmail('me@email');
+ // -&gt; false
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1054,7 +1135,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $email
                                                         </td>
-                                                        <td><p>String to validate.</p>
+                                                        <td><p>Email to validate.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1092,7 +1173,14 @@ filename and not the full path.</p>
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Checks whether a string is a valid URL.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::isUrl('http://www.php.net');
+ // -&gt; true
+
+ echo \MD\Foundation\Utils\StringUtils::isUrl('www.php.net');
+ // -&gt; false
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1147,7 +1235,14 @@ filename and not the full path.</p>
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Checks if the given string is a valid class name.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>It doesn't check if the class actually exists, it just checks if the given string
+could be used as a class name.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::isClassName('123Class');
+ // -&gt; false
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1166,7 +1261,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $allowNamespace
                                                         </td>
-                                                        <td><p>[optional] Can the class name include a namespace? Default: false.</p>
+                                                        <td><p>[optional] Can the class name include a namespace? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1202,9 +1297,13 @@ filename and not the full path.</p>
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Fix a given URL if it doesn't have http:// in front (common mistake! :))</p>
+                                                                        <div class="method-short-desc"><p>Fix a given URL if it doesn't have <code>http://</code> in front (common user mistake! :))</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::fixUrlProtocol('www.php.net');
+ // -&gt; 'http://www.php.net'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1266,7 +1365,8 @@ filename and not the full path.</p>
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Generate a random string of a given length.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>It just generates a random string, but doesn't check for its uniqueness or anything like that,
+so you probably shouldn't use it as a unique id generator.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1277,7 +1377,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $length
                                                         </td>
-                                                        <td><p>[optional] Length of the string. Default: 16</p>
+                                                        <td><p>[optional] Length of the generated string. Default: <code>16</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1285,7 +1385,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $capitals
                                                         </td>
-                                                        <td><p>[optional] Should the string include capital letters? Default: true</p>
+                                                        <td><p>[optional] Should the string include capital letters? Default: <code>true</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1293,7 +1393,7 @@ filename and not the full path.</p>
                                                         <td class="code param-name">
                                                                                                                         $punctuation
                                                         </td>
-                                                        <td><p>[optional] Should the string include special characters like punctuation? Default: false</p>
+                                                        <td><p>[optional] Should the string include special characters like punctuation? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1334,10 +1434,22 @@ filename and not the full path.</p>
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Parses the given string looking for variables to insert to from the given set of variables.</p>
+                                                                        <div class="method-short-desc"><p>Interpolates the given string with variables.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Ie. Looks for occurrences of variables like {foo} or {bar} and replaces them with values found under
-keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
+                                    <div class="method-long-desc language-php"><p>Looks for occurrences of placeholders like <code>{foo}</code> or <code>{bar}</code> and replaces them with values found under
+keys <code>foo</code> or <code>bar</code> (respectively) in the given array of variables.</p>
+
+<p>Also accepts an object as the second argument and in such case it will attempt to read
+the properties of that object using getters.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::interpolate('I have a {item} and I will {action} it.', array(
+     'item' =&gt; 'banana',
+     'action' =&gt; 'eat'
+ ));
+ // -&gt; 'I have a banana and I will eat it.'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1348,7 +1460,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td><p>String to parse.</p>
+                                                        <td><p>String to interpolate.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1356,7 +1468,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $variables
                                                         </td>
-                                                        <td><p>Either an array or an object with variables.</p>
+                                                        <td><p>Either an array or an object with variables to be interpolated into the string.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1370,6 +1482,18 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                             </tbody>
                                         </table>
                                     
+                                                                            <h5>Throws:</h5>
+                                        <table class="table table-striped table-condensed">
+                                            <tbody>
+                                                                                                    <tr>
+                                                        <td class="code">                                                                                                                                            
+                    <a href="../../../MD/Foundation/Exceptions/InvalidArgumentException.html">MD\Foundation\Exceptions\InvalidArgumentException</a>
+            </td>
+                                                        <td><p>If the <code>$variables</code> argument is neither an array or an object.</p>
+</td>
+                                                    </tr>
+                                                                                            </tbody>
+                                        </table>
                                                                     </div>
                             </div>
                                                     <div id="parseVariables" class="method deprecated">
@@ -1402,7 +1526,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                             This method has been deprecated.
                                             <strong>Do not use it anymore!</strong>
                                                                                     </div>
-                                                                        <div class="method-short-desc"><p>Alias for ::interpolate().</p>
+                                                                        <div class="method-short-desc"><p>Alias for <a href="#interpolate"><code>::interpolate()</code></a>.</p>
 </div>
                                     <div class="method-long-desc language-php">
 </div>
@@ -1415,7 +1539,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td><p>String to parse.</p>
+                                                        <td><p>String to interpolate.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1423,7 +1547,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $variables
                                                         </td>
-                                                        <td><p>Either an array or an object with variables.</p>
+                                                        <td><p>Either an array or an object with variables to be interpolated into the string.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1465,9 +1589,13 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Changes the given number of seconds to a format hh:mm:ss.</p>
+                                                                        <div class="method-short-desc"><p>Changes the given number of seconds to a format <code>h:mm:ss</code>.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::secondsToTimeString(3785);
+ // -&gt; '1:03:05'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1486,7 +1614,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $hideHoursWhenZero
                                                         </td>
-                                                        <td><p>[optional] If the time returned has zero hours then do not display them. Default: false.</p>
+                                                        <td><p>[optional] If the time returned has zero hours then do not display them. Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1522,11 +1650,17 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Changes string of time format hh:mm:ss to seconds as integer.</p>
+                                                                        <div class="method-short-desc"><p>Changes string of time format <code>h:mm:ss</code> to number of seconds.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Reverse of StringUtils::secondsToTimeString().</p>
+                                    <div class="method-long-desc language-php"><p>Reverse of <a href="#secondsToTimeString"><code>::secondsToTimeString()</code></a>.</p>
 
-<p>Can also take '.' (dot) as a separator.</p>
+<p>Can also take <code>.</code> (dot) as a separator.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::timeStringToSeconds('1:03:05');
+ // -&gt; 3785
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1537,7 +1671,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $string
                                                         </td>
-                                                        <td>
+                                                        <td><p>Formated time string to be converted to seconds.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1573,9 +1707,13 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Changes the given bytes to a user friendly string.</p>
+                                                                        <div class="method-short-desc"><p>Changes the given bytes number to a human readable string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::bytesToString(1572864);
+ // -&gt; '1.5 MB'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1586,7 +1724,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $bytes
                                                         </td>
-                                                        <td>
+                                                        <td><p>Number of bytes to be converted to a human readable string.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1622,11 +1760,18 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Converts the given hex color (e.g.</p>
+                                                                        <div class="method-short-desc"><p>Converts the given hex color to RGB color.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>ff000 or #ff000 or #f00) to RGB color.</p>
+                                    <div class="method-long-desc language-php"><p>Returns an array where index <code>0 = red, 1 = green, 2 = blue</code>.</p>
 
-<p>Returns an array where index 0 = red, 1 = green, 2 = blue.</p>
+<p>Accepts hex colors with and without the <code>#</code> in front (<code>ff0000</code> and <code>#ff0000</code>)
+as well as short notation (<code>#f00</code>).</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::hexToRgb('#B8860B');
+ // -&gt; array(184, 134, 11)
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1637,7 +1782,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $hex
                                                         </td>
-                                                        <td><p>Hex color that you want to convert. Can have a # in front.</p>
+                                                        <td><p>Hex color that you want to convert. Can have a <code>#</code> in front.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1682,7 +1827,19 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Converts the given RGB value (either as a separated string or an array) to hex value.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Returns the hex value in lowercase.</p>
+                                    <div class="method-long-desc language-php"><p>Returns the hex value in lowercase, without appended <code>#</code>.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\StringUtils::rgbToHex(array(255, 182, 193));
+ // -&gt; 'ffb6c1'
+
+ echo \MD\Foundation\Utils\StringUtils::rgbToHex('75, 0, 130');
+ // -&gt; '4b0082'
+
+ echo \MD\Foundation\Utils\StringUtils::rgbToHex('189:183:107', ':');
+ // -&gt; 'bdb76b'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1693,7 +1850,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $rgb
                                                         </td>
-                                                        <td><p>Either a zero-indexed array of red, green and blue values or a string separated by $separator.</p>
+                                                        <td><p>Either a zero-indexed array of red, green and blue values or a string separated by <code>$separator</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1701,7 +1858,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $separator
                                                         </td>
-                                                        <td><p>[optional] If $rgb is a string then what's the separator? Default: ','.</p>
+                                                        <td><p>[optional] If <code>$rgb</code> is a string then what's the separator? Default: <code>,</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1796,7 +1953,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $returnDateIfOlder
                                                         </td>
-                                                        <td><p>[optional] If specified then the function will return a regular date instead of 'xxx ago' if the date is older than this. Use (bool) false if you want to ommit this functionality. To use it pass any string that can be used by strtotime(). Default: '3 weeks ago'.</p>
+                                                        <td><p>[optional] If specified then the function will return a regular date instead of 'xxx ago' if the date is older than this. Use <code>false</code> if you want to ommit this functionality. To use it pass any string that can be used by <code>strtotime()</code>. Default: <code>3 weeks ago</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1804,7 +1961,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $returnDateFormat
                                                         </td>
-                                                        <td><p>[optional] If $returnDateIfOlder is set then this is the format in which the given date will be returned. Parsing of this will be rerouted to date() and this is the format that will be passed to that function. Default: 'd.m.Y H:i'.</p>
+                                                        <td><p>[optional] If <code>$returnDateIfOlder</code> is set then this is the format in which the given date will be returned. Parsing of this will be rerouted to <code>date()</code> and this is the format that will be passed to that function. Default: <code>d.m.Y H:i</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1812,7 +1969,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $secondSpecific
                                                         </td>
-                                                        <td><p>[optional] Should the return be specific to a second? Otherwise will return 'few seconds ago'. Defualt: false.</p>
+                                                        <td><p>[optional] Should the return be specific to a second? Otherwise will return 'few seconds ago'. Defualt: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1820,7 +1977,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                                         <td class="code param-name">
                                                                                                                         $trimAgo
                                                         </td>
-                                                        <td><p>[optional] Should the 'ago' appendix be not added? Mainly for internal use. Default: false.</p>
+                                                        <td><p>[optional] Should the 'ago' appendix be not added? Mainly for internal use. Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1916,7 +2073,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Explodes the given string just like php's explode() function with additional possibility of multiple exploding delimeters.</p>
+                                                                        <div class="method-short-desc"><p>Explodes the given string just like php's <code>explode()</code> function with additional possibility of multiple exploding delimeters.</p>
 </div>
                                     <div class="method-long-desc language-php">
 </div>
@@ -1989,7 +2146,7 @@ keys 'foo' or 'bar' (respectively) in the given array of variables.</p>
                                 <div class="method-info">
                                                                         <div class="method-short-desc"><p>Searches the given string for occurences of another string.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Returns true if found, false if not.</p>
+                                    <div class="method-long-desc language-php"><p>Returns <code>true</code> if found, <code>false</code> if not.</p>
 
 <p>Case insensitive. Can search for multiple strings in one call.</p>
 </div>
