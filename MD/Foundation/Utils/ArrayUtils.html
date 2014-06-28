@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>ArrayUtils class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="A set of array utility functions.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,7 +112,7 @@
                                     <small>Class</small>
                             </h1>
                                                 <div class="short-desc">
-                
+                <p>A set of array utility functions.</p>
 
             </div>
         </div>
@@ -168,9 +168,25 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Check whether the given array is a collection of data, ie.</p>
+                                                                        <div class="method-short-desc"><p>Check whether the given array is a collection of data, ie.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>multidimensional array with a list of data rows.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::isCollection(array(
+     array('id' =&gt; 1),
+     array('id' =&gt; 2),
+     array('id' =&gt; 3)
+ ));
+ // -&gt; true
+
+ echo \MD\Foundation\Utils\ArrayUtils::isCollection(array(
+     'id' =&gt; 1,
+     'title' =&gt; 'Lorem ipsum'
+ ));
+ // -&gt; false
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -217,9 +233,17 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Resets keys of an array to numerical values starting with 0.</p>
+                                                                        <div class="method-short-desc"><p>Resets keys of an array to numerical values starting with 0.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::resetKeys(array(
+     'a' =&gt; 0,
+     'b' =&gt; 3,
+     'c' =&gt; '8'
+ ));
+ // -&gt; array(0, 3, '8')
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -265,7 +289,7 @@
 
                     -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
                                         --><span class="method-argument">
-                        <span class="code">$preserveKey</span><!--
+                        <span class="code">$preserveIndex</span><!--
                                                     --><span class="method-default"> = false</span><!--
                                             --></span><!--
 
@@ -277,9 +301,17 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Returns an array with a list of all values (not unique) assigned to a key in a collection.</p>
+                                                                        <div class="method-short-desc"><p>Returns an array with a list of all (non-unique) valuesassigned to a key in a collection.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::pluck(array(
+     array('id' =&gt; 4, 'title' =&gt; 'Lipsum', 'author' =&gt; 'John'),
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'author' =&gt; 'Jane'),
+     array('id' =&gt; 2, 'title' =&gt; 'Dolor sit amet', 'author' =&gt; 'Doe')
+ ), 'title');
+ // -&gt; array('Lipsum', 'Lorem ipsum', 'Dolor sit amet')
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -290,7 +322,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to filter from.</p>
+                                                        <td><p>Array collection to get the values from.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -298,15 +330,15 @@
                                                         <td class="code param-name">
                                                                                                                         $key
                                                         </td>
-                                                        <td><p>Key to filter by.</p>
+                                                        <td><p>Get values of this key.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
                                                         <td class="code">bool</td>
                                                         <td class="code param-name">
-                                                                                                                        $preserveKey
+                                                                                                                        $preserveIndex
                                                         </td>
-                                                        <td><p>[optional] Should the level 1 key be preserved or not? Default: false.</p>
+                                                        <td><p>[optional] Should the collection index be preserved or not? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -322,7 +354,7 @@
                                     
                                                                     </div>
                             </div>
-                                                    <div id="keyFilter" class="method">
+                                                    <div id="keyFilter" class="method deprecated">
                                 <h3 class="code">
                                         <span class="method-signature">
                                     <span class="method-modifier">static</span>
@@ -341,7 +373,7 @@
 
                     -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
                                         --><span class="method-argument">
-                        <span class="code">$preserveKey</span><!--
+                        <span class="code">$preserveIndex</span><!--
                                                     --><span class="method-default"> = false</span><!--
                                             --></span><!--
 
@@ -353,7 +385,12 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Alias for ::pluck().</p>
+                                                                            <div class="alert alert-danger">
+                                            <strong>Deprecated!</strong>
+                                            This method has been deprecated.
+                                            <strong>Do not use it anymore!</strong>
+                                                                                    </div>
+                                                                        <div class="method-short-desc"><p>Alias for <a href="#pluck"><code>::pluck()</code></a>.</p>
 </div>
                                     <div class="method-long-desc language-php">
 </div>
@@ -366,7 +403,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to filter from.</p>
+                                                        <td><p>Array collection to get the values from.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -374,15 +411,15 @@
                                                         <td class="code param-name">
                                                                                                                         $key
                                                         </td>
-                                                        <td><p>Key to filter by.</p>
+                                                        <td><p>Get values of this key.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
                                                         <td class="code">bool</td>
                                                         <td class="code param-name">
-                                                                                                                        $preserveKey
+                                                                                                                        $preserveIndex
                                                         </td>
-                                                        <td><p>[optional] Should the level 1 key be preserved or not? Default: false.</p>
+                                                        <td><p>[optional] Should the collection index be preserved or not? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -422,7 +459,7 @@
 
                     -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
                                         --><span class="method-argument">
-                        <span class="code">$preserveKey</span><!--
+                        <span class="code">$preserveIndex</span><!--
                                                     --><span class="method-default"> = false</span><!--
                                             --></span><!--
 
@@ -434,9 +471,22 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Filters out all values from a multidimensional array that match the given value of they given associative level 2 key.</p>
+                                                                        <div class="method-short-desc"><p>Returns all values from an array collection that match the given value of the given associative level 2 key.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::filter(array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'featured' =&gt; true),
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'featured' =&gt; true),
+     array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'featured' =&gt; false),
+     array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'featured' =&gt; true)
+ ), 'featured', true);
+ // -&gt; array(
+ //      array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'featured' =&gt; true),
+ //      array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'featured' =&gt; true),
+ //      array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'featured' =&gt; true)
+ // )
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -469,9 +519,9 @@
                                                                                                     <tr>
                                                         <td class="code">bool</td>
                                                         <td class="code param-name">
-                                                                                                                        $preserveKey
+                                                                                                                        $preserveIndex
                                                         </td>
-                                                        <td><p>[optional] Should the level 1 key be preserved or not? Default: false.</p>
+                                                        <td><p>[optional] Should the index of the array collection be preserved or not? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -487,7 +537,7 @@
                                     
                                                                     </div>
                             </div>
-                                                    <div id="filterByKeyValue" class="method">
+                                                    <div id="filterByKeyValue" class="method deprecated">
                                 <h3 class="code">
                                         <span class="method-signature">
                                     <span class="method-modifier">static</span>
@@ -511,7 +561,7 @@
 
                     -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
                                         --><span class="method-argument">
-                        <span class="code">$preserveKey</span><!--
+                        <span class="code">$preserveIndex</span><!--
                                                     --><span class="method-default"> = false</span><!--
                                             --></span><!--
 
@@ -523,7 +573,12 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Alias for ::filter.</p>
+                                                                            <div class="alert alert-danger">
+                                            <strong>Deprecated!</strong>
+                                            This method has been deprecated.
+                                            <strong>Do not use it anymore!</strong>
+                                                                                    </div>
+                                                                        <div class="method-short-desc"><p>Alias for <a href="#filter"><code>::filter()</code></a>.</p>
 </div>
                                     <div class="method-long-desc language-php">
 </div>
@@ -558,9 +613,9 @@
                                                                                                     <tr>
                                                         <td class="code">bool</td>
                                                         <td class="code param-name">
-                                                                                                                        $preserveKey
+                                                                                                                        $preserveIndex
                                                         </td>
-                                                        <td><p>[optional] Should the level 1 key be preserved or not? Default: false.</p>
+                                                        <td><p>[optional] Should the index of the array collection be preserved or not? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -601,9 +656,23 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Assigns a value under a key of a collection to its main (top level) key.</p>
+                                                                        <div class="method-short-desc"><p>Assigns a value under a key of an array collection to its main (top level) key.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::indexBy(array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'featured' =&gt; true),
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'featured' =&gt; true),
+     array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'featured' =&gt; false),
+     array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'featured' =&gt; true)
+ ), 'id');
+ // -&gt; array(
+ //      3 =&gt; array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'featured' =&gt; true),
+ //      2 =&gt; array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'featured' =&gt; true),
+ //      4 =&gt; array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'featured' =&gt; false),
+ //      6 =&gt; array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'featured' =&gt; true)
+ // )
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -614,7 +683,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to be exploded.</p>
+                                                        <td><p>Array to be re-indexed.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -622,7 +691,7 @@
                                                         <td class="code param-name">
                                                                                                                         $key
                                                         </td>
-                                                        <td><p>Key on which to explode.</p>
+                                                        <td><p>Key on which to index by.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -640,24 +709,24 @@
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                                                                     <tr>
-                                                        <td class="code">                                                                            
+                                                        <td class="code">                                                                                                        
                     RuntimeException
             </td>
-                                                        <td><p>When at least one row of the $array doesn't have the $key.</p>
+                                                        <td><p>When at least one row of the <code>$array</code> doesn't have the <code>$key</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
-                                                        <td class="code">                                                                            
+                                                        <td class="code">                                                                                                        
                     RuntimeException
             </td>
-                                                        <td><p>When values of $key are not unique.</p>
+                                                        <td><p>When values of <code>$key</code> are not unique.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
                                         </table>
                                                                     </div>
                             </div>
-                                                    <div id="keyExplode" class="method">
+                                                    <div id="keyExplode" class="method deprecated">
                                 <h3 class="code">
                                         <span class="method-signature">
                                     <span class="method-modifier">static</span>
@@ -682,7 +751,12 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Alias for ::indexBy.</p>
+                                                                            <div class="alert alert-danger">
+                                            <strong>Deprecated!</strong>
+                                            This method has been deprecated.
+                                            <strong>Do not use it anymore!</strong>
+                                                                                    </div>
+                                                                        <div class="method-short-desc"><p>Alias for <a href="#indexBy"><code>::indexBy()</code></a>.</p>
 </div>
                                     <div class="method-long-desc language-php">
 </div>
@@ -695,7 +769,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to be indexed.</p>
+                                                        <td><p>Array to be re-indexed.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -703,7 +777,7 @@
                                                         <td class="code param-name">
                                                                                                                         $key
                                                         </td>
-                                                        <td><p>Key to index by.</p>
+                                                        <td><p>Key on which to index by.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -738,7 +812,7 @@
 
                     -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
                                         --><span class="method-argument">
-                        <span class="code">$preserveKey</span><!--
+                        <span class="code">$preserveIndex</span><!--
                                                     --><span class="method-default"> = false</span><!--
                                             --></span><!--
 
@@ -750,9 +824,31 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Group all items from the collection by the value of a specific key.</p>
+                                                                        <div class="method-short-desc"><p>Group all items from the array collection by the value of a key.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::groupBy(array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4),
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2),
+     array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3),
+     array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4),
+     array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3)
+ ), 'categoryId');
+ // -&gt; array(
+ //      4 =&gt; array(
+ //          array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4),
+ //          array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4)
+ //      ),
+ //      2 =&gt; array(
+ //          array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2)
+ //      ),
+ //      3 =&gt; array(
+ //          array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3),
+ //          array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3)
+ //      )
+ // )
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -763,7 +859,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to parse.</p>
+                                                        <td><p>Array collection.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -777,9 +873,9 @@
                                                                                                     <tr>
                                                         <td class="code">bool</td>
                                                         <td class="code param-name">
-                                                                                                                        $preserveKey
+                                                                                                                        $preserveIndex
                                                         </td>
-                                                        <td><p>[optional] Preserve keys? Default: false.</p>
+                                                        <td><p>[optional] Should the index of the array collection be preserved or not? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -795,7 +891,7 @@
                                     
                                                                     </div>
                             </div>
-                                                    <div id="categorizeByKey" class="method">
+                                                    <div id="categorizeByKey" class="method deprecated">
                                 <h3 class="code">
                                         <span class="method-signature">
                                     <span class="method-modifier">static</span>
@@ -814,7 +910,7 @@
 
                     -->, <!--                                                            --><span class="method-argument-hint">bool</span><!--
                                         --><span class="method-argument">
-                        <span class="code">$preserveKey</span><!--
+                        <span class="code">$preserveIndex</span><!--
                                                     --><span class="method-default"> = false</span><!--
                                             --></span><!--
 
@@ -826,7 +922,12 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Alias for ::groupBy().</p>
+                                                                            <div class="alert alert-danger">
+                                            <strong>Deprecated!</strong>
+                                            This method has been deprecated.
+                                            <strong>Do not use it anymore!</strong>
+                                                                                    </div>
+                                                                        <div class="method-short-desc"><p>Alias for <a href="#groupBy"><code>::groupBy()</code></a>.</p>
 </div>
                                     <div class="method-long-desc language-php">
 </div>
@@ -839,7 +940,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to parse.</p>
+                                                        <td><p>Array collection.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -853,9 +954,9 @@
                                                                                                     <tr>
                                                         <td class="code">bool</td>
                                                         <td class="code param-name">
-                                                                                                                        $preserveKey
+                                                                                                                        $preserveIndex
                                                         </td>
-                                                        <td><p>[optional] Preserve keys? Default: false.</p>
+                                                        <td><p>[optional] Should the index of the array collection be preserved or not? Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -903,9 +1004,16 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Special version of implode that uses alternative implode string for the last item in the array.</p>
+                                                                        <div class="method-short-desc"><p>Implodes values of an array, but allows alternative separator between last two elements.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::implode(array('a', 'b', 'c', 'd'), ', ', ' and ');
+ // -&gt; 'a, b, c and d'
+
+ echo \MD\Foundation\Utils\ArrayUtils::implode(array('a', 'b'), ', ', ' and ');
+ // -&gt; 'a and b'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -924,7 +1032,7 @@
                                                         <td class="code param-name">
                                                                                                                         $separator
                                                         </td>
-                                                        <td><p>[optional] Separator to implode with. Default: ','.</p>
+                                                        <td><p>[optional] Separator to implode with. Default: <code>,</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -932,7 +1040,7 @@
                                                         <td class="code param-name">
                                                                                                                         $lastSeparator
                                                         </td>
-                                                        <td><p>[optional] Separator for last imploded element - if none then $separator will be used. Default: null.</p>
+                                                        <td><p>[optional] Separator to use between last two elements - if <code>null</code> then <code>$separator</code> will be used. Default: <code>null</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -979,9 +1087,19 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Implodes all fields with a specific key from a multidimensional array.</p>
+                                                                        <div class="method-short-desc"><p>Implodes specific key values from an array collection.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::implodeByKey(array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4),
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2),
+     array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3),
+     array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4),
+     array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3)
+ ), 'id');
+ // -&gt; '3,2,4,6,1'
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -992,7 +1110,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to implode from.</p>
+                                                        <td><p>Array collection to implode.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1000,7 +1118,7 @@
                                                         <td class="code param-name">
                                                                                                                         $key
                                                         </td>
-                                                        <td><p>Key to implode by.</p>
+                                                        <td><p>Implode values assigned to this key.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1008,7 +1126,7 @@
                                                         <td class="code param-name">
                                                                                                                         $separator
                                                         </td>
-                                                        <td><p>[optional] Separator to implode by. Default: ",".</p>
+                                                        <td><p>[optional] Separator to implode by. Default: <code>,</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1054,9 +1172,25 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Searches a multidimensional array (a collection, but not necessarily) for a specific value on a key and returns top key (first occurrence!).</p>
+                                                                        <div class="method-short-desc"><p>Searches an array collection for a value found under a key and returns the top level key.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Only returns key for the first occurence of the searched value.</p>
+
+<p>Strict comparison <code>===</code> is used when searching.</p>
+
+<p>Returns <code>false</code> if not found.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::search(array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4),
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2),
+     array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3),
+     array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4),
+     array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3)
+ ), 'categoryId', 3);
+ // -&gt; 2
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1067,7 +1201,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to search through.</p>
+                                                        <td><p>Array collection to search through.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1075,7 +1209,7 @@
                                                         <td class="code param-name">
                                                                                                                         $key
                                                         </td>
-                                                        <td><p>Key of which value to look for.</p>
+                                                        <td><p>Search through values of this key.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1083,7 +1217,7 @@
                                                         <td class="code param-name">
                                                                                                                         $value
                                                         </td>
-                                                        <td><p>Value to look for.</p>
+                                                        <td><p>Value to search for.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1124,9 +1258,22 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Get the numerical index for an associative key.</p>
+                                                                        <div class="method-short-desc"><p>Get the numerical index for an associative key.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>In other words: returns numerical position of a key in an associative array.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::keyPosition(array(
+     'one' =&gt; 'frodo',
+     'two' =&gt; 'sam',
+     'three' =&gt; 'pippin',
+     'four' =&gt; 'merry'
+ ), 'three');
+ // -&gt; 2
+</code></pre>
+
+<p>Returns <code>false</code> if the key doesn't exist.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1137,7 +1284,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to search through.</p>
+                                                        <td><p>Associative array to search through.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1186,9 +1333,23 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Removes a key from a collection.</p>
+                                                                        <div class="method-short-desc"><p>Removes a key from all rows in an array collection.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::keyRemove(array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4),
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2),
+     array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3),
+     array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4),
+     array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3)
+ ), 'categoryId');
+ // -&gt; array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum'),
+ // -&gt; array('id' =&gt; 2, 'title' =&gt; 'Lipsum'),
+ // -&gt; array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet'),
+ // -&gt; array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit'),
+ // -&gt; array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat')
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1199,7 +1360,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to be parsed.</p>
+                                                        <td><p>Array collection.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1235,7 +1396,7 @@
                         <span class="code">$array</span><!--
                                             --></span><!--
 
-                    -->, <!--                                                            --><span class="method-argument-hint">MD\Foundation\Utils\key</span><!--
+                    -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
                                         --><span class="method-argument">
                         <span class="code">$key</span><!--
                                             --></span><!--
@@ -1254,9 +1415,27 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Adds a key to a collection.</p>
+                                                                        <div class="method-short-desc"><p>Adds a key to every row in an array collection.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Optionally you can specify what value to be set under that key.</p>
+
+<p>It will <strong>overwrite existing key</strong>.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::keyAdd(array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4),
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2),
+     array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3),
+     array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4),
+     array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3)
+ ), 'featured', true);
+ // array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4, 'featured' =&gt; true),
+ // array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2, 'featured' =&gt; true),
+ // array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3, 'featured' =&gt; true),
+ // array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4, 'featured' =&gt; true),
+ // array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3, 'featured' =&gt; true)
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1267,11 +1446,11 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to be parsed.</p>
+                                                        <td><p>Array collection.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
-                                                        <td class="code">MD\Foundation\Utils\key</td>
+                                                        <td class="code">string</td>
                                                         <td class="code param-name">
                                                                                                                         $key
                                                         </td>
@@ -1283,7 +1462,7 @@
                                                         <td class="code param-name">
                                                                                                                         $value
                                                         </td>
-                                                        <td><p>[optional] Optional value to be set under this key. Default null.</p>
+                                                        <td><p>[optional] Optional value to be set under this key. Default: <code>null</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1324,9 +1503,18 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Removes $values from the $array.</p>
+                                                                        <div class="method-short-desc"><p>Removes all <code>$values</code> from the <code>$array</code>.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>It doesn't change the array keys.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::removeValues(
+     array('one', 'two', 'three', 'four'),
+     array('two', 'three')
+ );
+ // -&gt; array(0 =&gt; 'one', 3 =&gt; 'four')
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1386,9 +1574,15 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Checks whether $array has at least one of the $values.</p>
+                                                                        <div class="method-short-desc"><p>Checks whether <code>$array</code> has at least one of the <code>$values</code>.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Returns false if $values is empty.</p>
+                                    <div class="method-long-desc language-php"><p>Returns <code>false</code> if <code>$values</code> is empty.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::hasValue(array('one', 'two', 'three'), 'two');
+ // -&gt; true
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1454,9 +1648,23 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Sorts a multidimensional array by key (2-dimensional).</p>
+                                                                        <div class="method-short-desc"><p>Sorts an array collection by value of a row key.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::multiSort(array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4),
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2),
+     array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3),
+     array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4),
+     array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3)
+ ), 'id');
+ // -&gt; array('id' =&gt; 1, 'title' =&gt; 'Aequetam alitat', 'categoryId' =&gt; 3),
+ // -&gt; array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'categoryId' =&gt; 2),
+ // -&gt; array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'categoryId' =&gt; 4),
+ // -&gt; array('id' =&gt; 4, 'title' =&gt; 'Dolor sit amet', 'categoryId' =&gt; 3),
+ // -&gt; array('id' =&gt; 6, 'title' =&gt; 'Adipiscit elit', 'categoryId' =&gt; 4)
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1467,7 +1675,7 @@
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td><p>Array to sort.</p>
+                                                        <td><p>Array collection to sort.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1483,7 +1691,7 @@
                                                         <td class="code param-name">
                                                                                                                         $reverse
                                                         </td>
-                                                        <td><p>[optional] True for descending order, false for ascending. Default: false.</p>
+                                                        <td><p>[optional] <code>true</code> for descending order, <code>false</code> for ascending. Default: <code>false</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1520,7 +1728,7 @@
                     -->, <!--                                                            --><span class="method-argument-hint">boolean</span><!--
                                         --><span class="method-argument">
                         <span class="code">$separator</span><!--
-                                                    --><span class="method-default"> = DS</span><!--
+                                                    --><span class="method-default"> = DIRECTORY_SEPARATOR</span><!--
                                             --></span><!--
 
                                                 -->)
@@ -1531,9 +1739,29 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Sorts an array of paths in either "child first" or "root first" order.</p>
+                                                                        <div class="method-short-desc"><p>Sorts an array of paths in either "child first" or "root first" order.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::sortPaths(array(
+     'company/wizards/gandalf.txt',
+     'company/dwarves/oin.txt',
+     'company/dwarves/thorin.txt',
+     'company/bilbo.txt',
+     'company/dwarves/bifur.txt',
+     'company/dwarves/bombur.txt',
+     'company/wizards/radagast.txt'
+ ));
+ // -&gt; array(
+ //      'company/dwarves/bifur.txt',
+ //      'company/dwarves/bombur.txt',
+ //      'company/dwarves/oin.txt',
+ //      'company/dwarves/thorin.txt',
+ //      'company/wizards/gandalf.txt',
+ //      'company/wizards/radagast.txt',
+ //      'company/bilbo.txt'
+ // );
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1552,7 +1780,7 @@
                                                         <td class="code param-name">
                                                                                                                         $rootFirst
                                                         </td>
-                                                        <td><p>[optional] Root first? Default: false (child first).</p>
+                                                        <td><p>[optional] Root first? Default: <code>false</code> (child first).</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -1560,7 +1788,7 @@
                                                         <td class="code param-name">
                                                                                                                         $separator
                                                         </td>
-                                                        <td><p>[optional] Used path separator. Default: DIRECTORY_SEPARATOR.</p>
+                                                        <td><p>[optional] Used path separator. Default: <code>DIRECTORY_SEPARATOR</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1593,7 +1821,8 @@
                         <span class="code">$input</span><!--
                                             --></span><!--
 
-                    -->, <!--                                                            --><span class="method-argument-hint">MD\Foundation\Utils\int/string</span><!--
+                    -->, <!--                                                            --><span class="method-argument-hint">int|</span><!--
+                                            --><span class="method-argument-hint">string</span><!--
                                         --><span class="method-argument">
                         <span class="code">$position</span><!--
                                             --></span><!--
@@ -1612,9 +1841,24 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Push a value after another one in an array</p>
+                                                                        <div class="method-short-desc"><p>Push a value after another one in an array</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::pushAfter(array(
+     'one' =&gt; 'frodo',
+     'two' =&gt; 'sam',
+     'three' =&gt; 'pippin',
+     'four' =&gt; 'merry'
+ ), 'bill', 'two', 'mule');
+ // -&gt; array(
+ //      'one' =&gt; 'frodo',
+ //      'two' =&gt; 'sam',
+ //      'mule' =&gt; 'bill',
+ //      'three' =&gt; 'pippin',
+ //      'four' =&gt; 'merry'
+ // );
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1637,7 +1881,7 @@
 </td>
                                                     </tr>
                                                                                                     <tr>
-                                                        <td class="code">MD\Foundation\Utils\int/string</td>
+                                                        <td class="code">int|string</td>
                                                         <td class="code param-name">
                                                                                                                         $position
                                                         </td>
@@ -1649,7 +1893,7 @@
                                                         <td class="code param-name">
                                                                                                                         $key
                                                         </td>
-                                                        <td><p>[optional] Specific key assigned to the value (if wanted). Default: null.</p>
+                                                        <td><p>[optional] Specific key assigned to the value. Default: <code>null</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1690,9 +1934,20 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Filters the array so that it contains only the keys from the $allowedKeys list.</p>
+                                                                        <div class="method-short-desc"><p>Filters the array so that it contains only the keys from the <code>$allowedKeys</code> list.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Ie. removes all keys that are not in <code>$allowedKeys</code> array.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::filterKeys(
+     array('id' =&gt; 2, 'title' =&gt; 'Lipsum', 'deleted' =&gt; false, 'featured' =&gt; true, 'slug' =&gt; 'lipsum.html'),
+     array('title', 'featured')
+ );
+ // -&gt; array('title' =&gt; 'Lipsum', 'featured' =&gt; true)
+</code></pre>
+
+<p>Useful for filtering POST-ed input.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1711,7 +1966,7 @@
                                                         <td class="code param-name">
                                                                                                                         $allowedKeys
                                                         </td>
-                                                        <td><p>List of keys that are allowed in the $array</p>
+                                                        <td><p>List of keys that are allowed in the <code>$array</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -1747,9 +2002,17 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Flattens an array, ie.</p>
+                                                                        <div class="method-short-desc"><p>Flattens an array, makes it 1-dimensional.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>makes it 1-dimensional.</p>
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::flatten(array(
+     array('id' =&gt; 2, 'title' =&gt; 'Lorem ipsum'),
+     array('id' =&gt; 3, 'title' =&gt; 'Lipsum.com'),
+     array('id' =&gt; 5, 'title' =&gt; 'Dolor sit amet')
+ ));
+ // -&gt; array(2, 'Lorem ipsum', 3, 'Lipsum.com', 5, 'Dolor sit amet');
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1791,9 +2054,20 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Performs a merge between n arrays, where the last array has the highest priority.</p>
+                                                                        <div class="method-short-desc"><p>Performs a merge between n arrays, where the last array has the highest priority.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>You can pass as many arrays as you want.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::merge(
+     array('one' =&gt; 'frodo', 'two' =&gt; 'bilbo'),
+     array('two' =&gt; 'sam'),
+     array('mule' =&gt; 'bill'),
+     array('three' =&gt; 'pippin', 'four' =&gt; 'merry')
+ );
+ // -&gt; array('one' =&gt; 'frodo', 'two' =&gt; 'sam', 'mule' =&gt; 'bill', 'three' =&gt; 'pippin', 'four' =&gt; 'merry')
+</code></pre>
 </div>
 
                                     
@@ -1832,9 +2106,31 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Performs a deep merge between two arrays.</p>
+                                                                        <div class="method-short-desc"><p>Performs a deep merge between two arrays.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::mergeDeep(array(
+     'settings' =&gt; array(
+         'login_enabled' =&gt; true,
+         'users' =&gt; array('Jane', 'John')
+     )
+ ), array(
+     'settings' =&gt; array(
+         'logout_enabled' =&gt; false
+         'users' =&gt; array('Doe')
+     ),
+     'config' =&gt; array()
+ ));
+ // -&gt; array(
+ //      'settings' =&gt; array(
+ //          'login_enabled' =&gt; true,
+ //          'users' =&gt; array('Jane', 'John', 'Doe'),
+ //          'logout_enabled' =&gt; false
+ //      ),
+ //      'config' =&gt; array()
+ // )
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1915,11 +2211,38 @@
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Joins the second collection into the first based on the given key.</p>
+                                                                        <div class="method-short-desc"><p>Joins items from the <code>$from</code> array collection into the <code>$into</code> collection based on matching criteria.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Default is outer join meaning
-that if matching row wasn't found in the second collection the row in the first collection will still
-be displayed (this can be altered by setting the 6th argument to 'inner').</p>
+                                    <div class="method-long-desc language-php"><p>Default type of join is <em>outer</em> meaning that if matching row wasn't found in the second collection
+the row in the first collection will not be removed (this can be altered by setting
+the <code>$type</code> argument to <code>ArrayUtils::JOIN_OUTER</code>).</p>
+
+<p>Example:</p>
+
+<pre><code> $posts = array(
+     array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'imageId' =&gt; 5),
+     array('id' =&gt; 4, 'title' =&gt; 'Lipsum', 'imageId' =&gt; 6),
+     array('id' =&gt; 5, 'title' =&gt; 'Muspi merol', 'imageId' =&gt; 5),
+     array('id' =&gt; 6, 'title' =&gt; 'Dolor sit amet', imageId' =&gt; 34)
+ );
+ $images = array(
+     array('id' =&gt; 5, 'url' =&gt; 'http://replygif.net/i/1452.gif'),
+     array('id' =&gt; 6, 'url' =&gt; 'http://replygif.net/i/1448.gif')
+ );
+ echo \MD\Foundation\Utils\ArrayUtils::join($posts, $images, 'imageId', 'image', 'id');
+ // -&gt; array(
+ // -&gt;   array('id' =&gt; 3, 'title' =&gt; 'Lorem ipsum', 'imageId' =&gt; 5,
+ // -&gt;       'image' =&gt; array('id' =&gt; 5, 'url' =&gt; 'http://replygif.net/i/1452.gif')),
+ // -&gt;   array('id' =&gt; 4, 'title' =&gt; 'Lipsum', 'imageId' =&gt; 6,
+ // -&gt;       'image' =&gt; array('id' =&gt; 6, 'url' =&gt; 'http://replygif.net/i/1448.gif')),
+ // -&gt;   array('id' =&gt; 5, 'title' =&gt; 'Muspi merol', 'imageId' =&gt; 5,
+ // -&gt;       'image' =&gt; array('id' =&gt; 5, 'url' =&gt; 'http://replygif.net/i/1452.gif')),
+ // -&gt;   array('id' =&gt; 6, 'title' =&gt; 'Dolor sit amet', imageId' =&gt; 34)
+ // -&gt; )
+</code></pre>
+
+<p>In the above example, if we added 6ths argument <code>ArrayUtils::JOIN_INNER</code> then the last <code>$posts</code> element (with <code>id = 6</code>)
+would not be included in the <code>::join()</code> results.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -1970,7 +2293,7 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                                         <td class="code param-name">
                                                                                                                         $type
                                                         </td>
-                                                        <td><p>[optional] Type of join. Default is ArrayUtils::JOIN_OUTER. Can also be ArrayUtils::JOIN_INNER which will remove all items from $into that haven't got values in $from. Default: ArrayUtils::JOIN_OUTER.</p>
+                                                        <td><p>[optional] Type of join. Can also be <code>ArrayUtils::JOIN_INNER</code> which will remove all items from <code>$into</code> that don't have values in <code>$from</code>. Default: <code>ArrayUtils::JOIN_OUTER</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -2011,9 +2334,23 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Check whether the specified keys are set inside the given array and are not empty (strings are trimmed before check).</p>
+                                                                        <div class="method-short-desc"><p>Check whether the specified keys are set inside the given array and are not empty.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>Returns boolean true if all is correct, false otherwise.</p>
+                                    <div class="method-long-desc language-php"><p>Returns <code>true</code> if all is correct, <code>false</code> otherwise.</p>
+
+<p>String values are trimmed before checking, so <code></code> (single space) is an invalid value.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::checkValues(array(
+     'id' =&gt; 5,
+     'title' =&gt; 'Lorem ipsum',
+     'slug' =&gt; ''
+ ), array('id', 'title', 'slug', 'author'));
+ // -&gt; false
+</code></pre>
+
+<p>The above example fails because <code>slug</code> key is empty and there is no <code>author</code> key.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -2068,9 +2405,20 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Removes empty keys from an array.</p>
+                                                                        <div class="method-short-desc"><p>Removes empty keys from an array.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::cleanEmpty(array(
+     'one' =&gt; 'frodo',
+     'two' =&gt; 'sam',
+     'three' =&gt; '',
+     'four' =&gt; null,
+     'five' =&gt; 0,
+     'six' =&gt; false
+ ));
+ // -&gt; array('one' =&gt; 'frodo', 'two' =&gt; 'sam', 'five' =&gt; 0, 'six' =&gt; false)
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -2117,9 +2465,23 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Parses the given array into a query string.</p>
+                                                                        <div class="method-short-desc"><p>Parses an array into a HTTP query string.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>The query string will not include the initial <code>?</code> sign, so it can be appended
+to an existing query string.</p>
+
+<p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::toQueryString(array(
+     'key' =&gt; 'val',
+     'key1' =&gt; array(
+         'subkey' =&gt; 'subval',
+         'subkey1' =&gt; 'subval1'
+     ),
+     'key2' =&gt; array('a', 'b', 'c', 'd')
+ ));
+ // -&gt; key=val&amp;key1%5Bsubkey%5D=subval&amp;key1%5Bsubkey1%5D=subval1&amp;key2%5B0%5D=a&amp;key2%5B1%5D=b&amp;key2%5B2%5D=c&amp;key2%5B3%5D=d
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -2166,15 +2528,18 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
 
                                                 -->)
         </span>
-                    <span class="method-return">-&gt; MD\Foundation\Utils\stdClass</span>
+                    <span class="method-return">-&gt; object</span>
             </span>
 
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Converts the given array to an object.</p>
+                                                                        <div class="method-short-desc"><p>Converts the given array to an object.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>The conversion is "deep", ie. all dimensions will be converted.</p>
+
+<p>By default it creates an object of <code>\StdClass</code>, but you can pass your own object
+as the 2nd argument. The array values will be set as public properties on the object.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -2193,7 +2558,7 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                                         <td class="code param-name">
                                                                                                                         $object
                                                         </td>
-                                                        <td><p>[optional] Object to which assign the properties, usually for internal use. Default: null.</p>
+                                                        <td><p>[optional] Object to which assign the properties, usually for internal use. Default: <code>null</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -2203,7 +2568,7 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                 <tr>
-                                                    <td class="code">MD\Foundation\Utils\stdClass                                                </tr>
+                                                    <td class="code">object                                                </tr>
                                             </tbody>
                                         </table>
                                     
@@ -2242,9 +2607,9 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Creates an array from a given object.</p>
+                                                                        <div class="method-short-desc"><p>Creates an array from a given object  The conversion is "deep", ie.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>The conversion is "deep", ie. all dimensions will be converted.</p>
+                                    <div class="method-long-desc language-php"><p>all dimensions will be converted.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -2255,7 +2620,7 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                                         <td class="code param-name">
                                                                                                                         $object
                                                         </td>
-                                                        <td><p>Object to be converted to an array or an array of objects.</p>
+                                                        <td><p>Object to be converted to an array or an array of objects (collection).</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -2263,7 +2628,7 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                                         <td class="code param-name">
                                                                                                                         $parent
                                                         </td>
-                                                        <td><p>[optional] Usually for internal use of the function. A reference to parent array. Default: array().</p>
+                                                        <td><p>[optional] Usually for internal use of the function. A reference to parent array. Default: <code>array()</code>.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
@@ -2271,7 +2636,7 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                                         <td class="code param-name">
                                                                                                                         $keys
                                                         </td>
-                                                        <td><p>[optional] If you don't want the whole object converted to array, specify the names of keys that you are interested in. Default: array().</p>
+                                                        <td><p>[optional] If you don't want the whole object converted to array, specify the names of keys that you are interested in. Default: <code>array()</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -2301,8 +2666,8 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
 
                     -->, <!--                                                            --><span class="method-argument-hint">string</span><!--
                                         --><span class="method-argument">
-                        <span class="code">$prepend</span><!--
-                                                    --><span class="method-default"> = &#039;&#039;</span><!--
+                        <span class="code">$prefix</span><!--
+                                                    --><span class="method-default"> = null</span><!--
                                             --></span><!--
 
                                                 -->)
@@ -2313,9 +2678,21 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Flatten a multi-dimensional associative array with dots.</p>
+                                                                        <div class="method-short-desc"><p>Flatten a multi-dimensional associative array to dot notation.</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::dot(array(
+     'flat' =&gt; 'bar',
+     'foo' =&gt; array(
+         'bar' =&gt; array(
+             'baz' =&gt; true,
+             'bat' =&gt; false
+         )
+     )
+ ));
+ // -&gt; array('flat' =&gt; 'bar', 'foo.bar.baz' =&gt; true, 'foo.bar.bat' =&gt; false)
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -2326,15 +2703,15 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                                         <td class="code param-name">
                                                                                                                         $array
                                                         </td>
-                                                        <td>
+                                                        <td><p>Array to be converted to dot notation.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
                                                         <td class="code">string</td>
                                                         <td class="code param-name">
-                                                                                                                        $prepend
+                                                                                                                        $prefix
                                                         </td>
-                                                        <td>
+                                                        <td><p>[optional] Prepend this string to all keys. Default: <code>null</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -2381,9 +2758,21 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Returns value from the key at given path (using a dot notation).</p>
+                                                                        <div class="method-short-desc"><p>Returns value from the key at given path (using dot notation).</p>
 </div>
-                                    <div class="method-long-desc language-php">
+                                    <div class="method-long-desc language-php"><p>Example:</p>
+
+<pre><code> echo \MD\Foundation\Utils\ArrayUtils::get(array(
+     'flat' =&gt; 'bar',
+     'foo' =&gt; array(
+         'bar' =&gt; array(
+             'baz' =&gt; true,
+             'bat' =&gt; false
+         )
+     )
+ ), 'foo.bar.baz');
+ // -&gt; true
+</code></pre>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -2410,7 +2799,7 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                                         <td class="code param-name">
                                                                                                                         $default
                                                         </td>
-                                                        <td><p>Default value if key not found.</p>
+                                                        <td><p>[optional] Default value if the key was not found. Default: <code>null</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -2456,7 +2845,7 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                 </h3>
 
                                 <div class="method-info">
-                                    <div class="method-short-desc"><p>Set an array item to a given value using a dot notation.</p>
+                                                                        <div class="method-short-desc"><p>Set an array item to a given value using a dot notation.</p>
 </div>
                                     <div class="method-long-desc language-php"><p>If no key is given to the method, the entire array will be replaced.</p>
 
@@ -2516,13 +2905,13 @@ be displayed (this can be altered by setting the 6th argument to 'inner').</p>
                                                                     <li><a href="#isCollection" class="code">isCollection</a></li>
                                                                     <li><a href="#resetKeys" class="code">resetKeys</a></li>
                                                                     <li><a href="#pluck" class="code">pluck</a></li>
-                                                                    <li><a href="#keyFilter" class="code">keyFilter</a></li>
+                                                                    <li><a href="#keyFilter" class="code deprecated">keyFilter</a></li>
                                                                     <li><a href="#filter" class="code">filter</a></li>
-                                                                    <li><a href="#filterByKeyValue" class="code">filterByKeyValue</a></li>
+                                                                    <li><a href="#filterByKeyValue" class="code deprecated">filterByKeyValue</a></li>
                                                                     <li><a href="#indexBy" class="code">indexBy</a></li>
-                                                                    <li><a href="#keyExplode" class="code">keyExplode</a></li>
+                                                                    <li><a href="#keyExplode" class="code deprecated">keyExplode</a></li>
                                                                     <li><a href="#groupBy" class="code">groupBy</a></li>
-                                                                    <li><a href="#categorizeByKey" class="code">categorizeByKey</a></li>
+                                                                    <li><a href="#categorizeByKey" class="code deprecated">categorizeByKey</a></li>
                                                                     <li><a href="#implode" class="code">implode</a></li>
                                                                     <li><a href="#implodeByKey" class="code">implodeByKey</a></li>
                                                                     <li><a href="#search" class="code">search</a></li>

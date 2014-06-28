@@ -211,6 +211,9 @@ pre[class*="language-"] {
 .class-page .docs .method {
   margin-bottom: 100px;
 }
+.class-page .docs .method.deprecated h3 {
+  text-decoration: line-through;
+}
 .class-page .docs .method-name {
   font-weight: bold;
 }
@@ -274,6 +277,9 @@ pre[class*="language-"] {
 }
 .docs-toc ul li {
   margin: 3px 0;
+}
+.docs-toc ul li .code.deprecated {
+  text-decoration: line-through;
 }
 .docs-toc.fixed {
   position: fixed;

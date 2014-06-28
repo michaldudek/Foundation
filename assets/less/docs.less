@@ -251,6 +251,12 @@ pre[class*="language-"] {
 
     .method {
         margin-bottom: 100px;
+
+        &.deprecated {
+            h3 {
+                text-decoration: line-through;
+            }
+        }
     }
 
     .method-name {
@@ -323,6 +329,10 @@ pre[class*="language-"] {
 
         li {
             margin: 3px 0;
+
+            .code.deprecated {
+                text-decoration: line-through;
+            }
         }
     }
 

@@ -78,12 +78,20 @@
                         <h2>Methods <small>This class defines the following methods:</small></h2>
 
                         {% for method in class.methods %}
-                            <div id="{{ method.name }}" class="method">
+                            <div id="{{ method.name }}" class="method{% if method.tags('deprecated') is not empty %} deprecated{% endif %}">
                                 <h3 class="code">
                                     {{ helpers.method_signature(method) }}
                                 </h3>
 
                                 <div class="method-info">
+                                    {% if method.tags('deprecated') is not empty %}
+                                        <div class="alert alert-danger">
+                                            <strong>Deprecated!</strong>
+                                            This method has been deprecated.
+                                            <strong>Do not use it anymore!</strong>
+                                            {#{ method.tags('deprecated') }#}
+                                        </div>
+                                    {% endif %}
                                     <div class="method-short-desc">{{ method.shortDesc|markdown }}</div>
                                     <div class="method-long-desc language-php">{{ method.longDesc|markdown }}</div>
 
@@ -148,7 +156,7 @@
                             <h4><a href="#section-methods">Methods</a></h4>
                             <ul class="list-unstyled">
                                 {% for method in class.methods %}
-                                    <li><a href="#{{ method.name }}" class="code">{{ method.name }}</a></li>
+                                    <li><a href="#{{ method.name }}" class="code{% if method.tags('deprecated') is not empty %} deprecated{% endif %}">{{ method.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         {% endif %}
