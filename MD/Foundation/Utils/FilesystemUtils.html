@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>FilesystemUtils class in MD\Foundation</title>
-    <meta name="description" content="">
+    <meta name="description" content="A set of filesystem utility functions.">
     
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -112,7 +112,7 @@
                                     <small>Class</small>
                             </h1>
                                                 <div class="short-desc">
-                
+                <p>A set of filesystem utility functions.</p>
 
             </div>
         </div>
@@ -160,26 +160,31 @@
                         <span class="code">$pattern</span><!--
                                             --></span><!--
 
-                    -->, <!--                                                            --><span class="method-argument-hint">integer</span><!--
+                    -->, <!--                                                            --><span class="method-argument-hint">int</span><!--
                                         --><span class="method-argument">
                         <span class="code">$flags</span><!--
                                             --></span><!--
 
                                                 -->)
         </span>
-                    <span class="method-return">-&gt; array|boolean</span>
+                    <span class="method-return">-&gt; array|bool</span>
             </span>
 
                                 </h3>
 
                                 <div class="method-info">
-                                                                        <div class="method-short-desc"><p>Extended glob() functionality that supports double star "**" wildcard.</p>
+                                                                        <div class="method-short-desc"><p>Extended <code>glob()</code> functionality that supports double star <code>**</code> (globstar) wildcard.</p>
 </div>
-                                    <div class="method-long-desc language-php"><p>PHP's glob() implementation doesn't allow for "**" wildcard. In Bash 4 it can be enabled with "globstar" setting.</p>
+                                    <div class="method-long-desc language-php"><p>PHP's <code>glob()</code> implementation doesn't allow for <code>**</code> wildcard. In Bash 4 it can be enabled with <code>globstar</code> setting.</p>
 
-<p>In case the "**" wildcard is not used in the pattern then this method just calls PHP's glob().</p>
+<p>In case the <code>**</code> wildcard is not used in the pattern then this method just calls PHP's <code>glob()</code>.</p>
 
-<p>For full documentation see PHP's glob() documentation.</p>
+<p>For full documentation see PHP's <a href="http://php.net/manual/en/function.glob.php"><code>glob()</code> documentation</a>.</p>
+
+<p>Additionally it provides sorting option to the results, which you can pass along with
+other flags. Constants <code>FilesystemUtils::GLOB_ROOTFIRST</code> and <code>FilesystemUtils::GLOB_CHILDFIRST</code>
+sort the results either as "root first" where files in a directory are listed before directories and
+subdirectories, or "child first" where subdirectories are listed before files.</p>
 </div>
 
                                                                             <h5>Arguments:</h5>
@@ -190,15 +195,15 @@
                                                         <td class="code param-name">
                                                                                                                         $pattern
                                                         </td>
-                                                        <td><p>The pattern. Supports "**" wildcard.</p>
+                                                        <td><p>The pattern. Supports <code>**</code> wildcard.</p>
 </td>
                                                     </tr>
                                                                                                     <tr>
-                                                        <td class="code">integer</td>
+                                                        <td class="code">int</td>
                                                         <td class="code param-name">
                                                                                                                         $flags
                                                         </td>
-                                                        <td><p>[optional] glob() flags. See glob()'s documentation. Default: 0.</p>
+                                                        <td><p>[optional] <code>glob()</code> flags. See <code>glob()</code>'s documentation. Default: <code>0</code>.</p>
 </td>
                                                     </tr>
                                                                                             </tbody>
@@ -208,7 +213,7 @@
                                         <table class="table table-striped table-condensed">
                                             <tbody>
                                                 <tr>
-                                                    <td class="code">array|boolean                                                </tr>
+                                                    <td class="code">array|bool                                                </tr>
                                             </tbody>
                                         </table>
                                     
