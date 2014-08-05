@@ -107,6 +107,13 @@ pre[class*="language-"] {
 .index-page .what-why p {
   margin-bottom: 0;
 }
+.index-page .more {
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 30px;
+  text-align: center;
+  font-size: 18px;
+}
 .index-page .using {
   width: 75%;
   margin: 0 auto;
