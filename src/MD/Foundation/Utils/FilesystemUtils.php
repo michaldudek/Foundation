@@ -29,6 +29,20 @@ class FilesystemUtils
      *
      * For full documentation see PHP's [`glob()` documentation](http://php.net/manual/en/function.glob.php).
      *
+     * It's worth noting that if you want to find files inside current directory and their subdirectories,
+     * then you have to use a `GLOB_BRACE` flag and pattern, e.g.:
+     * 
+     *     echo \MD\Foundation\Utils\FilesystemUtils::glob('{,** /}*.js', GLOB_BRACE); // note: remove space between * and /
+     *     // -> array(
+     *     //      'main.js',
+     *     //      'dir/script.js',
+     *     //      'dir/more/scripts.js'
+     *     // );
+     *      
+     * Implementation of this convention varies between libs in various languages and `MD\Foundation` sticks
+     * with what [Bash manual states](http://www.gnu.org/software/bash/manual/bashref.html#Pattern-Matching).
+     * More about this is explained in [#2](https://github.com/michaldudek/Foundation/issues/2).
+     *
      * Additionally it provides sorting option to the results, which you can pass along with
      * other flags. Constants `FilesystemUtils::GLOB_ROOTFIRST` and `FilesystemUtils::GLOB_CHILDFIRST`
      * sort the results either as "root first" where files in a directory are listed before directories and
