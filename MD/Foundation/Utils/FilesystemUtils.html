@@ -181,6 +181,21 @@
 
 <p>For full documentation see PHP's <a href="http://php.net/manual/en/function.glob.php"><code>glob()</code> documentation</a>.</p>
 
+<p>It's worth noting that if you want to find files inside current directory and their subdirectories,
+then you have to use a <code>GLOB_BRACE</code> flag and pattern, e.g.:</p>
+
+<pre><code>echo \MD\Foundation\Utils\FilesystemUtils::glob('{,** /}*.js', GLOB_BRACE); // note: remove space between * and /
+// -&gt; array(
+//      'main.js',
+//      'dir/script.js',
+//      'dir/more/scripts.js'
+// );
+</code></pre>
+
+<p>Implementation of this convention varies between libs in various languages and <code>MD\Foundation</code> sticks
+with what <a href="http://www.gnu.org/software/bash/manual/bashref.html#Pattern-Matching">Bash manual states</a>.
+More about this is explained in <a href="https://github.com/michaldudek/Foundation/issues/2">#2</a>.</p>
+
 <p>Additionally it provides sorting option to the results, which you can pass along with
 other flags. Constants <code>FilesystemUtils::GLOB_ROOTFIRST</code> and <code>FilesystemUtils::GLOB_CHILDFIRST</code>
 sort the results either as "root first" where files in a directory are listed before directories and
