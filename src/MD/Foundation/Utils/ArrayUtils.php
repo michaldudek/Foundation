@@ -103,7 +103,7 @@ class ArrayUtils
 
     /**
      * Alias for [`::pluck()`](#pluck).
-     * 
+     *
      * @param array $array Array collection to get the values from.
      * @param string $key Get values of this key.
      * @param bool $preserveIndex [optional] Should the collection index be preserved or not? Default: `false`.
@@ -156,7 +156,7 @@ class ArrayUtils
 
     /**
      * Alias for [`::filter()`](#filter).
-     * 
+     *
      * @param array $array Array to filter from.
      * @param string $key Key to filter by.
      * @param mixed $value Value to filter by.
@@ -214,7 +214,7 @@ class ArrayUtils
 
     /**
      * Alias for [`::indexBy()`](#indexBy).
-     * 
+     *
      * @param array $array Array to be re-indexed.
      * @param string $key Key on which to index by.
      * @return array
@@ -280,7 +280,7 @@ class ArrayUtils
 
     /**
      * Alias for [`::groupBy()`](#groupBy).
-     * 
+     *
      * @param array $array Array collection.
      * @param string $key Key to group by.
      * @param bool $preserveIndex [optional] Should the index of the array collection be preserved or not? Default: `false`.
@@ -302,7 +302,7 @@ class ArrayUtils
      *
      *      echo \MD\Foundation\Utils\ArrayUtils::implode(array('a', 'b'), ', ', ' and ');
      *      // -> 'a and b'
-     * 
+     *
      * @param  array  $array         Array to be imploded.
      * @param  string $separator     [optional] Separator to implode with. Default: `,`.
      * @param  string $lastSeparator [optional] Separator to use between last two elements
@@ -487,7 +487,7 @@ class ArrayUtils
      *          array('two', 'three')
      *      );
      *      // -> array(0 => 'one', 3 => 'four')
-     * 
+     *
      * @param  array  $array  Array to remove items from.
      * @param  array  $values Values to be removed.
      * @return array
@@ -505,7 +505,7 @@ class ArrayUtils
      *
      *      echo \MD\Foundation\Utils\ArrayUtils::hasValue(array('one', 'two', 'three'), 'two');
      *      // -> true
-     * 
+     *
      * @param  array   $array  Array to be checked.
      * @param  array   $values Values to be found.
      * @return boolean
@@ -749,7 +749,7 @@ class ArrayUtils
      *          array('three' => 'pippin', 'four' => 'merry')
      *      );
      *      // -> array('one' => 'frodo', 'two' => 'sam', 'mule' => 'bill', 'three' => 'pippin', 'four' => 'merry')
-     * 
+     *
      * @return array
      */
     public static function merge() {
@@ -816,7 +816,7 @@ class ArrayUtils
 
     /**
      * Joins items from the `$from` array collection into the `$into` collection based on matching criteria.
-     * 
+     *
      * Default type of join is _outer_ meaning that if matching row wasn't found in the second collection
      * the row in the first collection will not be removed (this can be altered by setting
      * the `$type` argument to `ArrayUtils::JOIN_OUTER`).
@@ -967,7 +967,7 @@ class ArrayUtils
 
     /**
      * Converts the given array to an object.
-     * 
+     *
      * The conversion is "deep", ie. all dimensions will be converted.
      *
      * By default it creates an object of `\StdClass`, but you can pass your own object
@@ -1003,7 +1003,7 @@ class ArrayUtils
 
     /**
      * Creates an array from a given object
-     * 
+     *
      * The conversion is "deep", ie. all dimensions will be converted.
      *
      * @param object|array $object Object to be converted to an array or an array of objects (collection).
@@ -1155,6 +1155,18 @@ class ArrayUtils
         $array[array_shift($keys)] = $value;
 
         return $array;
+    }
+
+    /**
+     * Pull a subset of items from array.
+     *
+     * @param  array      $array
+     * @param  array      $keys
+     *
+     * @return array
+     */
+    public static function only(array $array, array $keys) {
+        return array_intersect_key($array, array_flip((array) $keys));
     }
 
 }
