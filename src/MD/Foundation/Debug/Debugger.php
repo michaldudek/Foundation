@@ -76,7 +76,7 @@ class Debugger
      *          return false;
      *      };
      *      echo Debugger::getType($function);
-     *      // -> function
+     *      // -> closure
      * 
      * @param mixed $var Variable to be checked.
      * @return string
@@ -88,7 +88,7 @@ class Debugger
             $type = self::getClass($var);
 
             if ($type === 'Closure') {
-                $type = 'function';
+                $type = 'closure';
             }
         }
 

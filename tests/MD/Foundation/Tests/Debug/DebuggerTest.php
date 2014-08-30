@@ -33,7 +33,7 @@ class DebuggerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(get_called_class(), Debugger::getType($this));
         $this->assertEquals('MD\Foundation\Tests\TestFixtures\Collection', Debugger::getType(new Collection()));
         $this->assertEquals('stdClass', Debugger::getType(new \stdClass()));
-        $this->assertEquals('function', Debugger::getType(function() {}));
+        $this->assertEquals('closure', Debugger::getType(function() {}));
     }
 
     public function testGetClass() {
