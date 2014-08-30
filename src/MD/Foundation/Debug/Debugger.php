@@ -71,6 +71,12 @@ class Debugger
      *      $obj = new stdObject();
      *      echo Debugger::getType($obj);
      *      // -> stdObject
+     *
+     *      $function = function() {
+     *          return false;
+     *      };
+     *      echo Debugger::getType($function);
+     *      // -> function
      * 
      * @param mixed $var Variable to be checked.
      * @return string
@@ -80,6 +86,10 @@ class Debugger
 
         if ($type === 'object') {
             $type = self::getClass($var);
+
+            if ($type === 'Closure') {
+                $type = 'function';
+            }
         }
 
         return $type;
