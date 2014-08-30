@@ -1,7 +1,5 @@
 <?php
 /**
- * Exception usually thrown when a function returns invalid value.
- * 
  * @package Foundation
  * @subpackage Exceptions
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -13,6 +11,9 @@ namespace MD\Foundation\Exceptions;
 
 use MD\Foundation\Exceptions\Exception;
 
+/**
+ * Exception usually thrown when a function returns invalid value.
+ */
 class InvalidReturnValueException extends Exception
 {
 

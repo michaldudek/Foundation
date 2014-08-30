@@ -1147,5 +1147,19 @@ class ArrayUtilsTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testOnly()
+    {
+        $input = array('name' => 'John', 'surname' => 'Doe', 'age' => 30);
+
+        $expected = array('name' => 'John', 'surname' => 'Doe',);
+
+        $result = ArrayUtils::only($input, array('name', 'surname'));
+
+        $this->assertSame(
+            $expected,
+            $result
+        );
+    }
+
 
 }

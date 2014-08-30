@@ -1,7 +1,5 @@
 <?php
 /**
- * Timer to time various events.
- * 
  * @package Foundation
  * @subpackage Debug
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -15,6 +13,19 @@ use BadMethodCallException;
 
 use MD\Foundation\Debug\TimerStep;
 
+/**
+ * Timer to time various events.
+ *
+ * Usage:
+ *
+ *      use \MD\Foundation\Debug\Timer;
+ *      $timer = new Timer();
+ *      echo $timer->stop();
+ *      // -> 41.54232349
+ *
+ *      echo $timer->getMemoryUsage();
+ *      // -> 34567123
+ */
 class Timer
 {
     
@@ -79,7 +90,7 @@ class Timer
      * 
      * Starts the timer automatically by default.
      * 
-     * @param bool $instantStart [optional] Should the timer be started immediately? Default: true.
+     * @param bool $instantStart [optional] Should the timer be started immediately? Default: `true`.
      */
     public function __construct($instantStart = true) {
         if ($instantStart) {
@@ -106,11 +117,17 @@ class Timer
     
     /**
      * Stop the timer and return the result duration in seconds.
+     *
+     * Example:
+     *
+     *      $timer = new \MD\Foundation\Debug\Timer();
+     *      echo $timer->stop(3);
+     *      // -> 108.667
      * 
-     * @param int $precision [optional] How many places to round to. Default: 8
+     * @param int $precision [optional] How many places to round to. Default: `8`
      * @return float
      * 
-     * @throws\ BadMethodCallException When the timer was already stopped.
+     * @throws BadMethodCallException When the timer was already stopped.
      */
     public function stop($precision = 8) {
         if ($this->_stopTime) {

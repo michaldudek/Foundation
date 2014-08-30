@@ -28,15 +28,47 @@
  *
  * @package Foundation
  * @subpackage Crypto
- * @author Michał Dudek <michal@michaldudek.pl>
- * 
- * @copyright Copyright (c) 2014, Michał Dudek
- * @license MIT
  */
 namespace MD\Foundation\Crypto;
 
 use MD\Foundation\Exceptions\InvalidArgumentException;
 
+/**
+ * Class for standardized hashing of passwords that follows the best practices.
+ *
+ * This class as an adapted code taken from [http://crackstation.net/hashing-security.htm](http://crackstation.net/hashing-security.htm)
+ * and you should refer to that **great** article about password hashing.
+ *
+ * Some of the features include:
+ *
+ *  - Long auto-generated random salts for every hashed password.
+ *  - Same password hashed twice will have completely different hashes.
+ *  - Hashing algorithm can be changed at any time and will not break previously hashed passwords.
+ *  - Slow hash functions to make brute force attacks a little bit less convenient.
+ *  - Doesn't use "wacky" hash functions, e.g. `sha1(md5($password) . sha1($password))`.
+ *
+ * Once again, please refer to the **great** [article about password hashing](http://crackstation.net/hashing-security.htm)
+ * and bear in mind that this is only an adaptation of the code found there (rewritten into a class).
+ *
+ * Usage example:
+ *
+ *      $hasher = new \MD\Foundation\Crypto\Hasher();
+ *      $hash = $hasher->hash('pa$$word');
+ *      echo $hash;
+ *      // -> 'sha256:1000:lGWhVGUVxQArXgfOckPmJCVZD0l0cYPT:9UMoX8p10AgI7wd1bkvqjuRzTSXv6YF7'
+ *
+ *      echo $hasher->validate('notmypassword', $hash);
+ *      // -> false
+ *      echo $hasher->validate('pa$$word', $hash);
+ *      // -> true
+ *
+ * A general rule is that you should store the full generated hash, but if you want
+ * to store the hash in an external place (like a browser cookie) then just use the last
+ * part of the generated hash (after last `:`) because otherwise you will give an
+ * attacker all information they need to crack it.
+ *
+ * This class should be used especially by people not on PHP 5.5 yet.
+ */
 class Hasher
 {
 
@@ -56,31 +88,31 @@ class Hasher
     /**
      * Number of hash iterations.
      * 
-     * @var integer
+     * @var int
      */
     protected $iterations = 1000;
 
     /**
      * Salt size in bytes.
      * 
-     * @var integer
+     * @var int
      */
     protected $saltByteSize = 24;
 
     /**
      * Hash size in bytes.
      * 
-     * @var integer
+     * @var int
      */
     protected $hashByteSize = 24;
 
     /**
      * Constructor.
      * 
-     * @param string  $algorithm    [optional] Hash algorithm. Default: sha256.
-     * @param integer $iterations   [optional] Number of hash iterations. Default: 1000.
-     * @param integer $saltByteSize [optional] Salt size in bytes. Default: 24.
-     * @param integer $hashByteSize [optional] Hash size in bytes. Default: 24.
+     * @param string  $algorithm    [optional] Hash algorithm. Default: `sha256`.
+     * @param int     $iterations   [optional] Number of hash iterations. Default: `1000`.
+     * @param int     $saltByteSize [optional] Salt size in bytes. Default: `24`.
+     * @param int     $hashByteSize [optional] Hash size in bytes. Default: `24`.
      */
     public function __construct($algorithm = 'sha256', $iterations = 1000, $saltByteSize = 24, $hashByteSize = 24) {
         if (!is_int($iterations) && !is_numeric($iterations)) {
@@ -103,6 +135,15 @@ class Hasher
 
     /**
      * Hash the given string.
+     *
+     * Will hash the `$str` using parameters passed to the constructor or sane defaults.
+     *
+     * Example:
+     *
+     *      $hasher = new \MD\Foundation\Crypto\Hasher();
+     *      $hash = $hasher->hash('pa$$word');
+     *      echo $hash;
+     *      // -> 'sha256:1000:UI3BhfdMMlZ9Jr6Jgl6tLAc+X6CcTXhD:E6HrUs3Hjv/sbz4rCule5+3m2d8qDkxu'
      * 
      * @param  string $str String to be hashed.
      * @return string
@@ -124,10 +165,16 @@ class Hasher
 
     /**
      * Validate if the given hash is a hash of the given string.
+     *
+     * Example:
+     *
+     *      $hasher = new \MD\Foundation\Crypto\Hasher();
+     *      echo $hasher->validate('pa$$word', 'sha256:1000:UI3BhfdMMlZ9Jr6Jgl6tLAc+X6CcTXhD:E6HrUs3Hjv/sbz4rCule5+3m2d8qDkxu')
+     *      // -> true
      * 
      * @param  string $str  String to be verified. (e.g. password a user has entered)
      * @param  string $hash Hash to be verified. (e.g. password hash stored in db)
-     * @return boolean
+     * @return bool
      */
     public function validate($str, $hash) {
         $params = explode(':', $hash);
@@ -148,11 +195,11 @@ class Hasher
     }
 
     /**
-     * Compares two strings $a and $b in length-constant time.
+     * Compares two strings `$a` and `$b` in length-constant time.
      * 
      * @param  string $a String A to be compared.
      * @param  string $b String B to be compared.
-     * @return boolean
+     * @return bool
      */
     public function slowEquals($a, $b) {
         $a = (string)$a;
@@ -165,22 +212,22 @@ class Hasher
     }
 
     /**
-     * PBKDF2 key derivation function as defined by RSA's PKCS #5: https://www.ietf.org/rfc/rfc2898.txt
+     * PBKDF2 key derivation function as defined by RSA's PKCS #5: [https://www.ietf.org/rfc/rfc2898.txt](https://www.ietf.org/rfc/rfc2898.txt)
      *
-     * Returns a $keyLength-byte key derived from the string and salt.
+     * Returns a `$keyLength`-byte key derived from the string and salt.
      *
-     * Test vectors can be found here: https://www.ietf.org/rfc/rfc6070.txt
+     * Test vectors can be found here: [https://www.ietf.org/rfc/rfc6070.txt](https://www.ietf.org/rfc/rfc6070.txt)
      *
-     * This implementation of PBKDF2 was originally created by https://defuse.ca
-     * With improvements by http://www.variations-of-shadow.com
+     * This implementation of PBKDF2 was originally created by [https://defuse.ca](https://defuse.ca)
+     * With improvements by [http://www.variations-of-shadow.com](http://www.variations-of-shadow.com)
      * 
-     * @param  string  $algorithm The hash algorithm to use. Recommended: SHA256
+     * @param  string  $algorithm The hash algorithm to use. Recommended: `sha256`.
      * @param  string  $str       The string.
      * @param  string  $salt      A salt that is unique to the string.
-     * @param  int     $count     Iteration count. Higher is better, but slower. Recommended: >= 1000.
+     * @param  int     $count     Iteration count. Higher is better, but slower. Recommended: `>= 1000`.
      * @param  int     $keyLength The length of the derived key in bytes.
-     * @param  boolean $rawOutput [optional] If true, the key is returned in raw binary format.
-     *                            Hex encoded otherwise. Default: false.
+     * @param  bool    $rawOutput [optional] If `true`, the key is returned in raw binary format.
+     *                            Hex encoded otherwise. Default: `false`.
      * @return string
      */
     protected function pbkdf2($algorithm, $str, $salt, $count, $keyLength, $rawOutput = false) {

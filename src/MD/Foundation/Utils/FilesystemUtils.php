@@ -1,7 +1,5 @@
 <?php
 /**
- * A set of filesystem utility functions.
- * 
  * @package Foundation
  * @subpackage Utils
  * @author Michał Dudek <michal@michaldudek.pl>
@@ -14,7 +12,7 @@ namespace MD\Foundation\Utils;
 use MD\Foundation\Utils\ArrayUtils;
 
 /**
- * @static
+ * A set of filesystem utility functions.
  */
 class FilesystemUtils
 {
@@ -23,17 +21,36 @@ class FilesystemUtils
     const GLOB_CHILDFIRST =  65536;
     
     /**
-     * Extended glob() functionality that supports double star "**" wildcard.
+     * Extended `glob()` functionality that supports double star `**` (globstar) wildcard.
      *
-     * PHP's glob() implementation doesn't allow for "**" wildcard. In Bash 4 it can be enabled with "globstar" setting.
+     * PHP's `glob()` implementation doesn't allow for `**` wildcard. In Bash 4 it can be enabled with `globstar` setting.
      *
-     * In case the "**" wildcard is not used in the pattern then this method just calls PHP's glob().
+     * In case the `**` wildcard is not used in the pattern then this method just calls PHP's `glob()`.
      *
-     * For full documentation see PHP's glob() documentation.
+     * For full documentation see PHP's [`glob()` documentation](http://php.net/manual/en/function.glob.php).
+     *
+     * It's worth noting that if you want to find files inside current directory and their subdirectories,
+     * then you have to use a `GLOB_BRACE` flag and pattern, e.g.:
      * 
-     * @param  string  $pattern The pattern. Supports "**" wildcard.
-     * @param  integer $flags [optional] glob() flags. See glob()'s documentation. Default: 0.
-     * @return array|boolean
+     *     echo \MD\Foundation\Utils\FilesystemUtils::glob('{,** /}*.js', GLOB_BRACE); // note: remove space between * and /
+     *     // -> array(
+     *     //      'main.js',
+     *     //      'dir/script.js',
+     *     //      'dir/more/scripts.js'
+     *     // );
+     *      
+     * Implementation of this convention varies between libs in various languages and `MD\Foundation` sticks
+     * with what [Bash manual states](http://www.gnu.org/software/bash/manual/bashref.html#Pattern-Matching).
+     * More about this is explained in [#2](https://github.com/michaldudek/Foundation/issues/2).
+     *
+     * Additionally it provides sorting option to the results, which you can pass along with
+     * other flags. Constants `FilesystemUtils::GLOB_ROOTFIRST` and `FilesystemUtils::GLOB_CHILDFIRST`
+     * sort the results either as "root first" where files in a directory are listed before directories and
+     * subdirectories, or "child first" where subdirectories are listed before files.
+     * 
+     * @param  string  $pattern The pattern. Supports `**` wildcard.
+     * @param  int $flags [optional] `glob()` flags. See `glob()`'s documentation. Default: `0`.
+     * @return array|bool
      */
     public static function glob($pattern, $flags = 0) {
         // if not using ** then just use PHP's glob()
