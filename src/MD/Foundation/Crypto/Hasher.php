@@ -251,10 +251,6 @@ class Hasher
 
         // on PHP >= 5.5 use the builtin function
         if (function_exists("hash_pbkdf2")) {
-            // The output length is in NIBBLES (4-bits) if $rawOutput is false!
-            if (!$rawOutput) {
-                $keyLength = $keyLength * 2;
-            }
             return hash_pbkdf2($algorithm, $str, $salt, $count, $keyLength, $rawOutput);
         }
 
