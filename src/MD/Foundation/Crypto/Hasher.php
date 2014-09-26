@@ -249,11 +249,6 @@ class Hasher
             throw new InvalidArgumentException('positive integer', 'int('. $count .')', 5);
         }
 
-        // on PHP >= 5.5 use the builtin function
-        if (function_exists("hash_pbkdf2")) {
-            return hash_pbkdf2($algorithm, $str, $salt, $count, $keyLength, $rawOutput);
-        }
-
         $hash_length = mb_strlen(hash($algorithm, '', true));
         $block_count = ceil($keyLength / $hash_length);
 
