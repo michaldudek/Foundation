@@ -87,7 +87,7 @@ class Debugger
         if ($type === 'object') {
             $type = self::getClass($var);
 
-            if ($type === 'Closure') {
+            if ($type === 'Closure' || stripos($type, 'Closure$') === 0) {
                 $type = 'closure';
             }
         }
