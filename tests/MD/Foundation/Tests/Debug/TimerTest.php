@@ -216,9 +216,16 @@ class TimerTest extends \PHPUnit_Framework_TestCase
     }
 
     public function testGetCurrentMemory() {
-        $this->assertEquals(memory_get_usage(true), Timer::getCurrentMemory());
-        $this->assertInternalType('int', Timer::getCurrentMemory());
-        $this->assertTrue(Timer::getCurrentMemory() > 0);
+        $current = memory_get_usage(true);
+        $fromTimer = Timer::getCurrentMemory();
+
+        $this->assertInternalType('int', $fromTimer);
+
+        // make sure diff isn't bigger than 8kb
+        // because memory actually can be different when timer reads it
+        // and when the test reads it
+        $diff = abs($current - $fromTimer);
+        $this->assertLessThanOrEqual(1024 * 8, $diff);
     }
 
     public function testGetCurrentMemoryPeak() {
