@@ -17,6 +17,4 @@ use \Exception as Base_Exception;
 class Exception extends Base_Exception
 {
 
-
-
 }

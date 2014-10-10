@@ -17,6 +17,4 @@ use MD\Foundation\Exceptions\Exception;
 class ReadOnlyException extends Exception
 {
 
-
-
 }

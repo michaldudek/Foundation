@@ -17,6 +17,4 @@ use MD\Foundation\Exceptions\Exception;
 class InvalidReturnValueException extends Exception
 {
 
-
-
 }
