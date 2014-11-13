@@ -47,7 +47,13 @@ class ObjectUtils
         $return = array();
         
         foreach($objects as $object) {
-            if (method_exists($object, $getter)) {
+            if (is_array($object)) {
+                if (isset($object[$key])) {
+                    $val = $object[$key];
+                } else {
+                    continue; // can't get any value, move on
+                }
+            } elseif (method_exists($object, $getter)) {
                 $val = $object->$getter();
             } elseif (isset($object->$key)) {
                 $val = $object->$key;
@@ -98,7 +104,13 @@ class ObjectUtils
         $return = array();
         
         foreach($objects as $k => $object) {
-            if (method_exists($object, $getter)) {
+            if (is_array($object)) {
+                if (isset($object[$key])) {
+                    $val = $object[$key];
+                } else {
+                    continue; // can't get any value, move on
+                }
+            } elseif (method_exists($object, $getter)) {
                 $val = $object->$getter();
             } elseif (isset($object->$key)) {
                 $val = $object->$key;
@@ -151,7 +163,13 @@ class ObjectUtils
         $return = array();
         
         foreach($objects as $k => $object) {
-            if (method_exists($object, $getter)) {
+            if (is_array($object)) {
+                if (isset($object[$key])) {
+                    $val = $object[$key];
+                } else {
+                    continue; // can't get any value, move on
+                }
+            } elseif (method_exists($object, $getter)) {
                 $val = $object->$getter();
             } elseif (isset($object->$key)) {
                 $val = $object->$key;
@@ -211,7 +229,13 @@ class ObjectUtils
         $return = array();
         
         foreach($objects as $k => $object) {
-            if (method_exists($object, $getter)) {
+            if (is_array($object)) {
+                if (isset($object[$key])) {
+                    $val = $object[$key];
+                } else {
+                    continue; // can't get any value, move on
+                }
+            } elseif (method_exists($object, $getter)) {
                 $val = $object->$getter();
             } elseif (isset($object->$key)) {
                 $val = $object->$key;
