@@ -288,13 +288,15 @@ class StringUtils
      * @return string
      */
     public static function urlFriendly($string, $lowercase = true) {
+        // set default value to be compatible with PHP 5.3
+        $entitiesOption = defined('ENT_HTML401') ? ENT_COMPAT | ENT_HTML401 ? ENT_COMPAT;
         $string = static::translit($string);
         $string = utf8_decode($string);
-        $string = htmlentities($string, ENT_COMPAT | ENT_HTML401, 'utf-8');
+        $string = htmlentities($string, $entitiesOption, 'utf-8');
         $string = ($lowercase) ? strtolower($string) : $string;
         $string = str_replace('&amp;', 'and', $string);
         $string = preg_replace("/&(.)(acute|cedil|circ|ring|tilde|uml);/", "$1", $string);
-        $string = preg_replace("/([^a-zA-Z0-9]+)/", "-", html_entity_decode($string, ENT_COMPAT | ENT_HTML401, 'utf-8'));
+        $string = preg_replace("/([^a-zA-Z0-9]+)/", "-", html_entity_decode($string, $entitiesOption, 'utf-8'));
         $string = trim($string, "-");
         return $string;
     }
@@ -311,12 +313,13 @@ class StringUtils
      * @return string
      */
     public static function fileNameFriendly($string) {
+        $entitiesOption = defined('ENT_HTML401') ? ENT_COMPAT | ENT_HTML401 ? ENT_COMPAT;
         $string = static::translit($string);
         $string = utf8_decode($string);
-        $string = htmlentities($string, ENT_COMPAT | ENT_HTML401, 'utf-8');
+        $string = htmlentities($string, $entitiesOption, 'utf-8');
         $string = str_replace('&amp;', 'and', $string);
         $string = preg_replace("/&(.)(acute|cedil|circ|ring|tilde|uml);/", "$1", $string);
-        $string = preg_replace("/([^a-zA-Z0-9_\.\(\)]+)/", "-", html_entity_decode($string, ENT_COMPAT | ENT_HTML401, 'utf-8'));
+        $string = preg_replace("/([^a-zA-Z0-9_\.\(\)]+)/", "-", html_entity_decode($string, $entitiesOption, 'utf-8'));
         $string = trim($string, "-");
         return $string;
     }
