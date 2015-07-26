@@ -289,7 +289,7 @@ class StringUtils
      */
     public static function urlFriendly($string, $lowercase = true) {
         // set default value to be compatible with PHP 5.3
-        $entitiesOption = defined('ENT_HTML401') ? ENT_COMPAT | ENT_HTML401 ? ENT_COMPAT;
+        $entitiesOption = defined('ENT_HTML401') ? ENT_COMPAT | ENT_HTML401 : ENT_COMPAT;
         $string = static::translit($string);
         $string = utf8_decode($string);
         $string = htmlentities($string, $entitiesOption, 'utf-8');
@@ -313,7 +313,7 @@ class StringUtils
      * @return string
      */
     public static function fileNameFriendly($string) {
-        $entitiesOption = defined('ENT_HTML401') ? ENT_COMPAT | ENT_HTML401 ? ENT_COMPAT;
+        $entitiesOption = defined('ENT_HTML401') ? ENT_COMPAT | ENT_HTML401 : ENT_COMPAT;
         $string = static::translit($string);
         $string = utf8_decode($string);
         $string = htmlentities($string, $entitiesOption, 'utf-8');
