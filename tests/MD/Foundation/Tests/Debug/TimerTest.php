@@ -137,8 +137,8 @@ class TimerTest extends \PHPUnit_Framework_TestCase
 
         // fill a lot of memory
         $array = array();
-        for($i = 0; $i < 5000; $i++) {
-            $array[] = StringUtils::random();
+        for($i = 0; $i < 99999; $i++) {
+            $array[] = StringUtils::random(32);
         }
 
         $memory = $timer->getMemoryUsage();
