@@ -14,8 +14,3 @@ script:
 notifications:
   email:
     - michal@michaldudek.pl
-
-matrix:
-  exclude:
-  allow_failures:
-    - php: hhvm

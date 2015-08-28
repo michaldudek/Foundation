@@ -143,7 +143,7 @@ class TimerTest extends \PHPUnit_Framework_TestCase
 
         $memory = $timer->getMemoryUsage();
         $this->assertInternalType('int', $memory);
-        $this->assertTrue($memory > 0);
+        $this->assertGreaterThan(0, $memory);
     }
 
     public function testGetters() {
