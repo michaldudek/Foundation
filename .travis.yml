@@ -7,8 +7,9 @@ php:
   - 5.3
   - hhvm
 
-before_script:
-  - composer install
+script:
+  - make install_dev
+  - make test
 
 notifications:
   email:
@@ -18,4 +19,3 @@ matrix:
   exclude:
   allow_failures:
     - php: hhvm
-    - php: 7.0

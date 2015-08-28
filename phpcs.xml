@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<ruleset name="Splot Ruleset">
+    <description>The coding standard used for applications using Splot Framework.</description>
+
+    <rule ref="PSR2">
+        <exclude name="PSR2.Classes.PropertyDeclaration.Underscore"/> <!-- Splot issue -->
+        <exclude name="PSR2.Methods.MethodDeclaration.Underscore"/> <!-- Splot issue -->
+    </rule>
+
+    <rule ref="PEAR">
+        <exclude name="Generic.Files.LineLength.TooLong"/> <!-- This is taken care of in PSR2 -->
+        <exclude name="Generic.Commenting.DocComment.TagValueIndent"/>
+        <exclude name="PEAR.Commenting.FileComment.Missing"/> <!-- Just require class doc comment -->
+        <exclude name="PEAR.Commenting.ClassComment.MissingCategoryTag"/>
+        <exclude name="PEAR.Commenting.ClassComment.MissingPackageTag"/>
+        <exclude name="PEAR.Commenting.ClassComment.MissingLicenseTag"/>
+        <exclude name="PEAR.Commenting.ClassComment.MissingLinkTag"/>
+        <exclude name="PEAR.Commenting.FunctionComment.MissingReturn"/>
+        <exclude name="PEAR.Commenting.FunctionComment.SpacingAfterParamType"/>
+        <exclude name="PEAR.Commenting.FunctionComment.SpacingAfterParamName"/>
+        <exclude name="PEAR.WhiteSpace.ScopeIndent.IncorrectExact"/>
+        <exclude name="PEAR.NamingConventions.ValidVariableName.PrivateNoUnderscore"/> <!-- Conflict with PSR2 -->
+        <exclude name="PEAR.NamingConventions.ValidFunctionName.PrivateNoUnderscore"/> <!-- Conflict with PSR2 -->
+        <exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/> <!-- PSR2 is more forgiving -->
+        <exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine"/> <!-- PSR2 is more forgiving -->
+        <exclude name="PEAR.NamingConventions.ValidVariableName.PublicUnderscore"/> <!-- Splot issue -->
+        <exclude name="PEAR.NamingConventions.ValidFunctionName.PublicUnderscore"/> <!-- Splot issue -->
+    </rule>
+</ruleset>
