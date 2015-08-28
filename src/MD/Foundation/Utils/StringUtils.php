@@ -18,6 +18,13 @@ use MD\Foundation\Utils\ObjectUtils;
 class StringUtils
 {
 
+    /*
+     * Constants for `::truncate()` method options.
+     */
+    const TRUNCATE_START = -1;
+    const TRUNCATE_MIDDLE = 0;
+    const TRUNCATE_END = 1;
+
     /**
      * Accented letters map used in StringUtils::translit() method.
      * 
@@ -84,9 +91,10 @@ class StringUtils
      * @param string $text String to truncate.
      * @param int $limit [optional] Maximum length of the string. Default: `72`.
      * @param string $add [optional] String to append at the end. Default: `...`.
+     * @param integer $position [optional] Position at which to truncate. One of `self::TRUNCATE_*` constants. Default: `self::TRUNCATE_END`.
      * @return string
      */
-    public static function truncate($text, $limit = 72, $add = '...') {
+    public static function truncate($text, $limit = 72, $add = '...', $position = self::TRUNCATE_END) {
         if (!is_string($text)) {
             throw new InvalidArgumentException('string', $text);
         }
@@ -101,18 +109,110 @@ class StringUtils
         }
 
         $suffixLength = strlen($add);
-        if ($limit - $suffixLength < 0) {
+        if ($limit < $suffixLength) {
             return substr($add, 0, $limit);
         }
-        
-        $text = substr($text, 0, $limit - $suffixLength); // crop the string to a given limit minus suffix
 
+        $result = $text;
+        switch ($position) {
+            case self::TRUNCATE_START:
+                $result = static::truncateStart($text, $limit, $add);
+                break;
+
+            case self::TRUNCATE_MIDDLE:
+                $result = static::truncateMiddle($text, $limit, $add);
+                break;
+
+            case self::TRUNCATE_END:
+            default:
+                $result = static::truncateEnd($text, $limit, $add);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Truncates from the start of the string and prepends value of `$add`.
+     *
+     * Helper for `::truncate()`.
+     *
+     * @param  string  $text   Text to be truncated.
+     * @param  integer $limit  Limit.
+     * @param  string  $add    Prefix.
+     *
+     * @return string
+     */
+    protected static function truncateStart($text, $limit, $add)
+    {
+        $prefixLength = strlen($add);
+
+        // crop the string to a given limit minus suffix
+        $text = substr($text, ($limit - $prefixLength) * -1);
+
+        // find the first occurrence of a space and crop the string to it
+        $firstSpacePos = strpos($text, ' ');
+        if ($firstSpacePos) {
+            $text = substr($text, $firstSpacePos + 1);
+        }
+
+        // remove unwanted punctuation from the start of the string
+        $text = ltrim($text, '.!?:;,-');
+        
+        return $add . $text;
+    }
+
+    /**
+     * Truncates a string but removing its middle.
+     *
+     * Helper for `::truncate()`.
+     *
+     * @param  string  $text   Text to be truncated.
+     * @param  integer $limit  Limit.
+     * @param  string  $add    What will be added in the middle.
+     *
+     * @return string
+     */
+    protected static function truncateMiddle($text, $limit, $add)
+    {
+        $addLength = strlen($add);
+
+        $sideLimit = floor(($limit - $addLength) / 2);
+        $startText = substr($text, 0, $sideLimit);
+        $endText = substr($text, $sideLimit * -1);
+
+        // remove unwanted punctuation from the middle
+        $startText = rtrim($startText, '.!?:;,-');
+        $endText = ltrim($endText, '.!?:;,-');
+
+        return $startText . $add . $endText;
+    }
+
+    /**
+     * Truncates from the end of the string and appends value of `$add`.
+     *
+     * Helper for `::truncate()`.
+     *
+     * @param  string  $text   Text to be truncated.
+     * @param  integer $limit  Limit.
+     * @param  string  $add    Suffix.
+     *
+     * @return string
+     */
+    protected static function truncateEnd($text, $limit, $add)
+    {
+        $suffixLength = strlen($add);
+
+        // crop the string to a given limit minus suffix
+        $text = substr($text, 0, $limit - $suffixLength);
+
+        // find the last occurrence of a space and crop the string to it
         $lastSpacePos = strrpos($text, ' ');
         if ($lastSpacePos) {
-            $text = substr($text, 0, strrpos($text, ' ')); // find the last occurrence of a space and crop the string to it
+            $text = substr($text, 0, $lastSpacePos);
         }
-                
-        $text = rtrim($text, '.!?:;,-'); // remove unwanted punctuation from the end of the string
+
+        // remove unwanted punctuation from the end of the string
+        $text = rtrim($text, '.!?:;,-');
         
         return $text . $add;
     }

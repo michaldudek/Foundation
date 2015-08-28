@@ -54,6 +54,38 @@ class StringUtilsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Lo...', StringUtils::truncate($this->_getPreset('lipsum_sentence'), 5));
     }
 
+    public function provideTruncateStrings()
+    {
+        return array(
+            array(
+                'string' => 'Lorem ipsum dolor sit amet',
+                'expected' => 'Lorem ip...sit amet',
+                'length' => 19,
+                'position' => StringUtils::TRUNCATE_MIDDLE
+            ),
+            array(
+                'string' => 'Lorem ipsum dolor sit amet',
+                'expected' => '...dolor sit amet',
+                'length' => 19,
+                'position' => StringUtils::TRUNCATE_START
+            ),
+            array(
+                'string' => 'Lorem ipsum dolor sit amet',
+                'expected' => 'Lorem ipsum...',
+                'length' => 19,
+                'position' => StringUtils::TRUNCATE_END
+            ),
+        );
+    }
+
+    /**
+     * @dataProvider provideTruncateStrings
+     */
+    public function testTruncatePositions($string, $expected, $length, $position)
+    {
+        $this->assertEquals($expected, StringUtils::truncate($string, $length, '...', $position));
+    }
+
     public function testZeroFill() {
         $this->assertEquals('0000', StringUtils::zeroFill(''));
         $this->assertEquals('0001', StringUtils::zeroFill('1'));
