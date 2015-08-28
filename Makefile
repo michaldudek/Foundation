@@ -106,7 +106,7 @@ lint: phpcs phpmd
 qa: test lint
 
 # Build reports about the code / the project / the app.
-report: noop
+report: phpunit_coverage
 
 # Build docs.
 docs: noop
@@ -135,6 +135,10 @@ composer_dev:
 # run the PHPUnit tests
 phpunit:
 	php ./vendor/bin/phpunit -c phpunit.xml.dist
+
+# run the PHPUnit tests with coverage report
+phpunit_coverage:
+	php ./vendor/bin/phpunit -c phpunit.cov.xml
 
 # run PHPCS on the source code and show any style violations
 phpcs:

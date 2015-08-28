@@ -2,4 +2,4 @@
 bin
 composer.lock
 /vendor/
-/tests/coverage/
+/resources/coverage/
