@@ -369,7 +369,6 @@ class StringUtils
             $string = str_replace($accents, $ch, $string);
         }
 
-        $string = iconv($encoding, 'ISO-8859-1//TRANSLIT', $string);
         return $string;
     }
     
