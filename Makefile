@@ -51,6 +51,14 @@ help:
 # alias for help
 all: help
 
+# Docker containers for tests
+docker:
+	docker-compose up -d
+	docker-compose exec php /bin/sh
+
+docker-stop:
+	docker-compose stop
+
 # Installation
 # ---------------------------------------------------------------------------
 

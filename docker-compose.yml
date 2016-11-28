@@ -1,0 +1,7 @@
+version: '2'
+services:
+    php:
+        image: michaldudek/php7:latest
+        volumes:
+            - .:/app
+        command: tail -f /dev/null
