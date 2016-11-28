@@ -36,14 +36,6 @@ class MagicObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('ipsum', $properties['lorem']);
     }
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
-    public function test_SetProperty_Invalid() {
-        $obj = new MagicObject();
-        $this->reflections['__setProperty']->invoke($obj, array(), 'ipsum');
-    }
-
     public function test_GetProperty() {
         $obj= new MagicObject();
         $this->reflections['__setProperty']->invoke($obj, 'lorem', 'ipsum');
@@ -53,14 +45,6 @@ class MagicObjectTest extends \PHPUnit_Framework_TestCase
 
         $nullValue = $this->reflections['__getProperty']->invoke($obj, 'undefined');
         $this->assertInternalType('null', $nullValue);
-    }
-
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
-    public function test_GetProperty_Invalid() {
-        $obj = new MagicObject();
-        $this->reflections['__getProperty']->invoke($obj, array());
     }
 
     public function testSet() {
@@ -86,14 +70,6 @@ class MagicObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('lorem', $obj2->ipsum);
     }
 
-    /**
-     * @expectedException PHPUnit_Framework_Error_Notice
-     */
-    public function testGetUndefined() {
-        $obj = new MagicObject();
-        $value = $obj->undefinedVar;
-    }
-
     public function testIsset() {
         $obj = new MagicObject();
         $obj->lorem = 'ipsum';
@@ -104,28 +80,6 @@ class MagicObjectTest extends \PHPUnit_Framework_TestCase
         $obj2->ipsum = 'lorem';
         $this->assertTrue(isset($obj2->ipsum));
         $this->assertFalse(isset($obj2->lorem));
-    }
-
-    /**
-     * @expectedException PHPUnit_Framework_Error_Notice
-     */
-    public function testUnset() {
-        $obj = new MagicObject();
-        $obj->lorem = 'ipsum';
-        $this->assertEquals('ipsum', $obj->lorem);
-        unset($obj->lorem);
-        $this->assertEquals(null, $obj->lorem);
-    }
-
-    /**
-     * @expectedException PHPUnit_Framework_Error_Notice
-     */
-    public function testUnsetProperty() {
-        $obj2 = new MagicObjectClass();
-        $obj2->ipsum = 'lorem';
-        $this->assertEquals('lorem', $obj2->ipsum);
-        unset($obj2->ipsum);
-        $this->assertEquals(null, $obj2->ipsum);
     }
 
     public function testCallSetter() {
@@ -143,14 +97,6 @@ class MagicObjectTest extends \PHPUnit_Framework_TestCase
         $obj->camelCased = 'lorem ipsum';
         $obj->setCamelCased('lipsum');
         $this->assertEquals('lipsum', $obj->camelCased);
-    }
-
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
-    public function testCallSetterInvalid() {
-        $obj = new MagicObject();
-        $obj->setLorem();
     }
 
     public function testCallGetter() {
@@ -190,14 +136,6 @@ class MagicObjectTest extends \PHPUnit_Framework_TestCase
 
         $obj->camelCased = true;
         $this->assertTrue($obj->isCamelCased());
-    }
-
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */
-    public function testCallInvalid() {
-        $obj = new MagicObject();
-        $obj->doSomethingWeird();
     }
 
     public function test_GetClass() {
