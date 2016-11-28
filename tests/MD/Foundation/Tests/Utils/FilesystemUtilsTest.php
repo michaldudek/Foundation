@@ -31,6 +31,24 @@ class FilesystemUtilsTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::glob()
      */
+    public function testGlobBrace() {
+        $globDir = rtrim(realpath(__DIR__ .'/../TestFixtures/glob/'), '/') .'/';
+        $this->assertEquals(array(
+            $globDir .'config.ini',
+            $globDir .'config.php',
+            $globDir .'config.xml',
+            $globDir .'config.yml'
+        ), FilesystemUtils::glob($globDir .'config.{php,ini,yml,xml}', GLOB_BRACE));
+        $this->assertEquals(array(
+            $globDir .'lipsum/dolor/amet/adipiscit.txt',
+            $globDir .'lipsum/dolor/amet/elit.txt',
+            $globDir .'lipsum/dolor/amet/lorem.txt'
+        ), FilesystemUtils::glob($globDir .'lipsum/dolor/amet/{adipiscit,elit,lorem}.{txt,log}', GLOB_BRACE));
+    }
+
+    /**
+     * @covers ::glob()
+     */
     public function testGlobStar() {
         $globDir = rtrim(realpath(__DIR__ .'/../TestFixtures/glob/'), '/') .'/';
 
@@ -82,6 +100,10 @@ class FilesystemUtilsTest extends \PHPUnit_Framework_TestCase
             $globDir .'company/dwarves/thorin.txt',
             $globDir .'company/wizards/gandalf.txt',
             $globDir .'company/wizards/radagast.txt',
+            $globDir .'config.ini',
+            $globDir .'config.php',
+            $globDir .'config.xml',
+            $globDir .'config.yml',
             $globDir .'dolor.txt',
             $globDir .'global.js',
             $globDir .'global.min.js',
@@ -96,7 +118,7 @@ class FilesystemUtilsTest extends \PHPUnit_Framework_TestCase
             $globDir .'newdir/dummy/dummy.js',
             $globDir .'newdir/dummy/leaf.txt',
             $globDir .'newdir/file.txt',
-        ), FilesystemUtils::glob($globDir .'{,**}/*.*', GLOB_NOSORT | GLOB_BRACE), 'Failed to assert using double star wildcard inside braces.');
+        ), FilesystemUtils::glob($globDir .'{,**}/*.*', GLOB_BRACE), 'Failed to assert using double star wildcard inside braces.');
 
         $this->assertEquals(array(
             $globDir .'app.js',
@@ -108,6 +130,10 @@ class FilesystemUtilsTest extends \PHPUnit_Framework_TestCase
             $globDir .'company/dwarves/thorin.txt',
             $globDir .'company/wizards/gandalf.txt',
             $globDir .'company/wizards/radagast.txt',
+            $globDir .'config.ini',
+            $globDir .'config.php',
+            $globDir .'config.xml',
+            $globDir .'config.yml',
             $globDir .'dolor.txt',
             $globDir .'global.js',
             $globDir .'global.min.js',
@@ -122,11 +148,15 @@ class FilesystemUtilsTest extends \PHPUnit_Framework_TestCase
             $globDir .'newdir/dummy/dummy.js',
             $globDir .'newdir/dummy/leaf.txt',
             $globDir .'newdir/file.txt',
-        ), FilesystemUtils::glob($globDir .'{,**/}*.*', GLOB_NOSORT | GLOB_BRACE), 'Failed to assert using double star wildcard inside braces, different style.');
+        ), FilesystemUtils::glob($globDir .'{,**/}*.*', GLOB_BRACE), 'Failed to assert using double star wildcard inside braces, different style.');
 
         $this->assertEquals(array(
             $globDir .'app.js',
             $globDir .'app.min.js',
+            $globDir .'config.ini',
+            $globDir .'config.php',
+            $globDir .'config.xml',
+            $globDir .'config.yml',
             $globDir .'dolor.txt',
             $globDir .'global.js',
             $globDir .'global.min.js',
@@ -169,6 +199,10 @@ class FilesystemUtilsTest extends \PHPUnit_Framework_TestCase
             $globDir .'newdir/file.txt',
             $globDir .'app.js',
             $globDir .'app.min.js',
+            $globDir .'config.ini',
+            $globDir .'config.php',
+            $globDir .'config.xml',
+            $globDir .'config.yml',
             $globDir .'dolor.txt',
             $globDir .'global.js',
             $globDir .'global.min.js',
