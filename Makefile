@@ -117,7 +117,12 @@ qa: test lint
 report: phpunit_coverage
 
 # Build docs.
-docs: noop
+docs:
+	git checkout gh-pages
+	composer update
+	php bin/genry generate
+	git commit -a -m "Docs update"
+	git checkout master
 
 # Misc
 # ---------------------------------------------------------------------------
