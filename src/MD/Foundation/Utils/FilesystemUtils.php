@@ -71,7 +71,7 @@ class FilesystemUtils
         if (!defined('GLOB_BRACE') || !GLOB_BRACE) {
             $patterns = array_merge(
                 $patterns,
-                self::globBraceExpand($patterns, $globFlags)
+                self::globBraceExpand($patterns)
             );
         }
 
@@ -117,10 +117,9 @@ class FilesystemUtils
      * It expands the passed list of patterns into more patterns without the braces.
      *
      * @param  array|string $patterns An array of glob patterns or a single pattern.
-     * @param  integer      $flags    Glob flags.
      * @return array
      */
-    private static function globBraceExpand($patterns, $flags = 0) {
+    private static function globBraceExpand($patterns) {
         $patterns = is_array($patterns) ? $patterns : array($patterns);
         $results = array();
 
