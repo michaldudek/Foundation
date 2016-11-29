@@ -2,3 +2,4 @@
 .cache
 bin
 vendor
+resources/coverage
