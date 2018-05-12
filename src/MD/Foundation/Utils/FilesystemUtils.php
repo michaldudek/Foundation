@@ -50,13 +50,14 @@ class FilesystemUtils
      * 
      * @param  string  $pattern The pattern. Supports `**` wildcard.
      * @param  int $flags [optional] `glob()` flags. See `glob()`'s documentation. Default: `0`.
-     * @return array|bool
+     * @return array
      */
     public static function glob($pattern, $flags = 0) {
         // if not using ** then just use PHP's glob()
         if (stripos($pattern, '**') === false) {
             // turn off the custom flags
             $files = glob($pattern, ($flags | static::GLOB_CHILDFIRST | static::GLOB_ROOTFIRST) ^ (static::GLOB_CHILDFIRST | static::GLOB_ROOTFIRST));
+            $files = !is_array($files) ? array() : $files; // fix array for some systems
 
             // sort by root first?
             if ($flags & static::GLOB_ROOTFIRST) {
