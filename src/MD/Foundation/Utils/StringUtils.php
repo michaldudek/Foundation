@@ -698,13 +698,13 @@ class StringUtils
             if (is_object($variables)) {
                 $getter = ObjectUtils::getter($var);
                 if (method_exists($variables, $getter)) {
-                    $value = strval(call_user_func(array($variables, $getter)));
+                    $value = (string)$variables->$getter();
                 } elseif (isset($variables->$var)) {
-                    $value = strval($variables->$var);
+                    $value = (string)$variables->$var;
                 }
             } elseif (is_array($variables)) {
                 if (isset($variables[$var])) {
-                    $value = strval($variables[$var]);
+                    $value = (string)$variables[$var];
                 }
             }
 
@@ -740,32 +740,32 @@ class StringUtils
      * @return string
      */
     public static function secondsToTimeString($seconds, $hideHoursWhenZero = false) {
-        $seconds = intval($seconds);
-        
+        $seconds = (int)$seconds;
+
         // add negative sign but count as positive for negative values
         $negative = '';
         if ($seconds < 0) {
-            $seconds = $seconds * (-1);
+            $seconds *= (-1);
             $negative = '-';
         }
-        
-        $hours = floor($seconds / (60 * 60));
-        $seconds = $seconds - $hours * 60 * 60;
-        
+
+        $hours = (int)floor($seconds / (60 * 60));
+        $seconds -= $hours * 60 * 60;
+
         $minutes = floor($seconds / 60);
-        $seconds = $seconds - $minutes * 60;
-        
-        $seconds = round($seconds);
+        $seconds -= $minutes * 60;
+
+        $seconds = (int)round($seconds);
 
         $timeString = '';
 
-        if ($hours != 0 || !$hideHoursWhenZero) {
+        if ($hours !== 0 || !$hideHoursWhenZero) {
             $timeString = $hours .':';
         }
 
         $timeString .= static::zeroFill($minutes, 2) .':';
         $timeString .= static::zeroFill($seconds, 2);
-        
+
         return $negative . $timeString;
     }
     
@@ -787,21 +787,21 @@ class StringUtils
     public static function timeStringToSeconds($string) {
         $seconds = 0;
         $multipliers = array(1, 60, 3600);
-        $negative = (substr($string, 0, 1) === '-') ? true : false;
+        $negative = strpos($string, '-') === 0;
         $string = ltrim($string, '-');
-        
+
         $char = (strpos($string, ':') !== false) ? ':' : '.';
         $times = explode($char, $string);
         // 0 => seconds, 1 => minutes, 2 => hours
         $times = array_reverse($times);
         
         foreach($times as $i => $number) {
-            $number = intval(ltrim($number, '0')); // remove suffixed 0's and make int
-            $seconds = $seconds + ($number * $multipliers[$i]);
+            $number = (int)ltrim($number, '0'); // remove suffixed 0's and make int
+            $seconds += ($number * $multipliers[$i]);
         }
 
         if ($negative) {
-            $seconds = $seconds * -1;
+            $seconds *= -1;
         }
         
         return $seconds;
@@ -819,7 +819,7 @@ class StringUtils
      * @return string
      */
     public static function bytesToString($bytes) {
-        $bytes = intval($bytes);
+        $bytes = (int)$bytes;
         if ($bytes < 1024) {
             return $bytes .' b';
         }
@@ -894,14 +894,14 @@ class StringUtils
      */
     public static function rgbToHex($rgb, $separator = ',') {
         $rgb = is_array($rgb) ? $rgb : explode($separator, $rgb);
-        $rgb = array_map(function($item) use ($rgb) {
+        $rgb = array_map(static function($item) use ($rgb) {
             $item = trim($item);
 
             if (!is_numeric($item)) {
                 throw new InvalidArgumentException('valid RGB value', $rgb);
             }
-            
-            return intval($item);
+
+            return (int)$item;
         }, $rgb);
 
         // validate if really RGB
@@ -1004,13 +1004,13 @@ class StringUtils
         }
 
         $val = ($val < 0) ? 0 : $val;
-        $number = floor($number);
+        $number = (int)floor($number);
 
         // Determine the minor value, to recurse through
         $newTime = $currentTime - ($difference % $lengths[$val]);
 
         // Return text
-        $text = sprintf("%d %s ", $number, $number != 1 ? $periods[$val]['plural'] : $periods[$val]['single']);
+        $text = sprintf('%d %s ', $number, $number !== 1 ? $periods[$val]['plural'] : $periods[$val]['single']);
 
         // Ensure there is still something to recurse through, and we have not found 1 minute and 0 seconds.
         if (($val >= 1) && (($currentTime - $newTime) > 0) && ($levels > 0)){
@@ -1035,18 +1035,17 @@ class StringUtils
     /**
      * Explodes the given string just like php's `explode()` function with additional possibility of multiple exploding delimeters.
      *
-     * @param string $standardDelimeter Standard delimeter by which explode the string.
+     * @param string $standardDelimiter Standard delimeter by which explode the string.
      * @param string $string String to explode.
-     * @param array $delimeters [optional] Array of any other delimeters to take into account while exploding.
+     * @param array $delimiters [optional] Array of any other delimeters to take into account while exploding.
      * @return array
      */
-    public static function multiExplode($standardDelimeter, $string, $delimeters = array()) {
-        foreach($delimeters as $delimeter) {
-            $string = str_replace($delimeter, $standardDelimeter, $string);
+    public static function multiExplode($standardDelimiter, $string, $delimiters = array()) {
+        foreach($delimiters as $delimiter) {
+            $string = str_replace($delimiter, $standardDelimiter, $string);
         }
-        
-        $array = explode($standardDelimeter, $string);
-        return $array;
+
+        return explode($standardDelimiter, $string);
     }
 
     /**
