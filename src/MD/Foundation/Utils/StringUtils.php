@@ -657,7 +657,7 @@ class StringUtils
         
         $string = '';
         for ($i = 1; $i <= $length; $i++) {
-            $string .= $chars{mt_rand(0, strlen($chars) - 1)};
+            $string .= $chars[mt_rand(0, strlen($chars) - 1)];
         }
 
         return $string;
